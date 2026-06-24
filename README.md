@@ -1,38 +1,39 @@
 # Tales of Berseria — Guida completa all’Equipment
 
-Sito statico italiano per GitHub Pages. Spiega l’Equipment da zero e include un catalogo completo filtrabile per Item, categoria, Rarity, statistiche, Master Skill, Enhancement Bonus, Main Ingredient e Rare drop.
+Sito GitHub Pages in italiano dedicato all’Equipment di *Tales of Berseria*. I nomi di Item, Monster, Skill, Arte, Acerite e località rimangono in inglese per coincidere con il gioco.
+
+## Cosa contiene
+
+- Percorso guidato per chi inizia, con decisioni pratiche e collegamenti tra i concetti.
+- Spiegazione completa di statistiche, Rarity, Master Skills, Enhancement, Dismantle, Powder, Fluid, Armory Acerite, farming, Ignicite, Random Skills, Glacite e Sovereign Acerite.
+- Catalogo locale completo delle 18 categorie di Equipment, ricercabile e filtrabile per personaggio, categoria, periodo e Rarity.
+- Valori esatti a `+10`, Main Ingredient, Master Skill, Enhancement Bonus e fonte di acquisizione per ogni Item.
+- Selezione degli Item notevoli collegata direttamente alle rispettive schede.
 
 ## Pubblicazione
 
-1. Crea un repository GitHub vuoto e carica il contenuto di questa cartella nel branch `main`.
-2. In **Settings → Pages**, seleziona **GitHub Actions** come sorgente.
-3. Apri la scheda **Actions** e avvia oppure attendi `Build and deploy GitHub Pages`.
-4. Il workflow genera `site/content/catalogo.json`, verifica che siano presenti tutte le 18 categorie e almeno 300 Item, poi pubblica il sito.
+1. Estrai l’archivio e carica il contenuto in un repository GitHub.
+2. Pubblica nel branch `main`.
+3. In **Settings → Pages**, seleziona **GitHub Actions** come sorgente.
+4. Il workflow genera il catalogo statico prima del deploy e interrompe la pubblicazione se la copertura non è completa.
 
-Il deploy si interrompe intenzionalmente quando il catalogo non è completo: non viene mai pubblicata una versione parziale.
+Il browser carica esclusivamente file locali pubblicati con il sito. Il catalogo non viene interrogato né costruito lato client; il workflow lo genera prima dell’upload e pubblica solo l’output convalidato.
 
-## Sviluppo locale
+## Controlli della build
 
-Il file principale è `site/index.html`. Per testarlo con il catalogo completo:
+La pubblicazione viene bloccata quando:
+
+- non sono presenti tutte le 18 categorie;
+- il catalogo contiene meno di 350 Item;
+- una scheda non ha i campi essenziali;
+- i valori `+10` non coincidono con la formula di distribuzione dei 100 punti di Enhancement;
+- una pagina pubblicata contiene collegamenti esterni o riferimenti alla fonte di lavoro;
+- mancano gli anchor essenziali o i collegamenti interni della guida.
+
+## Anteprima locale
 
 ```bash
-python -m pip install requests beautifulsoup4
-python tools/build_catalog.py --output site/content/catalogo.json
-python tools/verify_site.py
-python -m http.server --directory site 8000
+python -m http.server 8000 --directory site
 ```
 
-Poi apri `http://localhost:8000` nel browser. Il server locale è necessario perché il sito carica guida e catalogo tramite `fetch`.
-
-## Struttura
-
-- `site/content/guide.html` — testo completo della guida in italiano.
-- `site/content/catalogo.json` — database locale generato durante build/deploy.
-- `site/assets/site.js` — ricerca, indice, tema e rendering del catalogo.
-- `tools/build_catalog.py` — generatore del catalogo.
-- `tools/verify_site.py` — controlli contro cataloghi incompleti, link esterni pubblicati e riferimenti non consentiti.
-- `.github/workflows/deploy-pages.yml` — build, validazione e deploy.
-
-## Note editoriali
-
-I nomi di Monster, Item, Skill, Arte, Acerite e località restano in inglese per essere riconoscibili nel gioco. Il testo, le istruzioni e le spiegazioni sono in italiano.
+Apri `http://localhost:8000/`. La copia del repository mostra il testo della guida; il catalogo completo appare dopo la build del workflow, che materializza `site/content/catalogo.json` prima della pubblicazione.

@@ -11,8 +11,8 @@ permissions:
   id-token: write
 
 concurrency:
-  group: "pages"
-  cancel-in-progress: false
+  group: pages
+  cancel-in-progress: true
 
 env:
   FORCE_JAVASCRIPT_ACTIONS_TO_NODE24: true
@@ -20,29 +20,37 @@ env:
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout
-        uses: actions/checkout@v4
+        uses: actions/checkout@v5
 
       - name: Set up Python
-        uses: actions/setup-python@v6
+        uses: actions/setup-python@v5
         with:
-          python-version: "3.13"
-          cache: pip
+          python-version: "3.12"
 
       - name: Install catalogue builder dependencies
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install requests beautifulsoup4
+        run: python -m pip install --disable-pip-version-check -r requirements.txt
 
       - name: Build complete local catalogue
-        run: python tools/build_catalog.py --output site/content/catalogo.json
+        run: |
+          set -euo pipefail
+          for attempt in 1 2 3; do
+            if python tools/build_catalog.py --output site/content/catalogo.json; then
+              exit 0
+            fi
+            if [ "$attempt" = "3" ]; then
+              exit 1
+            fi
+            sleep $((attempt * 5))
+          done
 
-      - name: Verify guide and catalogue coverage
-        run: python tools/verify_site.py
+      - name: Validate published content
+        run: |
+          python tools/verify_site.py --site site
+          node --check site/assets/site.js
 
-      - name: Configure GitHub Pages
+      - name: Configure Pages
         uses: actions/configure-pages@v5
 
       - name: Upload Pages artifact
@@ -56,8 +64,7 @@ jobs:
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
-
     steps:
-      - name: Deploy to GitHub Pages
+      - name: Deploy
         id: deployment
         uses: actions/deploy-pages@v5

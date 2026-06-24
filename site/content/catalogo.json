@@ -1,5 +1,8 @@
 {
-  "generated_at": null,
+  "schema_version": 2,
+  "complete": false,
   "categories": [],
-  "items": []
+  "items": [],
+  "noteworthy": [],
+  "message": "Il catalogo viene generato e convalidato dalla build di pubblicazione."
 }

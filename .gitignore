@@ -1,2 +1,4 @@
-.DS_Store
-site/.cache/
+__pycache__/
+*.py[cod]
+.venv/
+tools/reference-cache.txt
