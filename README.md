@@ -1,33 +1,34 @@
-# Tales of Berseria — Equipment Guide
+# Tales of Berseria — Guida all'equipaggiamento
 
-A self-hosted, responsive edition of **Syreldar's Tales of Berseria Equipment Guide**.
+Versione italiana statica, pronta per GitHub Pages.
 
-The source guide is preserved in two forms when the import workflow runs:
+Il progetto non scarica contenuti durante la pubblicazione: guida, tabelle, ricerca e indice sono tutti inclusi nella cartella `site/`.
 
-- `archive/gamefaqs-print.html`: complete printable-page archive;
-- `site/content/guide.html`: extracted guide content used by the reader;
-- `site/archive/guide-original.txt`: plain-text archive for long-term access.
+## Pubblicazione su GitHub Pages
 
-The reader provides a searchable table of contents, keyboard-friendly navigation, responsive tables, a light/dark theme toggle, and a direct link to the preserved original text. No guide content is intentionally rewritten or discarded during import.
+1. Crea un repository GitHub e carica questi file nel branch `main`.
+2. Apri **Settings → Pages** e seleziona **GitHub Actions** come sorgente di pubblicazione.
+3. Effettua un push su `main`, oppure avvia manualmente il workflow **Pubblica il sito su GitHub Pages** dalla scheda **Actions**.
+4. Al termine del workflow, GitHub mostrerà l'indirizzo pubblico del sito.
 
-## Publish it with GitHub Pages
+## Avvio locale
 
-1. Create an empty **public** GitHub repository named `tales-of-berseria-equipment-guide`.
-2. Extract this archive, then publish the folder with GitHub Desktop.
-3. In the repository, open **Settings → Pages** and set **Build and deployment → Source** to **GitHub Actions**.
-4. Open **Actions → Archive GameFAQs guide and deploy → Run workflow**.
-5. After the workflow succeeds, open **Settings → Pages → Visit site**.
+Non servono dipendenze. Apri `site/index.html` in un browser oppure avvia un server statico dalla radice del progetto:
 
-The workflow retrieves the guide from its printable GameFAQs view, saves the complete page archive, extracts the author content, commits the files, and deploys the static site in the same run.
+```bash
+python -m http.server 8000 --directory site
+```
 
-If GitHub refuses the archive workflow's commit, open **Settings → Actions → General → Workflow permissions** and allow read/write workflow permissions, then run it again.
+Poi visita `http://localhost:8000`.
 
-## Updating the source archive
+## Struttura
 
-Run **Archive GameFAQs guide and deploy** again. It replaces the preserved source files only when the page changes, commits the result, and deploys the refreshed site.
+- `site/index.html` — shell della pagina.
+- `site/content/guide.html` — testo della guida in italiano.
+- `site/assets/site.css` — stile responsive.
+- `site/assets/site.js` — indice automatico, ricerca nel testo e tema chiaro/scuro.
+- `.github/workflows/deploy-pages.yml` — pubblicazione automatica su GitHub Pages.
 
-## Ownership and attribution
+## Nota sui nomi
 
-Guide text © 2018–2026 **Syreldar**. All rights reserved.
-
-This repository deliberately preserves the original byline, version history, acknowledgement text, and a link to the GameFAQs publication. *Tales of Berseria* and related names are trademarks of their respective owners.
+I nomi di Monster, Item, Skill, Arte, Acerite, stat e località del gioco restano in inglese per permettere una ricerca immediata in gioco.

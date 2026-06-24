@@ -1,12 +1,9 @@
-name: Deploy Pages changes
+name: Pubblica il sito su GitHub Pages
 
 on:
   push:
     branches:
       - main
-    paths:
-      - "site/**"
-      - ".github/workflows/deploy-pages.yml"
   workflow_dispatch:
 
 permissions:
@@ -16,23 +13,26 @@ permissions:
 
 concurrency:
   group: pages
-  cancel-in-progress: true
+  cancel-in-progress: false
 
 jobs:
   deploy:
-    runs-on: ubuntu-latest
     environment:
       name: github-pages
       url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
     steps:
-      - name: Check out repository
-        uses: actions/checkout@v5
+      - name: Scarica il repository
+        uses: actions/checkout@v4
 
-      - name: Upload static site
-        uses: actions/upload-pages-artifact@v5
+      - name: Configura GitHub Pages
+        uses: actions/configure-pages@v5
+
+      - name: Carica il sito statico
+        uses: actions/upload-pages-artifact@v3
         with:
-          path: site
+          path: ./site
 
-      - name: Deploy static site
+      - name: Pubblica
         id: deployment
-        uses: actions/deploy-pages@v5
+        uses: actions/deploy-pages@v4
