@@ -12,7 +12,7 @@ Il workflow rifiuta l’artifact quando non trova:
 - almeno 350 Item;
 - valori base e `+10` coerenti;
 - Master Skill, Enhancement Bonus, Main Ingredient e acquisizione per ogni scheda;
-- almeno due schede di riferimento per ciascuna categoria;
+- una scheda di riferimento per ogni combinazione categoria/fase realmente presente (almeno 34 in totale);
 - anchor interni validi e tutte le sezioni didattiche richieste.
 
 ## Limite dichiarato dei dati di acquisizione

@@ -299,6 +299,13 @@ def notable_entries(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
     return sorted(results, key=lambda entry: (entry["category_id"], entry["phase"], entry["rarity"]))
 
 
+MIN_NAVIGATION_ENTRIES = 34
+
+
+def navigation_pairs(entries: list[dict[str, Any]]) -> set[tuple[str, str]]:
+    return {(str(entry["category_id"]), str(entry["phase"])) for entry in entries}
+
+
 def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], noteworthy: list[dict[str, Any]]) -> None:
     expected = {category["id"] for category in categories}
     found = {item["category_id"] for item in items}
@@ -308,11 +315,6 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], note
         raise RuntimeError("The category manifest must contain all 18 categories")
     if len(items) < 350:
         raise RuntimeError(f"Catalogue has {len(items)} items; at least 350 are required")
-    if len(noteworthy) < 36:
-        raise RuntimeError(f"Only {len(noteworthy)} navigation entries found; expected at least 36")
-    noteworthy_categories = {entry["category_id"] for entry in noteworthy}
-    if noteworthy_categories != expected:
-        raise RuntimeError("Navigation entries must cover all 18 categories")
 
     keys: set[tuple[str, int, str]] = set()
     for item in items:
@@ -332,6 +334,22 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], note
                 raise RuntimeError(f"Missing {field} for {item['name']}")
             if re.search(r"https?://", value, re.IGNORECASE):
                 raise RuntimeError(f"External URL leaked into item field: {item['name']}")
+
+    expected_pairs = navigation_pairs(items)
+    noteworthy_pairs = navigation_pairs(noteworthy)
+    if len(noteworthy) < MIN_NAVIGATION_ENTRIES:
+        raise RuntimeError(
+            f"Only {len(noteworthy)} navigation entries found; at least {MIN_NAVIGATION_ENTRIES} are required"
+        )
+    if len(noteworthy) != len(noteworthy_pairs):
+        raise RuntimeError("Navigation entries must not duplicate a category/phase pair")
+    if noteworthy_pairs != expected_pairs:
+        missing = sorted(expected_pairs - noteworthy_pairs)
+        unexpected = sorted(noteworthy_pairs - expected_pairs)
+        raise RuntimeError(
+            "Navigation coverage does not match the catalogue phases. "
+            f"Missing: {missing}; unexpected: {unexpected}"
+        )
 
 
 def main() -> int:

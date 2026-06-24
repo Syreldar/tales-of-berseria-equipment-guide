@@ -71,15 +71,12 @@ def validate_catalogue(catalogue: Path, allow_unbuilt: bool) -> None:
         fail("Catalogue must contain exactly 18 categories")
     if not isinstance(items, list) or len(items) < 350:
         fail("Catalogue must contain at least 350 items")
-    if not isinstance(noteworthy, list) or len(noteworthy) < 36:
-        fail("Catalogue must retain at least 36 noteworthy progression entries")
+    if not isinstance(noteworthy, list) or len(noteworthy) < 34:
+        fail("Catalogue must retain at least 34 noteworthy navigation entries")
     category_ids = {entry.get("id") for entry in categories}
     found_ids = {entry.get("category_id") for entry in items}
     if category_ids != found_ids:
         fail("Catalogue category coverage is incomplete")
-    noteworthy_ids = {entry.get("category_id") for entry in noteworthy}
-    if noteworthy_ids != category_ids:
-        fail("Noteworthy coverage is incomplete")
     seen: set[tuple[Any, ...]] = set()
     for item in items:
         stats = item.get("stats")
@@ -100,6 +97,18 @@ def validate_catalogue(catalogue: Path, allow_unbuilt: bool) -> None:
                 fail(f"Missing {field}: {item.get('name')}")
             if FORBIDDEN_PUBLIC.search(value):
                 fail(f"External URL in item field: {item.get('name')}")
+
+    expected_pairs = {(item.get("category_id"), item.get("phase")) for item in items}
+    noteworthy_pairs = {(entry.get("category_id"), entry.get("phase")) for entry in noteworthy}
+    if len(noteworthy_pairs) != len(noteworthy):
+        fail("Noteworthy navigation entries duplicate a category/phase pair")
+    if noteworthy_pairs != expected_pairs:
+        missing = sorted(expected_pairs - noteworthy_pairs)
+        unexpected = sorted(noteworthy_pairs - expected_pairs)
+        fail(
+            "Noteworthy navigation does not cover the catalogue phases. "
+            f"Missing: {missing}; unexpected: {unexpected}"
+        )
 
 
 def main() -> int:

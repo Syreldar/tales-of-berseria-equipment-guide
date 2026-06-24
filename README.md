@@ -39,3 +39,7 @@ python -m http.server 8000 --directory site
 ```
 
 Apri `http://localhost:8000/`. Il catalogo completo viene creato dal workflow di build e incluso nell’artifact pubblicato.
+## Correzione controllo di navigazione
+
+Alcune categorie non espongono entrambe le fasi nel dato strutturato. Il build non presume più due riferimenti fissi per ciascuna delle 18 categorie: richiede invece esattamente un riferimento per ogni combinazione `categoria + fase` effettivamente presente, con una soglia minima di 34. Questo conserva la copertura reale e impedisce duplicati o voci mancanti.
+
