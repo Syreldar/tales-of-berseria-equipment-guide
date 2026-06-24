@@ -1,475 +1,460 @@
-<section>
-    <p class="kicker">Guida pratica · per una prima run e oltre</p>
-    <p class="lead">L'equipaggiamento in <em>Tales of Berseria</em> non è solo un rimpiazzo progressivo: determina gran parte delle statistiche, sblocca <strong>Master Skills</strong>, migliora le prestazioni in battaglia e alimenta il ciclo di <strong>Enhancement</strong> e smantellamento. Questa versione riscrive il sistema in ordine operativo, prima per chi inizia e poi per chi vuole ottimizzare.</p>
-
+<article class="guide-document">
+  <section id="inizio" class="hero-copy">
+    <p class="eyebrow">Tales of Berseria · Equipment</p>
+    <h1>Guida completa all’Equipment</h1>
+    <p class="lead">Questa guida spiega ogni sistema che modifica l’Equipment: statistiche, Rarity, <strong>Enhancement</strong>, smantellamento, drop, <strong>Random Skills</strong>, <strong>Glacite</strong>, <strong>Sovereign Acerite</strong> e catalogo completo. I nomi di Item, Monster, Skill, Arte, Acerite e luoghi restano in inglese per corrispondere al gioco.</p>
     <div class="callout success">
-        <h2>La regola da ricordare subito</h2>
-        <p>Durante la storia, scegli un Item con una grande quantità della statistica principale del suo slot, portalo a <strong>+3</strong> quando puoi e smantella gli Item che non vuoi usare. Non serve inseguire ogni drop, né portare tutto a <strong>+10</strong>.</p>
+      <p><strong>Obiettivo per una prima run:</strong> non costruire subito un set perfetto. Indossa Item con una statistica forte, porta gradualmente l’Equipment utile a <code>+3</code> e poi a <code>+6</code>, usa i drop per apprendere <strong>Master Skills</strong>, e rimanda il vero min-max a post-game.</p>
     </div>
+  </section>
 
-    <div class="cards">
-        <article class="card">
-            <h3>Rarity</h3>
-            <p><code>R1</code>, <code>R2</code> e così via indicano il livello di rarità. In generale il totale delle statistiche cresce con la Rarity, ma la distribuzione di quelle statistiche è spesso più importante del numero totale.</p>
-        </article>
-        <article class="card">
-            <h3>Enhancement</h3>
-            <p><code>+1</code>–<code>+10</code> sono potenziamenti dell'Item. Aumentano le statistiche e il bonus di categoria. Non sono percentuali aggiunte direttamente ai valori mostrati.</p>
-        </article>
-        <article class="card">
-            <h3>Common e rare</h3>
-            <p>Nella maggior parte dei casi, le Rarity pari sono <strong>Common</strong>; quelle dispari sono Item rari legati a Monster o Chest. Le eccezioni e i Ring hanno regole di materiali proprie.</p>
-        </article>
-        <article class="card">
-            <h3>Smantellamento</h3>
-            <p>Distruggere un Item recupera Ingredient, Powder e, in certi casi, Fluid. È il modo affidabile per preparare l'Enhancement del pezzo che vuoi davvero tenere.</p>
-        </article>
-    </div>
-</section>
-
-<section>
-    <h2>Procedura consigliata per chi è alle prime armi</h2>
-    <ol class="step-list">
-        <li><strong>Equipaggia il pezzo migliore per lo slot.</strong> Guarda prima la statistica che quello slot dovrebbe rafforzare: Atk per Weapon, A.Atk per Accessory, Def per Armor, A.Def per Ring e Foc per Footwear.</li>
-        <li><strong>Impara le Master Skills.</strong> Usa gli Item che hanno Skill utili, ma non sacrificare tutte le statistiche soltanto per una Skill marginale.</li>
-        <li><strong>Porta a +1 gli scarti prima di smantellarli.</strong> Di norma spendi 1 Main Ingredient, ma recuperi 2 Main Ingredient e 1 Coarse Tempering Powder.</li>
-        <li><strong>Fermati a +3 o +6.</strong> +3 è economico; +6 è un buon obiettivo per un Item che userai a lungo. +9 e +10 sono investimenti da post-game.</li>
-        <li><strong>Non inseguire Random Skills perfette.</strong> Sono determinati quando ottieni l'Item, non quando lo potenzi. Per finire la storia contano molto di più una buona base statistica e un Enhancement ragionevole.</li>
+  <section id="come-usare">
+    <h2>Come usare questa guida</h2>
+    <ol class="steps">
+      <li><strong>Se sei all’inizio:</strong> leggi <a href="#regole">Le cinque regole</a>, poi <a href="#scelte">Scelte consigliate</a>.</li>
+      <li><strong>Hai appena trovato uno Smith:</strong> consulta <a href="#smith">Smith’s Acerite</a> e <a href="#enhancement">Enhancement</a>.</li>
+      <li><strong>Vuoi un Item preciso:</strong> apri <a href="#catalogo">Catalogo completo</a>, filtra personaggio/categoria/Rarity e confronta le colonne.</li>
+      <li><strong>Vuoi farmare:</strong> leggi <a href="#drop">Drop e acquisizione</a>; il catalogo indica il Monster del Rare drop quando disponibile.</li>
+      <li><strong>Sei in post-game:</strong> usa <a href="#random-skills">Random Skills e Glacite</a>, <a href="#sovereign">Sovereign Acerite</a> e le ricette da <code>+9</code>/<code>+10</code>.</li>
     </ol>
+    <p class="muted">Le statistiche nella tabella del catalogo sono quelle base. La colonna <code>+10</code> calcola automaticamente gli stessi 100 punti bonus dell’Enhancement, distribuiti in proporzione alle statistiche iniziali.</p>
+  </section>
 
-    <div class="callout warning">
-        <p><strong>Errore comune:</strong> tenere ogni Item “per dopo”. L'inventario pieno rallenta il farming e ti nasconde i pezzi utili. Conserva gli Item equipaggiati, quelli con Master Skills che vuoi imparare e i materiali per un progetto concreto; il resto può entrare nel ciclo di smantellamento.</p>
+  <section id="regole">
+    <h2>Le cinque regole da ricordare</h2>
+    <div class="rule-grid">
+      <article><span>01</span><h3>Non aumentare tutto</h3><p>Un Item con una sola statistica alta sfrutta meglio l’Enhancement. Un’arma con molto <strong>Atk</strong>, per esempio, riceve quasi tutti i suoi punti bonus in <strong>Atk</strong>.</p></article>
+      <article><span>02</span><h3>Il segno <code>+N</code> non è una percentuale</h3><p>Ogni livello di Enhancement aggiunge punti statistica fissi. A <code>+10</code>, un Item ha ricevuto in totale <strong>100 punti</strong> distribuiti proporzionalmente.</p></article>
+      <article><span>03</span><h3>Rarity e Enhancement sono sistemi diversi</h3><p>La <strong>Rarity</strong> decide la forza base, il materiale e il gruppo di Item. L’<strong>Enhancement</strong> modifica quell’Item specifico.</p></article>
+      <article><span>04</span><h3>Smantellare non cancella il lavoro</h3><p><strong>Dismantle</strong> restituisce materiali e trasforma le Random Skills in Fluid. Per questo si può creare Equipment da usare come materiale di crafting.</p></article>
+      <article><span>05</span><h3>Le Random Skills sono una fase avanzata</h3><p>Durante la storia, priorità a statistiche, bonus di categoria e Master Skills. Un set con tre Random Skills Rank 4 per pezzo serve soprattutto dopo la campagna.</p></article>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Perché l'Equipment conta così tanto</h2>
-    <p>Le statistiche ottenute salendo di livello sono importanti, ma l'equipaggiamento raggiunge rapidamente valori comparabili o superiori. Ogni personaggio può indossare cinque pezzi e ogni slot è orientato verso una statistica primaria.</p>
-
-    <h3>Crescita indicativa dei personaggi fino a Lv. 200</h3>
-    <p>La tabella mostra la crescita approssimativa ottenuta dai level up, senza includere le statistiche iniziali. È utile per capire la scala del sistema, non per calcolare un build al singolo punto.</p>
+  <section id="fondamenti">
+    <h2>Fondamenti: slot, statistiche e Rarity</h2>
+    <h3>I sei tipi di statistica</h3>
     <table>
-        <thead><tr><th>Character</th><th>HP</th><th>Atk</th><th>A.Atk</th><th>Def</th><th>A.Def</th><th>Foc</th></tr></thead>
-        <tbody>
-            <tr><td>Velvet</td><td>6864</td><td>253.8</td><td>253.8</td><td>296.4</td><td>169.5</td><td>296.4</td></tr>
-            <tr><td>Rokurou</td><td>7280</td><td>286.0</td><td>204.9</td><td>327.6</td><td>204.9</td><td>204.9</td></tr>
-            <tr><td>Laphicet</td><td>5616</td><td>188.2</td><td>329.7</td><td>235.0</td><td>376.5</td><td>282.9</td></tr>
-            <tr><td>Eizen</td><td>6656</td><td>257.9</td><td>257.9</td><td>171.6</td><td>257.9</td><td>344.2</td></tr>
-            <tr><td>Magilou</td><td>6032</td><td>226.7</td><td>363.0</td><td>272.5</td><td>317.2</td><td>182.0</td></tr>
-            <tr><td>Eleanor</td><td>6448</td><td>350.5</td><td>174.7</td><td>263.1</td><td>263.1</td><td>263.1</td></tr>
-        </tbody>
+      <thead><tr><th>Statistica</th><th>Che cosa influenza</th><th>Categoria che la privilegia</th></tr></thead>
+      <tbody>
+        <tr><td><strong>HP</strong></td><td>Vita massima. Utile per sopravvivere, ma raramente è la prima priorità offensiva.</td><td>Dipende dall’Item.</td></tr>
+        <tr><td><strong>Atk</strong></td><td>Danno fisico e potenza degli attacchi fisici.</td><td>Weapons.</td></tr>
+        <tr><td><strong>A.Atk</strong></td><td>Danno delle Artes e delle azioni basate su Arte Attack.</td><td>Accessories.</td></tr>
+        <tr><td><strong>Def</strong></td><td>Difesa fisica.</td><td>Armor.</td></tr>
+        <tr><td><strong>A.Def</strong></td><td>Difesa contro danni basati su Arte Attack.</td><td>Rings.</td></tr>
+        <tr><td><strong>Focus</strong></td><td>Influenza Stun, effetti legati ai colpi e varie interazioni di combattimento.</td><td>Footwear.</td></tr>
+      </tbody>
+    </table>
+    <p><strong>Regola pratica:</strong> Weapons cercano <strong>Atk</strong>, Accessories <strong>A.Atk</strong>, Armor <strong>Def</strong>, Rings <strong>A.Def</strong>, Footwear <strong>Focus</strong>. Non sacrificare enormi quantità della statistica principale solo per inseguire una Master Skill marginale.</p>
+
+    <h3>Le 18 categorie di Equipment</h3>
+    <table>
+      <thead><tr><th>Slot</th><th>Categorie</th><th>Personaggio</th></tr></thead>
+      <tbody>
+        <tr><td>Weapon</td><td>Blades, Short Swords, Paper, Bracelets, Guardians, Spears</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
+        <tr><td>Accessory</td><td>Belts, Talismans, Bags, Pendants, Earrings, Ribbons</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
+        <tr><td>Armor</td><td>Men’s Armor, Women’s Armor</td><td>Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
+        <tr><td>Ring</td><td>Rings</td><td>Tutti</td></tr>
+        <tr><td>Footwear</td><td>Shoes, Men’s Shoes, Women’s Shoes</td><td>Tutti; Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
+      </tbody>
     </table>
 
-    <h3>Totale delle statistiche base per Rarity</h3>
-    <p>Il valore è la somma delle statistiche visualizzate sull'Item prima dell'Enhancement. Alcune categorie hanno valori speciali alle Rarity più alte.</p>
+    <h3>Rarity: cosa cambia davvero</h3>
+    <p>Ogni Rarity usa un livello di potenza base e un <strong>Main Ingredient</strong>. La Rarity non sostituisce la scelta della statistica: un Item di Rarity inferiore ma concentrato sulla statistica corretta può restare migliore di un Item più alto dispersivo.</p>
+    <table class="compact-table">
+      <thead><tr><th>Rarity</th><th>Somma statistiche base</th><th>Rarity</th><th>Somma statistiche base</th><th>Rarity</th><th>Somma statistiche base</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>50</td><td>8</td><td>137</td><td>15</td><td>232</td></tr>
+        <tr><td>2</td><td>62</td><td>9</td><td>156</td><td>16</td><td>239</td></tr>
+        <tr><td>3</td><td>79</td><td>10</td><td>163</td><td>17</td><td>257</td></tr>
+        <tr><td>4</td><td>87</td><td>11</td><td>181</td><td>18</td><td>287</td></tr>
+        <tr><td>5</td><td>105</td><td>12</td><td>188</td><td>19</td><td>308<sup>†</sup></td></tr>
+        <tr><td>6</td><td>112</td><td>13</td><td>207</td><td>20</td><td>341<sup>†</sup></td></tr>
+        <tr><td>7</td><td>130</td><td>14</td><td>214</td><td>21</td><td>385<sup>‡</sup></td></tr>
+      </tbody>
+    </table>
+    <p class="muted"><sup>†</sup> Weapons e Accessories hanno valori specifici più alti a Rarity 19–20. <sup>‡</sup> Weapons, Accessories e Rings hanno valori specifici a Rarity 21.</p>
+
+    <h3>Crescita naturale dei personaggi</h3>
+    <p>Le statistiche ottenute salendo di livello diminuiscono a metà dopo il livello 60 e ancora a metà dal 101 al 200. L’Equipment diventa quindi sempre più importante nella seconda metà del gioco.</p>
+    <table class="compact-table">
+      <thead><tr><th>Personaggio</th><th>HP</th><th>Atk</th><th>A.Atk</th><th>Def</th><th>A.Def</th><th>Focus</th></tr></thead>
+      <tbody>
+        <tr><td>Velvet</td><td>66</td><td>2.44</td><td>2.44</td><td>2.85</td><td>1.63</td><td>2.85</td></tr>
+        <tr><td>Rokurou</td><td>70</td><td>2.75</td><td>1.97</td><td>3.15</td><td>1.97</td><td>1.97</td></tr>
+        <tr><td>Laphicet</td><td>54</td><td>1.81</td><td>3.17</td><td>2.26</td><td>3.62</td><td>2.72</td></tr>
+        <tr><td>Eizen</td><td>64</td><td>2.48</td><td>2.48</td><td>1.65</td><td>2.48</td><td>3.31</td></tr>
+        <tr><td>Magilou</td><td>58</td><td>2.18</td><td>3.49</td><td>2.62</td><td>3.05</td><td>1.75</td></tr>
+        <tr><td>Eleanor</td><td>62</td><td>3.37</td><td>1.68</td><td>2.53</td><td>2.53</td><td>2.53</td></tr>
+      </tbody>
+    </table>
+  </section>
+
+  <section id="enhancement">
+    <h2>Enhancement: potenziare un Item senza confondersi</h2>
+    <p><strong>Enhancement</strong> porta un singolo pezzo da <code>+0</code> a <code>+10</code>. Ogni passaggio consuma il suo Main Ingredient, Gald e, da <code>+3</code>, Powder oppure Fluid. Il limite massimo dipende dallo <a href="#smith">Smith’s Acerite</a> ottenuto nella storia.</p>
+    <h3>Punti statistica ricevuti</h3>
     <table>
-        <thead><tr><th>Rarity</th><th>Totale base</th><th>Rarity</th><th>Totale base</th><th>Rarity</th><th>Totale base</th></tr></thead>
-        <tbody>
-            <tr><td>R1</td><td>50</td><td>R8</td><td>137</td><td>R15</td><td>232</td></tr>
-            <tr><td>R2</td><td>62</td><td>R9</td><td>156</td><td>R16</td><td>239</td></tr>
-            <tr><td>R3</td><td>79</td><td>R10</td><td>163</td><td>R17</td><td>257</td></tr>
-            <tr><td>R4</td><td>87</td><td>R11</td><td>181</td><td>R18</td><td>287</td></tr>
-            <tr><td>R5</td><td>105</td><td>R12</td><td>188</td><td>R19</td><td>308; 316 per Weapon/Accessory</td></tr>
-            <tr><td>R6</td><td>112</td><td>R13</td><td>207</td><td>R20</td><td>341; 359 per Weapon/Accessory</td></tr>
-            <tr><td>R7</td><td>130</td><td>R14</td><td>214</td><td>R21</td><td>385; 410 Accessory; 468 Weapon</td></tr>
-        </tbody>
+      <thead><tr><th>Livello raggiunto</th><th>Punti aggiunti in quel passaggio</th><th>Totale punti aggiunti</th></tr></thead>
+      <tbody>
+        <tr><td>+1</td><td>8</td><td>8</td></tr><tr><td>+2</td><td>8</td><td>16</td></tr><tr><td>+3</td><td>8</td><td>24</td></tr><tr><td>+4</td><td>8</td><td>32</td></tr><tr><td>+5</td><td>8</td><td>40</td></tr>
+        <tr><td>+6</td><td>10</td><td>50</td></tr><tr><td>+7</td><td>12</td><td>62</td></tr><tr><td>+8</td><td>12</td><td>74</td></tr><tr><td>+9</td><td>12</td><td>86</td></tr><tr><td>+10</td><td>14</td><td>100</td></tr>
+      </tbody>
+    </table>
+    <div class="callout info"><p><strong>Esempio:</strong> un’arma con <code>Atk 100</code> e nessun’altra statistica riceve <code>Atk +100</code> a <code>+10</code>, quindi arriva a <code>Atk 200</code>. Un Item con <code>Atk 50</code> e <code>Def 50</code> divide approssimativamente i 100 punti in <code>+50 Atk</code> e <code>+50 Def</code>.</p></div>
+
+    <h3>Enhancement Bonus: il bonus della categoria</h3>
+    <table>
+      <thead><tr><th>Categoria</th><th>Bonus per livello</th><th>Massimo a +10</th><th>Perché conta</th></tr></thead>
+      <tbody>
+        <tr><td>Weapons</td><td>+10% damage contro foe Stunned</td><td>+100%</td><td>Grande premio quando il gruppo crea Stun.</td></tr>
+        <tr><td>Accessories</td><td>+10% potenza di Break Soul</td><td>+100%</td><td>Molto forte per il loop offensivo dei personaggi.</td></tr>
+        <tr><td>Armor</td><td>-5% durata di Stagger</td><td>-50%</td><td>Aiuta a riprendere il controllo dopo un colpo.</td></tr>
+        <tr><td>Rings</td><td>-9% durata di Stun</td><td>-90%</td><td>Riduce drasticamente un problema pericoloso.</td></tr>
+        <tr><td>Footwear</td><td>+50 HP da Quickstep</td><td>+500 HP</td><td>Valore difensivo continuo per chi usa spesso Quickstep.</td></tr>
+      </tbody>
     </table>
 
-    <div class="callout">
-        <p><strong>Conclusione pratica:</strong> una Rarity più alta tende a offrire più punti, ma non implica automaticamente un Item migliore. Un Item con quasi tutto il valore nella statistica utile al suo slot può rendere meglio di un Item superiore che divide i punti in valori che non ti servono.</p>
-    </div>
-</section>
-
-<section>
-    <h2>Le statistiche e gli slot</h2>
+    <h3 id="smith">Smith’s Acerite: quando si sbloccano i limiti</h3>
     <table>
-        <thead><tr><th>Stat</th><th>Che cosa indica</th><th>Slot orientato a questa Stat</th></tr></thead>
-        <tbody>
-            <tr><td>Atk</td><td>Potenza degli attacchi fisici e delle Artes che scalano con Attack.</td><td>Weapons</td></tr>
-            <tr><td>A.Atk</td><td>Potenza delle Artes magiche e degli effetti che scalano con Arte Attack.</td><td>Accessories</td></tr>
-            <tr><td>Def</td><td>Difesa contro il danno fisico.</td><td>Armor</td></tr>
-            <tr><td>A.Def</td><td>Difesa contro il danno legato alle Artes.</td><td>Rings</td></tr>
-            <tr><td>Foc</td><td>Stat versatile legata al ritmo dei combattimenti e alla gestione di Souls.</td><td>Footwear</td></tr>
-            <tr><td>HP</td><td>Punti vita massimi. Può comparire su Skill e Random Skills, non definisce un singolo slot.</td><td>—</td></tr>
-        </tbody>
+      <thead><tr><th>Acerite</th><th>Limite di Enhancement e Dismantle</th><th>Come arriva</th></tr></thead>
+      <tbody>
+        <tr><td>Novice Smith’s Acerite</td><td>+3</td><td>Storia a Hellawes.</td></tr>
+        <tr><td>Journeyman Smith’s Acerite</td><td>+6</td><td>Storia a Pandora Pot.</td></tr>
+        <tr><td>Master Smith’s Acerite</td><td>+9</td><td>Storia dopo Failed Oscar.</td></tr>
+        <tr><td>Grandmaster Smith’s Acerite</td><td>+10</td><td>Quest finale/post-game a Milla Figahl Icecaps.</td></tr>
+      </tbody>
     </table>
 
-    <h3>Perché un Item mono-stat può essere eccellente</h3>
-    <p>L'Enhancement distribuisce i punti aggiuntivi nello stesso rapporto delle statistiche base. Per esempio, un Weapon con <code>75 Atk / 4 Def</code> concentra quasi tutto il suo guadagno su Atk; un Weapon con <code>118 Atk / 118 A.Atk</code> divide invece il guadagno esattamente a metà. Non esiste una scelta sempre corretta, ma nella prima run è più sicuro rinforzare il punto forte del personaggio invece di forzare una Stat estranea.</p>
-
-    <div class="callout warning">
-        <p><strong>Stat gouging:</strong> usare più slot per gonfiare una sola Stat può sembrare potente, ma lascia scoperte altre parti del personaggio. Per chi non conosce già le Artes e gli incontri, una distribuzione equilibrata è più affidabile.</p>
-    </div>
-</section>
-
-<section>
-    <h2>Enhancement: cosa aumenta davvero</h2>
-    <p>Ogni Item può arrivare a <strong>+10</strong>. Il totale massimo aggiunto è <strong>100 punti statistica</strong>, distribuiti in proporzione ai valori base dell'Item.</p>
-    <table>
-        <thead><tr><th>Livello</th><th>Punti aggiunti a questo livello</th><th>Totale teorico aggiunto</th></tr></thead>
-        <tbody>
-            <tr><td>+1</td><td>+8</td><td>+8</td></tr>
-            <tr><td>+2</td><td>+8</td><td>+16</td></tr>
-            <tr><td>+3</td><td>+8</td><td>+24</td></tr>
-            <tr><td>+4</td><td>+8</td><td>+32</td></tr>
-            <tr><td>+5</td><td>+8</td><td>+40</td></tr>
-            <tr><td>+6</td><td>+10</td><td>+50</td></tr>
-            <tr><td>+7</td><td>+12</td><td>+62</td></tr>
-            <tr><td>+8</td><td>+12</td><td>+74</td></tr>
-            <tr><td>+9</td><td>+12</td><td>+86</td></tr>
-            <tr><td>+10</td><td>+14</td><td>+100</td></tr>
-        </tbody>
+    <h3>Costi da +0 a +10</h3>
+    <p>“Common” e “Rare” indicano il tipo di Item, non la sua Rarity. Le colonne Powder/Fluid sono il costo aggiuntivo del singolo passaggio.</p>
+    <table class="wide-table">
+      <thead><tr><th>Verso</th><th>Main Ingredient</th><th>Common</th><th>Rare</th><th>Gald del passaggio</th><th>Gald cumulativo</th></tr></thead>
+      <tbody>
+        <tr><td>+1</td><td>1</td><td>—</td><td>—</td><td>0.1× prezzo shop</td><td>0.1×</td></tr>
+        <tr><td>+2</td><td>2</td><td>—</td><td>—</td><td>0.2×</td><td>0.3×</td></tr>
+        <tr><td>+3</td><td>3</td><td>1 Coarse Tempering Powder</td><td>5 Odorless Fluid</td><td>0.4×</td><td>0.7×</td></tr>
+        <tr><td>+4</td><td>4</td><td>2 Coarse Tempering Powder</td><td>10 Balmy Fluid</td><td>0.8×</td><td>1.5×</td></tr>
+        <tr><td>+5</td><td>6</td><td>4 Coarse Tempering Powder</td><td>10 Coarse Tempering Powder</td><td>1.0×</td><td>2.5×</td></tr>
+        <tr><td>+6</td><td>8</td><td>1 Standard Tempering Powder</td><td>10 Mellow Fluid</td><td>2.0×</td><td>4.5×</td></tr>
+        <tr><td>+7</td><td>10</td><td>2 Standard Tempering Powder</td><td>10 Standard Tempering Powder</td><td>4.0×</td><td>8.5×</td></tr>
+        <tr><td>+8</td><td>12</td><td>4 Standard Tempering Powder</td><td>10 Pungent Fluid</td><td>6.0×</td><td>14.5×</td></tr>
+        <tr><td>+9</td><td>14</td><td>2 Fine Tempering Powder</td><td>10 Fine Tempering Powder</td><td>12.0×</td><td>26.5×</td></tr>
+        <tr><td>+10</td><td>16</td><td>4 Fine Tempering Powder</td><td>5 Funky Fluid</td><td>40.0×</td><td>66.5×</td></tr>
+      </tbody>
     </table>
-    <p>Il gioco tronca le frazioni quando non riesce a distribuirle in numeri interi. Per questo molti Item a +10 mostrano <strong>+99</strong> invece di +100: non hai perso un punto, è solo il modo in cui la visualizzazione gestisce gli arrotondamenti.</p>
+  </section>
 
-    <h3>Bonus di Enhancement per categoria</h3>
-    <p>Oltre alle statistiche, ogni livello aggiunge progresso a un bonus universale dello slot. Il bonus non dipende dal singolo Item della categoria.</p>
-    <table>
-        <thead><tr><th>Categoria</th><th>Bonus per livello</th><th>Massimo a +10</th></tr></thead>
-        <tbody>
-            <tr><td>Weapons</td><td>Danno contro nemici Stunned +10%</td><td>+100%</td></tr>
-            <tr><td>Accessories</td><td>Potenza di Break Soul +10%</td><td>+100%</td></tr>
-            <tr><td>Armor</td><td>Durata dello Stagger subìto −5%</td><td>−50%</td></tr>
-            <tr><td>Rings</td><td>Durata dello Stun subìto −9%</td><td>−90%</td></tr>
-            <tr><td>Footwear</td><td>HP recuperati con Quickstep +50</td><td>+500</td></tr>
-        </tbody>
+  <section id="materiali">
+    <h2>Materiali: quale Main Ingredient serve</h2>
+    <p>Per trovare il materiale giusto, guarda prima la Rarity dell’Item. Le Rings sono l’eccezione: spesso condividono il materiale tra due Rarity consecutive.</p>
+    <table class="compact-table">
+      <thead><tr><th>Rarity</th><th>Item non-Ring</th><th>Rings</th></tr></thead>
+      <tbody>
+        <tr><td>1</td><td>Bronze Scrap</td><td>Amber Fragment</td></tr>
+        <tr><td>2</td><td>Amber Fragment</td><td>Amber Fragment</td></tr>
+        <tr><td>3</td><td>Bronze Scrap</td><td>Calcite Fragment</td></tr>
+        <tr><td>4</td><td>Calcite Fragment</td><td>Calcite Fragment</td></tr>
+        <tr><td>5</td><td>Bronze Scrap</td><td>Flourite Fragment</td></tr>
+        <tr><td>6</td><td>Flourite Fragment</td><td>Flourite Fragment</td></tr>
+        <tr><td>7</td><td>Silver Scrap</td><td>Amphibole Fragment</td></tr>
+        <tr><td>8</td><td>Amphibole Fragment</td><td>Amphibole Fragment</td></tr>
+        <tr><td>9</td><td>Silver Scrap</td><td>Feldspar Fragment</td></tr>
+        <tr><td>10</td><td>Feldspar Fragment</td><td>Feldspar Fragment</td></tr>
+        <tr><td>11</td><td>Silver Scrap</td><td>Quartz Fragment</td></tr>
+        <tr><td>12</td><td>Quartz Fragment</td><td>Quartz Fragment</td></tr>
+        <tr><td>13</td><td>Gold Scrap</td><td>Topaz Fragment</td></tr>
+        <tr><td>14</td><td>Topaz Fragment</td><td>Topaz Fragment</td></tr>
+        <tr><td>15</td><td>Gold Scrap</td><td>Mythril Fragment / Gold Scrap<sup>*</sup></td></tr>
+        <tr><td>16</td><td>Mythril Fragment</td><td>Gold Scrap</td></tr>
+        <tr><td>17</td><td>Gold Scrap</td><td>Adamantine Fragment</td></tr>
+        <tr><td>18</td><td>Adamantine Fragment</td><td>Adamantine Fragment</td></tr>
+        <tr><td>19</td><td>Platinum Scrap</td><td>Platinum Scrap</td></tr>
+        <tr><td>20</td><td>Platinum Scrap</td><td>Adamantine Fragment</td></tr>
+        <tr><td>21</td><td>Void Scrap</td><td>Void Scrap</td></tr>
+      </tbody>
     </table>
+    <p class="muted"><sup>*</sup> Pinion usa Mythril Fragment; Barrier usa Gold Scrap.</p>
 
-    <h3>Armory Acerite: premi di set</h3>
-    <p>Il livello complessivo dell'Equipment equipaggiato sblocca ulteriori bonus. I requisiti sono cumulativi sul personaggio, quindi cinque Item a +2 contano come totale 10.</p>
+    <h3>Dismantle: cosa restituisce davvero</h3>
+    <p><strong>Non confondere le due colonne:</strong> il livello <code>+N</code> decide Main Ingredient e Powder; il Rank delle <strong>Random Skills</strong> decide il tipo di Fluid. Un Item senza Random Skills produce Odorless Fluid solo se smantellato a <code>+0</code>.</p>
     <table>
-        <thead><tr><th>Acerite</th><th>Totale Enhancement richiesto</th><th>Effetto</th><th>Ottenimento</th></tr></thead>
-        <tbody>
-            <tr><td>Armory Acerite I</td><td>5</td><td>+1 Max BG</td><td>Story</td></tr>
-            <tr><td>Armory Acerite II</td><td>10</td><td>HP Regen +50% fuori dal combattimento attivo</td><td>Story</td></tr>
-            <tr><td>Armory Acerite III</td><td>15</td><td>+1 Max BG</td><td>Story</td></tr>
-            <tr><td>Armory Acerite IV</td><td>20</td><td>+1 Max Souls</td><td>King Peacock, Code Red #16, Davahl Forest</td></tr>
-            <tr><td>Armory Acerite V</td><td>25</td><td>+1 Initial Souls</td><td>Behemoth, Code Red #19, Morgana Woods</td></tr>
-            <tr><td>Armory Acerite VI</td><td>30</td><td>+1 Max Souls</td><td>Millionaire, Code Red #21, Baird Marsh</td></tr>
-            <tr><td>Armory Acerite VII</td><td>35</td><td>+1 Max BG</td><td>Lancelot, Code Red #26, Vortigern</td></tr>
-            <tr><td>Armory Acerite VIII</td><td>40</td><td>+1 Max Souls</td><td>Dragonfolk, Code Red #31, Empyrean's Throne</td></tr>
-            <tr><td>Armory Acerite IX</td><td>45</td><td>+1 Initial Souls</td><td>Demon Rodler, Code Red #30, Hexen Isle</td></tr>
-            <tr><td>Armory Acerite X</td><td>50</td><td>Costo SG dimezzato</td><td>Vouivre, Heavenly Steppes, 2nd Chamber</td></tr>
-        </tbody>
+      <thead><tr><th>Enhancement dell’Item</th><th>Restituzione sicura</th><th>Random Skill presente</th></tr></thead>
+      <tbody>
+        <tr><td>+0</td><td>1 Main Ingredient</td><td>1 Odorless Fluid se non ha Random Skills.</td></tr>
+        <tr><td>+1</td><td>2 Main Ingredient + 1 Coarse Tempering Powder</td><td>Ogni Rank 1 → 1 Balmy Fluid.</td></tr>
+        <tr><td>+2</td><td>3 Main Ingredient + 2 Coarse Tempering Powder</td><td>Ogni Rank 2 → 1 Mellow Fluid.</td></tr>
+        <tr><td>+3</td><td>4 Main Ingredient + 3 Coarse Tempering Powder</td><td>Ogni Rank 3 → 1 Pungent Fluid.</td></tr>
+        <tr><td>+4</td><td>5 Main Ingredient + 1 Standard Tempering Powder</td><td>Ogni Rank 4 → 1 Funky Fluid.</td></tr>
+        <tr><td>+5</td><td>6 Main Ingredient + 2 Standard Tempering Powder</td><td>—</td></tr>
+        <tr><td>+6</td><td>7 Main Ingredient + 3 Standard Tempering Powder</td><td>—</td></tr>
+        <tr><td>+7</td><td>8 Main Ingredient + 1 Fine Tempering Powder</td><td>—</td></tr>
+        <tr><td>+8</td><td>9 Main Ingredient + 2 Fine Tempering Powder</td><td>—</td></tr>
+        <tr><td>+9</td><td>10 Main Ingredient + 3 Fine Tempering Powder</td><td>—</td></tr>
+        <tr><td>+10</td><td>11 Main Ingredient + 1 Sovereign Acerite</td><td>—</td></tr>
+      </tbody>
     </table>
-</section>
+    <div class="callout warning"><p><strong>Regola utile:</strong> portare un Item a <code>+1</code> e poi smantellarlo costa 1 Main Ingredient ma restituisce 2 Main Ingredient e 1 Coarse Tempering Powder. È un modo base per convertire Equipment inutilizzato in materiali.</p></div>
+  </section>
 
-<section>
-    <h2>Materiali: Main Ingredient, Powder e Fluid</h2>
-    <p>Per potenziare un Item serve il suo <strong>Main Ingredient</strong>: è il materiale ricavato smantellando Item della stessa Rarity. Le Rarity pari sono normalmente più facili da alimentare perché corrispondono ai Common drop.</p>
-
-    <h3>Main Ingredient per Rarity</h3>
-    <table>
-        <thead><tr><th>Rarity</th><th>Main Ingredient</th><th>Rarity</th><th>Main Ingredient</th><th>Rarity</th><th>Main Ingredient</th></tr></thead>
-        <tbody>
-            <tr><td>R1</td><td>Bronze Scrap</td><td>R8</td><td>Amphibole Fragment</td><td>R15</td><td>Gold Scrap</td></tr>
-            <tr><td>R2</td><td>Amber Fragment</td><td>R9</td><td>Silver Scrap</td><td>R16</td><td>Mythril Fragment</td></tr>
-            <tr><td>R3</td><td>Bronze Scrap</td><td>R10</td><td>Feldspar Fragment</td><td>R17</td><td>Gold Scrap</td></tr>
-            <tr><td>R4</td><td>Calcite Fragment</td><td>R11</td><td>Silver Scrap</td><td>R18</td><td>Adamantine Fragment</td></tr>
-            <tr><td>R5</td><td>Bronze Scrap</td><td>R12</td><td>Quartz Fragment</td><td>R19</td><td>Platinum Scrap</td></tr>
-            <tr><td>R6</td><td>Flourite Fragment</td><td>R13</td><td>Gold Scrap</td><td>R20</td><td>Platinum Scrap</td></tr>
-            <tr><td>R7</td><td>Silver Scrap</td><td>R14</td><td>Topaz Fragment</td><td>R21</td><td>Void Scrap</td></tr>
-        </tbody>
+  <section id="piani">
+    <h2>Piani di Enhancement senza sprechi</h2>
+    <p>Le ricette seguenti usano Equipment “donatore”: Item che non vuoi indossare, ma che smantelli per costruire Main Ingredient, Powder e Fluid. “Matching” significa che il donatore usa lo stesso Main Ingredient del bersaglio.</p>
+    <h3>Common: obiettivi consigliati</h3>
+    <table class="wide-table">
+      <thead><tr><th>Obiettivo</th><th>Costo totale bersaglio</th><th>Preparazione sicura</th><th>Risultato pratico</th></tr></thead>
+      <tbody>
+        <tr><td>+3</td><td>6 Main Ingredient + 1 Coarse Tempering Powder</td><td>Porta 3 Item Matching a +1, poi Dismantle.</td><td>Ottieni 6 Main Ingredient + 3 Coarse Tempering Powder: il bersaglio resta a +3 e avanzano 2 Powder.</td></tr>
+        <tr><td>+6</td><td>24 Main Ingredient + 7 Coarse + 1 Standard</td><td>12 Item Matching a +1; poi usa 5 Common Item qualsiasi per creare e smantellare un +4.</td><td>Hai i 24 Ingredient richiesti, almeno 12 Coarse Powder e 1 Standard Powder.</td></tr>
+        <tr><td>+9</td><td>60 Main Ingredient + 7 Coarse + 7 Standard + 2 Fine</td><td>Prepara 30 Item Matching a +1. Aggiungi donatori Common della stessa Rarity per produrre Standard/Fine Powder.</td><td>Richiede gestione di più cicli: conviene farlo quando hai drop in abbondanza.</td></tr>
+        <tr><td>+10</td><td>76 Main Ingredient + 7 Coarse + 7 Standard + 6 Fine</td><td>Prepara almeno 38 Item Matching a +1 e donatori Common della stessa Rarity per la produzione di Powder.</td><td>Operazione da post-game; non bruciare un buon Item prima di avere materiale di riserva.</td></tr>
+      </tbody>
     </table>
-
-    <h3>Eccezione: Ring</h3>
-    <p>I Ring riusano in larga parte Ingredient da Rarity pari, quindi sono spesso più semplici da potenziare rispetto agli altri Item della stessa Rarity.</p>
+    <h3>Rare: cosa aggiunge la difficoltà</h3>
+    <p>Un Rare richiede anche Fluid: <strong>Odorless</strong> per <code>+3</code>, poi <strong>Balmy</strong>, <strong>Mellow</strong>, <strong>Pungent</strong> e infine <strong>Funky</strong>. Il Fluid arriva dal Rank delle Random Skills del donatore, non dalla sua Rarity.</p>
     <table>
-        <thead><tr><th>Rarity del Ring</th><th>Main Ingredient</th><th>Rarity del Ring</th><th>Main Ingredient</th></tr></thead>
-        <tbody>
-            <tr><td>R1–R2</td><td>Amber Fragment</td><td>R13–R14</td><td>Topaz Fragment</td></tr>
-            <tr><td>R3–R4</td><td>Calcite Fragment</td><td>R15 Pinion Ring</td><td>Mythril Fragment</td></tr>
-            <tr><td>R5–R6</td><td>Flourite Fragment</td><td>R15 Barrier Ring / R16</td><td>Gold Scrap</td></tr>
-            <tr><td>R7–R8</td><td>Amphibole Fragment</td><td>R17, R18, R20</td><td>Adamantine Fragment</td></tr>
-            <tr><td>R9–R10</td><td>Feldspar Fragment</td><td>R19</td><td>Platinum Scrap</td></tr>
-            <tr><td>R11–R12</td><td>Quartz Fragment</td><td>R21</td><td>Void Scrap</td></tr>
-        </tbody>
+      <thead><tr><th>Obiettivo Rare</th><th>Fluid cumulativi da pianificare</th><th>Indicazione per novizi</th></tr></thead>
+      <tbody>
+        <tr><td>+3</td><td>5 Odorless Fluid</td><td>Smantella 5 Item +0 senza Random Skills, oltre ai 3 donatori Matching a +1.</td></tr>
+        <tr><td>+6</td><td>5 Odorless + 10 Balmy + 10 Mellow</td><td>Conserva Item con Rank 1 e Rank 2; non usarli tutti come equipaggiamento temporaneo.</td></tr>
+        <tr><td>+9</td><td>5 Odorless + 10 Balmy + 10 Mellow + 10 Pungent + 10 Fine Powder</td><td>È normale dover farmare deliberatamente le Random Skills desiderate.</td></tr>
+        <tr><td>+10</td><td>5 Odorless + 10 Balmy + 10 Mellow + 10 Pungent + 5 Funky + Powder</td><td>Meglio aspettare l’<strong>Alchemist’s Acerite</strong>, che raddoppia i materiali da Item potenziati smantellati.</td></tr>
+      </tbody>
     </table>
+    <p class="muted">L’<strong>Alchemist’s Acerite</strong> arriva dall’ultimo boss dell’Ex-Dungeon. Per questo <code>+10</code> conviene davvero alla fase finale.</p>
 
-    <h3>Costo di Enhancement</h3>
-    <p>Il costo indicato è quello del singolo passaggio; il totale tra parentesi si riferisce a un Item partito da +0. <code>MI</code> significa Main Ingredient.</p>
-    <table>
-        <thead><tr><th>Verso</th><th>Common Equipment</th><th>Rare Equipment</th><th>Gald</th></tr></thead>
-        <tbody>
-            <tr><td>+1</td><td>1 MI</td><td>1 MI</td><td>0.1× prezzo shop</td></tr>
-            <tr><td>+2</td><td>2 MI (3 tot.)</td><td>2 MI (3 tot.)</td><td>0.2× (0.3× tot.)</td></tr>
-            <tr><td>+3</td><td>3 MI + 1 Coarse Tempering Powder</td><td>3 MI + 5 Odorless Fluid</td><td>0.4× (0.7× tot.)</td></tr>
-            <tr><td>+4</td><td>4 MI + 2 Coarse Tempering Powder</td><td>4 MI + 10 Balmy Fluid</td><td>0.8× (1.5× tot.)</td></tr>
-            <tr><td>+5</td><td>6 MI + 4 Coarse Tempering Powder</td><td>6 MI + 10 Coarse Tempering Powder</td><td>1× (2.5× tot.)</td></tr>
-            <tr><td>+6</td><td>8 MI + 1 Standard Tempering Powder</td><td>8 MI + 10 Mellow Fluid</td><td>2× (4.5× tot.)</td></tr>
-            <tr><td>+7</td><td>10 MI + 2 Standard Tempering Powder</td><td>10 MI + 10 Standard Tempering Powder</td><td>4× (8.5× tot.)</td></tr>
-            <tr><td>+8</td><td>12 MI + 4 Standard Tempering Powder</td><td>12 MI + 10 Pungent Fluid</td><td>6× (14.5× tot.)</td></tr>
-            <tr><td>+9</td><td>14 MI + 2 Fine Tempering Powder</td><td>14 MI + 10 Fine Tempering Powder</td><td>12× (26.5× tot.)</td></tr>
-            <tr><td>+10</td><td>16 MI + 4 Fine Tempering Powder</td><td>16 MI + 5 Funky Fluid</td><td>40× (66.5× tot.)</td></tr>
-        </tbody>
-    </table>
-</section>
-
-<section>
-    <h2>Smantellamento: cosa ricevi e perché +1 conviene</h2>
-    <p>Lo smantellamento restituisce risorse in base al <strong>livello di Enhancement</strong>. I Fluid dipendono invece dal <strong>Rank delle Random Skills</strong> presenti sull'Item, non dal suo +N.</p>
-    <table>
-        <thead><tr><th>Item smantellato a</th><th>Main Ingredient ricevuti</th><th>Powder ricevuta</th><th>Fluid / ricompensa da Random Skill</th></tr></thead>
-        <tbody>
-            <tr><td>+0</td><td>1</td><td>—</td><td>1 Odorless Fluid soltanto se l'Item non ha Random Skills</td></tr>
-            <tr><td>+1</td><td>2</td><td>1 Coarse Tempering Powder</td><td>1 Balmy Fluid per Random Skill di Rank 1</td></tr>
-            <tr><td>+2</td><td>3</td><td>2 Coarse Tempering Powder</td><td>1 Mellow Fluid per Random Skill di Rank 2</td></tr>
-            <tr><td>+3</td><td>4</td><td>3 Coarse Tempering Powder</td><td>1 Pungent Fluid per Random Skill di Rank 3</td></tr>
-            <tr><td>+4</td><td>5</td><td>1 Standard Tempering Powder</td><td>1 Funky Fluid per Random Skill di Rank 4</td></tr>
-            <tr><td>+5</td><td>6</td><td>2 Standard Tempering Powder</td><td>—</td></tr>
-            <tr><td>+6</td><td>7</td><td>3 Standard Tempering Powder</td><td>—</td></tr>
-            <tr><td>+7</td><td>8</td><td>1 Fine Tempering Powder</td><td>—</td></tr>
-            <tr><td>+8</td><td>9</td><td>2 Fine Tempering Powder</td><td>—</td></tr>
-            <tr><td>+9</td><td>10</td><td>3 Fine Tempering Powder</td><td>—</td></tr>
-            <tr><td>+10</td><td>11</td><td>1 Sovereign Acerite</td><td>—</td></tr>
-        </tbody>
+    <h3>Ricette esatte per Common +9 e +10</h3>
+    <p>Questa è la forma completa della procedura. <strong>MI</strong> indica il Main Ingredient del bersaglio; <strong>CI</strong> indica un Main Ingredient di un Common donatore; “Any” può essere una categoria qualsiasi, purché i donatori del singolo ciclo usino lo stesso materiale.</p>
+    <table class="wide-table">
+      <thead><tr><th>Obiettivo</th><th>Materiali finali del bersaglio</th><th>Preparazione ideale</th><th>Sequenza di conversione</th></tr></thead>
+      <tbody>
+        <tr><td>Common +9</td><td>60 MI; 7 CTP; 7 STP; 2 FTP</td><td>30 Matching; 4 gruppi da 9 Common della stessa Rarity; 24 Any della stessa Rarity; 30 MI; 4 gruppi da 8 CI; 23 CI Any; 0 CTP; 0 STP (8 preferiti); 0 FTP (2 preferiti).</td><td>1) <code>+1 Matching ×30</code> → Dismantle: 60 MI e 30 CTP. 2) Crea quattro donor Common <code>+5</code> usando quattro gruppi da otto Common <code>+1</code>: ottieni 8 STP. 3) Crea altri tre donor <code>+5</code> nello stesso modo: ottieni 6 STP. 4) Con 23 donor Any <code>+1</code>, tre donor <code>+5</code> e 1 STP costruisci un donor Any <code>+8</code>, poi Dismantle: 2 FTP. 5) Porta il bersaglio a <code>+9</code>.</td></tr>
+        <tr><td>Common +10</td><td>76 MI; 7 CTP; 7 STP; 6 FTP</td><td>38 Matching; 4 gruppi da 9 Common della stessa Rarity; 38 MI; 4 gruppi da 8 CI; 0 CTP; 0 STP (8 preferiti); 6 FTP.</td><td>1) <code>+1 Matching ×38</code> → Dismantle: 76 MI e 38 CTP. 2) Crea quattro donor Common <code>+5</code> da gruppi da otto Common <code>+1</code>: ottieni 8 STP. 3) Tieni 6 FTP già raccolti. 4) Porta il bersaglio a <code>+10</code>. Il ciclo lascia 35 CTP, 1 STP e parte dei CI usati.</td></tr>
+      </tbody>
     </table>
 
-    <div class="callout success">
-        <p><strong>Regola assoluta di recupero:</strong> se un Item è destinato allo smantellamento, portarlo da +0 a +1 costa 1 MI ma restituisce 2 MI e 1 Coarse Tempering Powder. Salvo un vincolo molto specifico, smantellare direttamente a +0 è uno spreco.</p>
-    </div>
-
-    <h3>Le fermate efficienti</h3>
-    <table>
-        <thead><tr><th>Obiettivo</th><th>Perché è utile nello smantellamento</th><th>Uso pratico</th></tr></thead>
-        <tbody>
-            <tr><td>+1</td><td>Raddoppia i MI recuperati rispetto a +0 e produce Coarse Tempering Powder.</td><td>Base del ciclo di materiali.</td></tr>
-            <tr><td>+5</td><td>Produce Standard Tempering Powder.</td><td>Preparazione per +6, +7 e +8.</td></tr>
-            <tr><td>+8</td><td>Produce Fine Tempering Powder.</td><td>Solo quando ti servono davvero per +9; nel main game è spesso più efficiente raccoglierla come shiny drop.</td></tr>
-        </tbody>
+    <h3>Ricette esatte per Rare +9 e +10</h3>
+    <p>La struttura dei Main Ingredient e dei donor Common è identica, ma devi aggiungere i Fluid. Non potenziare i donatori di Fluid: basta smantellarli al Rank corretto.</p>
+    <table class="wide-table">
+      <thead><tr><th>Obiettivo</th><th>Fluid richiesti</th><th>Preparazione ideale</th><th>Scenario peggiore aggiuntivo</th></tr></thead>
+      <tbody>
+        <tr><td>Rare +9</td><td>5 Odorless; 10 Balmy; 10 Mellow; 10 Pungent; 10 Fine Powder</td><td>30 Matching; 5 gruppi da 9 Common della stessa Rarity; 30 MI; 5 gruppi da 8 CI; 0 CTP; 0 STP (10 preferiti); 10 FTP.</td><td>Fino a 5 Item senza Random Skills, 10 Item con Rank 1, 10 con Rank 2 e 10 con Rank 3. Smantellali direttamente per ottenere i Fluid.</td></tr>
+        <tr><td>Rare +10</td><td>5 Odorless; 10 Balmy; 10 Mellow; 10 Pungent; 5 Funky; 10 Fine Powder</td><td>38 Matching; 5 gruppi da 9 Common della stessa Rarity; 38 MI; 5 gruppi da 8 CI; 0 CTP; 0 STP (10 preferiti); 10 FTP.</td><td>Fino a 5 Item senza Random Skills, 10 con Rank 1, 10 con Rank 2, 10 con Rank 3 e 5 con Rank 4. Smantellali direttamente per i Fluid.</td></tr>
+      </tbody>
     </table>
-</section>
+  </section>
 
-<section>
-    <h2>Enhancement ottimale senza formule incomprensibili</h2>
-    <p>Qui <strong>Matching</strong> significa “della stessa Rarity del target”; <strong>Common</strong> significa un Item Common (di solito Rarity pari); <strong>Any</strong> significa qualsiasi Rarity compatibile con il materiale che vuoi produrre.</p>
-
-    <h3>Obiettivi realistici nella storia</h3>
+  <section id="armory">
+    <h2>Armory Acerite: bonus globali da Equipment potenziato</h2>
+    <p>Il totale di tutti i livelli di Enhancement dell’Equipment posseduto, non solo indossato, sblocca bonus globali. Conservare vecchi Item potenziati può quindi essere utile.</p>
     <table>
-        <thead><tr><th>Target</th><th>Investimento consigliato</th><th>Schema di preparazione</th></tr></thead>
-        <tbody>
-            <tr><td>+3 Common</td><td>3 Item Matching</td><td>Porta i 3 Item a +1, smantellali e usa i 6 MI / 3 CTP ottenuti per il target.</td></tr>
-            <tr><td>+3 Rare</td><td>3 Item Matching; fino a 5 Item senza Random Skills se non possiedi Odorless Fluid</td><td>Il ciclo +1 fornisce i MI; gli Item senza Random Skills sono una fonte di Odorless Fluid.</td></tr>
-            <tr><td>+6 Common</td><td>13 Item Matching e 5 Common o Matching aggiuntivi</td><td>I 12 Matching a +1 finanziano il target; i 5 Common a +1 servono a costruire e smantellare un Item +4, ottenendo lo Standard Tempering Powder richiesto.</td></tr>
-            <tr><td>+6 Rare</td><td>12 Item Matching; fino a 5 senza Skill, 10 con Rank 1 e 10 con Rank 2</td><td>I Fluid sono il collo di bottiglia, non i MI. Non potenziare Item casuali se non hai un progetto preciso.</td></tr>
-        </tbody>
+      <thead><tr><th>Totale Enhancement</th><th>Bonus</th><th>Fonte quando non è narrativa</th></tr></thead>
+      <tbody>
+        <tr><td>+5</td><td>+1 Max BG</td><td>Eizen, storia.</td></tr>
+        <tr><td>+10</td><td>HP Regen +50% in reserve</td><td>Swordbreaker, storia.</td></tr>
+        <tr><td>+15</td><td>+1 Max BG</td><td>Dullahan, storia.</td></tr>
+        <tr><td>+20</td><td>+1 Max Souls</td><td>King Peacock, Code Red #16, Davahl Forest.</td></tr>
+        <tr><td>+25</td><td>+1 Initial Souls</td><td>Behemoth, Code Red #19, Morgana Woods.</td></tr>
+        <tr><td>+30</td><td>+1 Max Souls</td><td>Millionaire, Code Red #21, Baird Marsh.</td></tr>
+        <tr><td>+35</td><td>+1 Max BG</td><td>Lancelot, Code Red #26, Vortigern.</td></tr>
+        <tr><td>+40</td><td>+1 Max Souls</td><td>Dragonfolk, Code Red #31, Empyrean’s Throne.</td></tr>
+        <tr><td>+45</td><td>+1 Initial Souls</td><td>Demon Rodler, Code Red #30, Hexen Isle.</td></tr>
+        <tr><td>+50</td><td>SG consumption dimezzato</td><td>Vouivre, Heavenly Steppes 2nd Chamber.</td></tr>
+      </tbody>
     </table>
+  </section>
 
-    <h3>Perché evitare +9 e +10 nella prima run</h3>
-    <p>Il solo target Common a +9 richiede in totale 60 MI, 7 Coarse Tempering Powder, 7 Standard Tempering Powder e 2 Fine Tempering Powder; a +10 servono 76 MI, 8 Standard Tempering Powder e 6 Fine Tempering Powder. Per Rare e Random Skills la preparazione cresce ulteriormente. La potenza è reale, ma il tempo di farming raramente ripaga prima del post-game.</p>
-
-    <h3>Alchemist's Acerite</h3>
-    <p><strong>Alchemist's Acerite</strong> raddoppia ciò che ricevi dallo smantellamento di Item potenziati. Su un Item +1, spendi 1 MI e ne recuperi 4, quindi il guadagno netto diventa 3 MI invece di 1. È un acceleratore enorme, ma arriva dal boss finale dell'<strong>Ex-Dungeon</strong>: pianifica il +10 dopo averlo ottenuto, non prima.</p>
-</section>
-
-<section>
-    <h2>Come ottenere l'Equipment che cerchi</h2>
-    <h3>Difficoltà</h3>
-    <p>Ogni difficoltà oltre Normal aumenta il drop rate degli Item del <strong>10%</strong>: Moderate +10%, Hard +20% e così via. È un aiuto secondario; non alzare la difficoltà oltre ciò che puoi gestire soltanto per il drop rate.</p>
-
-    <h3>Ignicites per il farming</h3>
-    <table>
-        <thead><tr><th>Ignicite</th><th>Effetto</th><th>Attivazione</th><th>Difficoltà minima</th><th>Ottenimento</th></tr></thead>
-        <tbody>
-            <tr><td>Ignicite of Affinity</td><td>Aumenta il drop rate dell'Equipment indossato dal Character che infligge il colpo finale.</td><td>Kill</td><td>Normal+</td><td>Managarmr, Figahl Icecaps, Code Red #15</td></tr>
-            <tr><td>Repeating Ignicite</td><td>Aumenta il drop rate di Equipment con Master Skills corrispondenti a quelle indossate.</td><td>Kill</td><td>Normal+</td><td>Boss Troll, quest di Haria</td></tr>
-            <tr><td>Mimicking Ignicite</td><td>Aumenta la probabilità di Equipment con Random Skills simili a quelle indossate.</td><td>Kill</td><td>Normal+</td><td>Leviathan, Heavenly Steppes</td></tr>
-            <tr><td>Hopeful Ignicite</td><td>Dopo una battaglia senza Item, il drop rate base dell'incontro successivo aumenta dell'1%.</td><td>Always</td><td>Moderate+</td><td>Hanged Man, Westgand Dire Foe</td></tr>
-            <tr><td>Organizing Ignicite</td><td>Drop rate +1% con meno di 100 Item nell'inventario.</td><td>Always</td><td>Hard+</td><td>Queen Bee, Southgand Dire Foe</td></tr>
-            <tr><td>Pioneering Ignicite</td><td>Aumenta il drop rate degli Item non ancora raccolti.</td><td>Always</td><td>Hard+</td><td>Sacred Baboon, Midgand Dire Foe</td></tr>
-            <tr><td>Longing Ignicite</td><td>Dopo una battaglia senza Item, il drop rate base dell'incontro successivo aumenta del 2%.</td><td>Always</td><td>Hard+</td><td>Lindwurm, Northgand Dire Foe</td></tr>
-            <tr><td>Anomalous Ignicite</td><td>Aumenta il drop rate dei Rare Equipment.</td><td>Always</td><td>Intense+</td><td>Bacturnian Man, Eastgand Dire Foe</td></tr>
-        </tbody>
-    </table>
-    <p>Le percentuali non esplicitamente mostrate dal gioco non sono note con precisione. <strong>Hopeful</strong> e <strong>Longing</strong> si sommano per +3% dopo una battaglia senza drop. Per <strong>Repeating Ignicite</strong>, non è dimostrato in modo conclusivo se serva la Skill esatta o soltanto lo stesso tipo di Skill.</p>
-
-    <h3>Altri moltiplicatori che contano</h3>
+  <section id="drop">
+    <h2>Drop e acquisizione: trovare l’Equipment giusto</h2>
+    <h3>Come migliorare il drop rate</h3>
     <ul>
-        <li><strong>Mystic Artes:</strong> un kill con Mystic Arte di livello 1, 2 o 3 aggiunge rispettivamente +30%, +40% o +50% al drop rate del nemico.</li>
-        <li><strong>Molti nemici nella stessa battaglia:</strong> ogni kill aumenta del 5% il drop rate per le kill successive di quello scontro. Le <strong>Class 4 Zones</strong> sono ottime per Common drop; i <strong>Dangerous Encounters</strong> sono più mirati per un Rare drop specifico.</li>
-        <li><strong>Shop:</strong> tutti gli shop rinnovano la disponibilità dopo tre battaglie. Fai due battaglie, quick save, vinci la terza e controlla; se il risultato non va bene, ricarica e ripeti una sola battaglia.</li>
+      <li>Ogni difficoltà sopra <strong>Normal</strong> aumenta il drop rate di Equipment del 10% per livello: Moderate +10%, Hard +20%, Intense +30%, Chaos +40%.</li>
+      <li>Ogni foe ucciso nella stessa battaglia aumenta la chance del kill successivo di circa 5%.</li>
+      <li>Una <strong>Dangerous Encounter</strong> è ottima per cercare uno specifico Rare drop; aree con molti foe sono ottime per Common drop generici.</li>
+      <li>Gli shop aggiornano l’Equipment dopo tre battaglie. Per cercare un Item da shop: combatti due volte, fai un quick save, combatti la terza volta, controlla lo shop e ricarica se necessario.</li>
     </ul>
 
-    <h3>Come mirare un Common drop preciso</h3>
-    <p>Il Common drop di un Monster appartiene sempre alla stessa categoria del suo Rare Equipment ed è di una Rarity inferiore. Per cercare, ad esempio, un Common R8 di una categoria, individua un Monster che ha come Rare drop un Item R9 della stessa categoria. Questa regola è molto più affidabile che combattere casualmente nello stesso dungeon.</p>
-</section>
-
-<section>
-    <h2>Equipment con bonus “Equipment drop rates +X”</h2>
-    <p>Un Item con la Master Skill <strong>Equipment Skills learning speed +X%</strong> possiede come Enhancement Bonus <strong>Equipment drop rates +X</strong>. Il bonus vale per le kill effettuate da chi lo indossa.</p>
+    <h3>Ignicite utili al farming</h3>
     <table>
-        <thead><tr><th>Item</th><th>Bonus</th><th>Slot / Character</th><th>Ottenimento</th></tr></thead>
-        <tbody>
-            <tr><td>Amphibole Belt</td><td>1.2× (+20%)</td><td>Accessory / Velvet</td><td>Yseult Shop, Common Drop</td></tr>
-            <tr><td>Topaz Belt</td><td>1.35× (+35%)</td><td>Accessory / Velvet</td><td>Port Zekson Shop, late game</td></tr>
-            <tr><td>Adamantine Belt</td><td>1.5× (+50%)</td><td>Accessory / Velvet</td><td>Katz Corner Shop, Ex-Dungeon</td></tr>
-            <tr><td>Spirit Daggers</td><td>1.5× (+50%)</td><td>Weapon / Rokurou</td><td>Hallowed Tree, Baird Marsh</td></tr>
-            <tr><td>Adamantine Talisman</td><td>1.2× (+20%)</td><td>Accessory / Rokurou</td><td>Katz Corner Shop, Ex-Dungeon</td></tr>
-            <tr><td>Perfect Bulwark</td><td>1.35× (+35%)</td><td>Accessory / Rokurou</td><td>Chest, Heavenly Steppes, 3rd–6th Chamber</td></tr>
-            <tr><td>Topaz Paper</td><td>1.2× (+20%)</td><td>Weapon / Laphicet</td><td>Port Zekson Shop, late game</td></tr>
-            <tr><td>Mythril Bag</td><td>1.35× (+35%)</td><td>Accessory / Laphicet</td><td>Meirchio Shop, Common Drop</td></tr>
-            <tr><td>Adamantine Paper</td><td>1.5× (+50%)</td><td>Weapon / Laphicet</td><td>Katz Corner Shop, Ex-Dungeon</td></tr>
-            <tr><td>Quartz Bracelet</td><td>1.2× (+20%)</td><td>Weapon / Eizen</td><td>Hellawes Shop, return visit</td></tr>
-            <tr><td>Pumper Upper</td><td>1.35× (+35%)</td><td>Accessory / Eizen</td><td>Chest, Hexen Isle; Shop level 8</td></tr>
-            <tr><td>Unnamed Bracelet</td><td>1.5× (+50%)</td><td>Weapon / Eizen</td><td>Heracles Bettle, Heavenly Steppes 6th Chamber</td></tr>
-            <tr><td>Amphibole Earrings</td><td>1.2× (+20%)</td><td>Accessory / Magilou</td><td>Yseult Shop, Common Drop</td></tr>
-            <tr><td>Witching Hour</td><td>1.35× (+35%)</td><td>Weapon / Magilou</td><td>Roving Spirit, Faldies Ruins</td></tr>
-            <tr><td>Doppelganger</td><td>1.5× (+50%)</td><td>Weapon / Magilou</td><td>Water Skunk, Heavenly Steppes 3rd Chamber</td></tr>
-            <tr><td>Mana Lance</td><td>1.2× (+20%)</td><td>Weapon / Eleanor</td><td>Starting Weapon; Orb-Weaver, East Laban Tunnel</td></tr>
-            <tr><td>Capriccioso</td><td>1.35× (+35%)</td><td>Accessory / Eleanor</td><td>Peacock, Maclir Beach</td></tr>
-            <tr><td>Brillante</td><td>1.5× (+50%)</td><td>Accessory / Eleanor</td><td>Bird of Paradise, Innominat</td></tr>
-        </tbody>
+      <thead><tr><th>Ignicite</th><th>Condizione</th><th>Effetto</th><th>Fonte</th></tr></thead>
+      <tbody>
+        <tr><td>Ignicite of Affinity</td><td>Kill / Normal+</td><td>Aumenta il drop di Equipment indossato dal killer.</td><td>Managarmr, Figahl Icecaps, Code Red #15.</td></tr>
+        <tr><td>Repeating Ignicite</td><td>Kill / Normal+</td><td>Aumenta i drop con le stesse Master Skills dell’Equipment del killer.</td><td>Boss Troll, quest Haria.</td></tr>
+        <tr><td>Mimicking Ignicite</td><td>Kill / Normal+</td><td>Può favorire Equipment con le stesse Random Skills del killer.</td><td>Leviathan, Heavenly Steppes.</td></tr>
+        <tr><td>Hopeful Ignicite</td><td>Always / Moderate+</td><td>Se non ottieni drop, la battaglia successiva riceve +1% drop rate base.</td><td>Hanged Man, Westgand Dire Foe.</td></tr>
+        <tr><td>Organizing Ignicite</td><td>Always / Hard+</td><td>+1% drop rate se trasporti meno di 100 Equipment.</td><td>Queen Bee, Southgand Dire Foe.</td></tr>
+        <tr><td>Pioneering Ignicite</td><td>Always / Hard+</td><td>Aumenta i drop non ancora raccolti.</td><td>Sacred Baboon, Midgand Dire Foe.</td></tr>
+        <tr><td>Longing Ignicite</td><td>Always / Hard+</td><td>Se non ottieni drop, la battaglia successiva riceve +2% drop rate.</td><td>Lindwurm, Northgand Dire Foe.</td></tr>
+        <tr><td>Anomalous Ignicite</td><td>Always / Intense+</td><td>Aumenta il drop rate di Rare Equipment.</td><td>Bacturnian Man, Eastgand Dire Foe.</td></tr>
+      </tbody>
     </table>
-</section>
+    <p><strong>Hopeful</strong> e <strong>Longing</strong> si sommano: dopo una battaglia senza drop, il successivo bonus è +3%.</p>
 
-<section>
-    <h2>Leggere il catalogo: tutte le categorie</h2>
-    <p>Il gioco organizza l'Equipment in 18 categorie. Le liste originali separano Main Game e Post-Game; qui la priorità è capire quale famiglia cercare e quali valori leggere per primi.</p>
-    <table>
-        <thead><tr><th>Gruppo</th><th>Categorie</th><th>Character o utilizzo</th><th>Stat da guardare prima</th></tr></thead>
-        <tbody>
-            <tr><td>Weapons</td><td>Blades, Short Swords, Paper, Bracelets, Guardians, Spears</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td><td>Atk</td></tr>
-            <tr><td>Accessories</td><td>Belts, Talismans, Bags, Pendants, Earrings, Ribbons</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td><td>A.Atk</td></tr>
-            <tr><td>Armor</td><td>Men's Armor, Women's Armor</td><td>Dipende dal personaggio che può indossarlo</td><td>Def</td></tr>
-            <tr><td>Rings</td><td>Rings</td><td>Slot condiviso; materiali spesso più facili</td><td>A.Def</td></tr>
-            <tr><td>Footwear</td><td>Shoes, Men's Shoes, Women's Shoes</td><td>Dipende dal personaggio che può indossarlo</td><td>Foc</td></tr>
-        </tbody>
+    <h3>Equipment che migliora direttamente i drop</h3>
+    <table class="wide-table">
+      <thead><tr><th>Item</th><th>Personaggio</th><th>Bonus</th><th>Dove trovarlo</th></tr></thead>
+      <tbody>
+        <tr><td>Amphibole Belt</td><td>Velvet</td><td>1.2× Equipment drop rate</td><td>Yseult, Common drop.</td></tr>
+        <tr><td>Topaz Belt</td><td>Velvet</td><td>1.35×</td><td>Port Zekson, Common drop avanzato.</td></tr>
+        <tr><td>Adamantine Belt</td><td>Velvet</td><td>1.5×</td><td>Katz corner, Ex-Dungeon, Common drop.</td></tr>
+        <tr><td>Spirit Daggers</td><td>Rokurou</td><td>1.5×</td><td>Hallowed Tree, Baird Marsh.</td></tr>
+        <tr><td>Adamantine Talisman</td><td>Rokurou</td><td>1.2×</td><td>Katz corner, Ex-Dungeon, Common drop.</td></tr>
+        <tr><td>Perfect Bulwark</td><td>Rokurou</td><td>1.35×</td><td>Chest, Heavenly Steppes 3rd–6th Chamber.</td></tr>
+        <tr><td>Topaz Paper</td><td>Laphicet</td><td>1.2×</td><td>Port Zekson, Common drop avanzato.</td></tr>
+        <tr><td>Mythril Bag</td><td>Laphicet</td><td>1.35×</td><td>Meirchio, Common drop.</td></tr>
+        <tr><td>Adamantine Paper</td><td>Laphicet</td><td>1.5×</td><td>Katz corner, Ex-Dungeon, Common drop.</td></tr>
+        <tr><td>Quartz Bracelet</td><td>Eizen</td><td>1.2×</td><td>Hellawes, ritorno, Common drop.</td></tr>
+        <tr><td>Pumper Upper</td><td>Eizen</td><td>1.35×</td><td>Chest, Hexen Isle; shop rank 8.</td></tr>
+        <tr><td>Unnamed Bracelet</td><td>Eizen</td><td>1.5×</td><td>Hercules Beetle, Heavenly Steppes 6th Chamber.</td></tr>
+        <tr><td>Amphibole Earrings</td><td>Magilou</td><td>1.2×</td><td>Yseult, Common drop.</td></tr>
+        <tr><td>Witching Hour</td><td>Magilou</td><td>1.35×</td><td>Roving Spirit, Faldies Ruins.</td></tr>
+        <tr><td>Doppelganger</td><td>Magilou</td><td>1.5×</td><td>Water Skunk, Heavenly Steppes 3rd Chamber.</td></tr>
+        <tr><td>Mana Lance</td><td>Eleanor</td><td>1.2×</td><td>Starting weapon / Orb-Weaver, East Laban.</td></tr>
+        <tr><td>Capriccioso</td><td>Eleanor</td><td>1.35×</td><td>Peacock, Maclir Beach.</td></tr>
+        <tr><td>Brillante</td><td>Eleanor</td><td>1.5×</td><td>Bird of Paradise, Innominat’s Domain.</td></tr>
+      </tbody>
     </table>
 
-    <h3>Scelte notevoli da riconoscere</h3>
-    <p>Questi Item non sono l'unica risposta possibile. Sono scelte particolarmente leggibili perché combinano una buona distribuzione statistica, una Master Skill utile, un Enhancement Bonus interessante o un'ottima disponibilità.</p>
-    <table>
-        <thead><tr><th>Item</th><th>Perché tenerlo d'occhio</th><th>Dove compare</th></tr></thead>
-        <tbody>
-            <tr><td>Mana Earrings</td><td>A.Atk puro e bonus totale di Arte Attack: scelta semplice per Magilou nelle fasi iniziali.</td><td>Scaled Bird, Brigid Ravine</td></tr>
-            <tr><td>Armstrong</td><td>Atk molto concentrato e bonus di Attack: scelta diretta per Velvet.</td><td>Living Armor, Barona Catacombs</td></tr>
-            <tr><td>Flouric Boots</td><td>Foc con BG da Break Soul e +1 Max BG.</td><td>Reneed Shop, Common Drop</td></tr>
-            <tr><td>Mars Satchel</td><td>A.Atk puro; utile se Laphicet sfrutta Burn.</td><td>Zombie, Vester Tunnels</td></tr>
-            <tr><td>Cast Heels</td><td>Foc puro e +2 Max BG.</td><td>Skunk, Fens of Nog</td></tr>
-            <tr><td>Cassandra Sash</td><td>Fire attack power e hit Fire aggiunto all'inizio della combo.</td><td>Chest, Warg Forest</td></tr>
-            <tr><td>Jet Black Waistcoat</td><td>Def e protezione dal danno non-elementale.</td><td>Lycanthrope, Warg Forest</td></tr>
-            <tr><td>Garish Pink Shirt</td><td>Atk e Foc, con sinergia per Artes con Absorb HP.</td><td>Chest, Burnack Plateau</td></tr>
-            <tr><td>Amphibole Blade</td><td>Atk puro, potenza non-elementale e hit non-elementale extra: eccellente appena disponibile.</td><td>Yseult Shop, Common Drop</td></tr>
-            <tr><td>Secret Histories</td><td>Foc alto e bonus per Malak Arte non-elementali.</td><td>Hawk, Manann Reef</td></tr>
-            <tr><td>Exquisite Charm</td><td>A.Atk puro; utile con Slow per la difesa aggiuntiva.</td><td>Tiga Heddin, Titania / Undead Quarter</td></tr>
-            <tr><td>Force Ring</td><td>A.Def puro e moltiplicatore di Arte Defense.</td><td>Taliesin Shop</td></tr>
-            <tr><td>Feldspar Daggers</td><td>Atk puro; orientato a Fatigue e Focus.</td><td>Taliesin Shop, Common Drop</td></tr>
-            <tr><td>Feldspar Doll</td><td>Atk e Foc, con sinergia sul basso HP e Paralysis.</td><td>Taliesin Shop, Common Drop</td></tr>
-            <tr><td>Feldspar Pendant</td><td>A.Atk e Foc, utile con Fatigue.</td><td>Taliesin Shop, Common Drop</td></tr>
-            <tr><td>Pumper Upper</td><td>Bonus 1.35× al drop rate dopo l'Enhancement.</td><td>Chest, Hexen Isle; Shop level 8</td></tr>
-            <tr><td>Shimmery Shoes</td><td>Foc e SG recuperato dopo weak point combo.</td><td>Hell Lady, Earthpulse</td></tr>
-            <tr><td>Topaz Bag</td><td>A.Atk e moltiplicatore totale di Arte Attack.</td><td>Port Zekson Shop, late game</td></tr>
-            <tr><td>Guandao</td><td>Atk / Foc e recupero HP sostenuto.</td><td>Ancient Armor, Earthpulse</td></tr>
-            <tr><td>Leviathan Earrings</td><td>Water attack power e cast time ridotto per Water Malak Arte.</td><td>Phantasmal Needle, Empyrean's Throne 2nd Visit</td></tr>
-            <tr><td>Fonon Blade</td><td>Buono contro Armored e utile verso il finale.</td><td>Curse Island Giant, Hexen Isle</td></tr>
-            <tr><td>Stygian Daggers</td><td>Foc puro, potenza non-elementale e hit extra.</td><td>Chest, Innominat; Katz Corner Shop</td></tr>
-            <tr><td>Ember Paper</td><td>A.Atk / Foc e sinergia per Burn.</td><td>Chest, Zamahl Grotto; Katz Corner Shop</td></tr>
-            <tr><td>Twoside Doll</td><td>A.Atk / Def e recupero HP affidabile.</td><td>Ghoul, Zamahl Grotto</td></tr>
-            <tr><td>Brillante</td><td>Bonus 1.5× al drop rate dopo l'Enhancement.</td><td>Bird of Paradise, Innominat</td></tr>
-            <tr><td>Adamantine Blade</td><td>Il miglior Atk base della linea principale di Velvet; molto forte ma l'accesso richiede l'Ex-Dungeon.</td><td>Katz Corner Shop</td></tr>
-            <tr><td>Unnamed Blade</td><td>Weapon post-game di potenza estrema, con 468 Atk base.</td><td>Dragoon, Heavenly Steppes 6th Chamber</td></tr>
-        </tbody>
-    </table>
-</section>
+    <h3>La regola del Common Target</h3>
+    <p>Se un Monster ha come <strong>Rare drop</strong> un Item di Rarity <code>N</code>, può far cadere come <strong>Common drop</strong> un Item della stessa categoria di Rarity <code>N−1</code>. Per farmare un Common preciso, cerca nel catalogo il Rare della Rarity successiva nella stessa categoria e sconfiggi il Monster indicato.</p>
+  </section>
 
-<section>
-    <h2>Random Skills: cosa sono e quando diventano importanti</h2>
-    <p>Un Item può avere fino a <strong>tre Random Skills</strong>. Sono simili alle Master Skills, ma hanno <strong>quattro Rank</strong> invece di tre. Il loro contenuto viene fissato quando ottieni l'Item: ripotenziare lo stesso Item non cambia le Random Skills.</p>
-
-    <table>
-        <thead><tr><th>Ignicite</th><th>Effetto</th><th>Ottenimento</th></tr></thead>
-        <tbody>
-            <tr><td>Intermediate Ignicite</td><td>Sblocca Random Skills Rank 2.</td><td>Eleanor, Story</td></tr>
-            <tr><td>Aspirant's Ignicite</td><td>Aumenta la probabilità di Rank 2.</td><td>Spider Queen, Code Red #5, Yvolg Ruins; Normal+</td></tr>
-            <tr><td>Superior Ignicite</td><td>Sblocca Random Skills Rank 3.</td><td>Therion Medissa, Story</td></tr>
-            <tr><td>Expert's Ignicite</td><td>Aumenta la probabilità di Rank 3.</td><td>Phantom, Code Red #23, Earthpulse; Normal+</td></tr>
-            <tr><td>Elite Ignicite</td><td>Sblocca Random Skills Rank 4.</td><td>Shenlong, Aldina Plains, sidequest endgame/post-game</td></tr>
-            <tr><td>Champion's Ignicite</td><td>Aumenta la probabilità di Rank 4.</td><td>Jude, Yseult, endgame/post-game; Hard+</td></tr>
-        </tbody>
-    </table>
-
-    <h3>Priorità pratica</h3>
-    <ul>
-        <li><strong>Stat dirette:</strong> Atk, A.Atk, Def, A.Def, Foc e HP sono sempre comprensibili e funzionano bene con Item che moltiplicano quella Stat.</li>
-        <li><strong>Break Soul:</strong> più BG da Break Soul e probabilità di non perdere Souls sono molto forti per la maggior parte dei personaggi.</li>
-        <li><strong>Capability vs. type:</strong> aumenta danno inflitto e riduce danno subìto contro un tipo di Monster. È forte, ma situazionale.</li>
-        <li><strong>Elemental attack power:</strong> utile quando il Character usa spesso quell'elemento; non trattarlo come universale.</li>
-        <li><strong>Master Skills learning speed:</strong> eccellente durante la storia; perde valore quando le Skill importanti sono già imparate.</li>
-    </ul>
-
-    <div class="callout warning">
-        <p>Non cercare tre Rank 4 specifici per ogni Item. Anche Chaos è completabile senza un Equipment massimizzato, e l'Equipment non passa in New Game+. Mantieni un buon drop quando appare, ma non trasformare il farming in un requisito per progredire.</p>
+  <section id="catalogo">
+    <h2>Catalogo completo dell’Equipment</h2>
+    <p>Il catalogo viene compilato durante la pubblicazione e contiene tutte le 18 categorie. Ogni riga mostra Item, Rarity, statistiche base e a <code>+10</code>, Master Skill, Enhancement Bonus, Main Ingredient, possibile Rare drop e nome massimo.</p>
+    <div class="callout info"><p><strong>Come leggere le fonti:</strong> “Rare: Monster” identifica il Monster da cui l’Item può arrivare come Rare drop. “Common / shop / chest / story” significa che l’Item può provenire dalla progressione, da contenitori, dallo shop o dai drop comuni; usa la ricerca globale del sito insieme al nome del Monster o dell’Item.</p></div>
+    <div id="catalogo-dinamico" aria-live="polite">
+      <p class="loading">Caricamento del catalogo completo…</p>
     </div>
-</section>
+  </section>
 
-<section>
-    <h2>Equipment Maximization</h2>
-    <p>Con “maximization” si intende un Item a <strong>+10</strong> con tre Random Skills di Rank 4 oppure con Skill ottenibili tramite <strong>Sovereign Acerite</strong> che lavorano insieme. È il progetto da post-game per chi vuole sperimentare build estreme; non è lo standard da usare per giudicare gli Item della storia.</p>
-
-    <h3>Checklist prima di investire</h3>
-    <ol class="step-list">
-        <li>L'Item concentra la Stat che vuoi davvero aumentare?</li>
-        <li>Il suo Master Skill e il suo Enhancement Bonus servono al tuo Character?</li>
-        <li>Hai abbastanza MI e Powder/Fluid senza smontare altri pezzi indispensabili?</li>
-        <li>Lo stai preparando per una sfida di post-game concreta, non solo perché ha una Rarity alta?</li>
-        <li>Hai già ottenuto Alchemist's Acerite? Se la risposta è no, considera di rinviare il progetto.</li>
+  <section id="scelte">
+    <h2>Scelte consigliate per una prima run</h2>
+    <h3>Quando cambi Equipment</h3>
+    <ol>
+      <li>Controlla prima la <strong>statistica principale</strong> della categoria.</li>
+      <li>Controlla se la <strong>Master Skill</strong> è nuova per quel personaggio.</li>
+      <li>Confronta l’<strong>Enhancement Bonus</strong>: spesso un Item già a <code>+3</code> è preferibile a un nuovo Item non potenziato di poco superiore.</li>
+      <li>Non vendere subito i doppioni: possono diventare Main Ingredient, Powder o Fluid tramite Dismantle.</li>
     </ol>
-</section>
+    <h3>Priorità di Enhancement</h3>
+    <table>
+      <thead><tr><th>Fase</th><th>Cosa fare</th><th>Cosa evitare</th></tr></thead>
+      <tbody>
+        <tr><td>Prima di Novice Smith’s Acerite</td><td>Indossa il meglio trovato; raccogli doppioni.</td><td>Vendere tutto senza controllare le Master Skills.</td></tr>
+        <tr><td>Limite +3</td><td>Porta a +3 Weapon o Accessory con statistica concentrata.</td><td>Costruire molti Item +3 casuali.</td></tr>
+        <tr><td>Limite +6</td><td>Costruisci un piccolo set stabile e accumula Armory Acerite.</td><td>Consumare tutti gli Item con Random Skills utili.</td></tr>
+        <tr><td>Limite +9</td><td>Scegli solo Item che prevedi di tenere a lungo.</td><td>Usare Powder/Fine Powder senza un piano.</td></tr>
+        <tr><td>Post-game +10</td><td>Farm di Rare, Random Skills e Sovereign Acerite.</td><td>Trattare il +10 come necessario per finire la storia.</td></tr>
+      </tbody>
+    </table>
+  </section>
 
-<section>
+  <section id="maximization">
+    <h2>Equipment Maximization: quando ha senso</h2>
+    <p>Per “maximization” si intende un Item a <code>+10</code> con tre Random Skills Rank 4 oppure Sovereign che funzionano insieme. È il traguardo teorico del sistema, ma non è richiesto per finire storia, post-game normale o anche Chaos in tempi ragionevoli.</p>
+    <div class="callout info"><p><strong>Perché non inseguirlo troppo presto:</strong> gli Item non vengono trasferiti in New Game+, ottenere tre Skill specifiche dello stesso Rank sullo stesso Item è estremamente raro, e il costo di ottenere molti Sovereign Acerite è enorme. Usa questa sezione per riconoscere un drop eccezionale, non come lista di obblighi.</p></div>
+  </section>
+
+  <section id="random-skills">
+    <h2>Random Skills e Glacite</h2>
+    <p>Ogni Equipment può avere fino a tre <strong>Random Skills</strong>. Il tiro è fissato quando l’Item viene generato: potenziarlo non cambia le Skills. I Rank vanno da 1 a 4 e sono sbloccati gradualmente con Ignicite/Potentites.</p>
+    <h3>Sblocchi dei Rank</h3>
+    <table>
+      <thead><tr><th>Potentite</th><th>Effetto</th><th>Fonte</th></tr></thead>
+      <tbody>
+        <tr><td>Intermediate Ignicite</td><td>Sblocca Rank 2.</td><td>Storia con Eleanor.</td></tr>
+        <tr><td>Aspirant’s Ignicite</td><td>Possibilità Rank 2 su Normal+.</td><td>Spider Queen, Code Red #5, Yvolg Ruins.</td></tr>
+        <tr><td>Superior Ignicite</td><td>Sblocca Rank 3.</td><td>Storia con Therion Medissa.</td></tr>
+        <tr><td>Expert Ignicite</td><td>Possibilità Rank 3 su Normal+.</td><td>Phantom, Code Red #23, Earthpulse.</td></tr>
+        <tr><td>Elite Ignicite</td><td>Sblocca Rank 4.</td><td>Shenlong, Aldina Plains, quest post-game.</td></tr>
+        <tr><td>Champion Ignicite</td><td>Possibilità Rank 4 su Hard+.</td><td>Jude, Yseult, fine/post-game.</td></tr>
+      </tbody>
+    </table>
+
+    <h3>Tabella completa delle Glacite</h3>
+    <p>I valori sono elencati come <code>Rank 1 / Rank 2 / Rank 3 / Rank 4</code>. “Max” è il limite cumulabile, non il valore di una singola Skill.</p>
+    <table class="wide-table">
+      <thead><tr><th>Glacite</th><th>Difficoltà</th><th>Effetto R1 / R2 / R3 / R4</th><th>Max</th><th>Fonte</th></tr></thead>
+      <tbody>
+        <tr><td>Prodigy Glacite</td><td>Simple+</td><td>Atk/A.Atk/Def/A.Def/Focus: 5 / 8 / 15 / 40; HP: 30 / 50 / 90 / 250</td><td>500 stat; 3000 HP</td><td>Seres, storia.</td></tr>
+        <tr><td>Vampire Glacite</td><td>Normal+</td><td>Assorbimento HP: 1.15 / 1.20 / 1.25 / 1.45; recupero su defeat: 30 / 50 / 80 / 120</td><td>5×; 1000 HP</td><td>Oscar, storia.</td></tr>
+        <tr><td>Seer Glacite</td><td>Normal+</td><td>BG da Break Soul: 1.10 / 1.12 / 1.15 / 1.22</td><td>2×</td><td>Guardian, storia.</td></tr>
+        <tr><td>Adept Glacite</td><td>Normal+</td><td>Item delay: -12 / -16 / -20 / -30</td><td>-90%</td><td>Shop level 4.</td></tr>
+        <tr><td>Numbing Glacite</td><td>Simple+</td><td>Paralysis duration: -40 / -60 / -85 / -100; infliction: 1.08 / 1.12 / 1.15 / 1.32</td><td>-100%; 3×</td><td>Shigure.</td></tr>
+        <tr><td>Smoldering Glacite</td><td>Simple+</td><td>Burn duration e infliction: stessi valori di Numbing.</td><td>-100%; 3×</td><td>Mysterious Malak.</td></tr>
+        <tr><td>Envenoming Glacite</td><td>Simple+</td><td>Poison duration e infliction: stessi valori di Numbing.</td><td>-100%; 3×</td><td>Legendary Wyvern.</td></tr>
+        <tr><td>Burdening Glacite</td><td>Simple+</td><td>Slow duration e infliction: stessi valori di Numbing.</td><td>-100%; 3×</td><td>Brigid Brigand.</td></tr>
+        <tr><td>Wearying Glacite</td><td>Simple+</td><td>Fatigue duration e infliction: stessi valori di Numbing.</td><td>-100%; 3×</td><td>Daemon Mahina.</td></tr>
+        <tr><td>Terrestrial Glacite</td><td>Normal+</td><td>Danno a Beast/Crustacean/Amorphous/Apodous/Winged: 8 / 10 / 12 / 18</td><td>100%</td><td>Venom Lizard.</td></tr>
+        <tr><td>Celestial Glacite</td><td>Normal+</td><td>Danno a Demihuman/Armored/Undead/Fiend/Dragon: 8 / 10 / 12 / 18</td><td>100%</td><td>Xeno Mantis.</td></tr>
+        <tr><td>Elemental-Attuned Glacite</td><td>Moderate+</td><td>Potenza attacchi non-elementali e Fire/Earth/Water/Wind: 4 / 7 / 9 / 25</td><td>100%</td><td>Therion Orthrus.</td></tr>
+        <tr><td>Apprentice Glacite</td><td>Moderate+</td><td>Velocità apprendimento Master Skill: 10 / 14 / 19 / 25</td><td>500%</td><td>Orc Kong, Code Red #2.</td></tr>
+        <tr><td>Elemental-Dispersing Glacite</td><td>Moderate+</td><td>Danno elementale ricevuto: -4 / -5 / -6 / -15</td><td>-80%</td><td>Pillbug, Code Red #4.</td></tr>
+        <tr><td>Glacite of Reversal</td><td>Moderate+</td><td>Sotto soglia HP, +30% statistiche: 8 / 10 / 15 / 32</td><td>75%</td><td>Plantasm, Code Red #9.</td></tr>
+        <tr><td>Preserver Glacite</td><td>Hard+</td><td>Tutti i danni: -20 / -30 / -45 / -70</td><td>-600</td><td>Harpy Go Lucky, Code Red #12.</td></tr>
+        <tr><td>Miser Glacite</td><td>Hard+</td><td>Chance di dimezzare SG consumption: 5 / 7 / 9 / 20</td><td>100%</td><td>Dangeroma, Code Red #18.</td></tr>
+        <tr><td>Disruptor Glacite</td><td>Hard+</td><td>Chance di non perdere Soul con Break Soul: 6 / 8 / 10 / 15</td><td>30%</td><td>Kraken, Code Red #13.</td></tr>
+        <tr><td>Mirrored Glacite</td><td>Intense+</td><td>Riflette danno quando viene annullato: 7 / 10 / 13 / 25</td><td>95%</td><td>Iron Bones, Code Red #20.</td></tr>
+        <tr><td>Dazing Glacite</td><td>Intense+</td><td>Durata Stun inflitto: 1.10 / 1.16 / 1.24 / 1.50</td><td>4×</td><td>Weighty Witch, Magilou Menagerie.</td></tr>
+        <tr><td>Roaring Glacite</td><td>Chaos</td><td>Velocità charge: 12 / 15 / 20 / 32</td><td>50%</td><td>Chaos Bison, Heddin.</td></tr>
+        <tr><td>Juggernaut Glacite</td><td>Chaos</td><td>Invulnerabilità iniziale: 3 / 5 / 7 / 12 secondi</td><td>120 s</td><td>Titan, Code Red #27.</td></tr>
+        <tr><td>Phoenix Glacite</td><td>Normal+</td><td>Revive: 10 / 15 / 18 / 50</td><td>100%</td><td>Phoenix, Titania, fine gioco.</td></tr>
+      </tbody>
+    </table>
+    <p class="muted">Phoenix dimezza la propria chance dopo ogni resurrection riuscita e si resetta alla battaglia successiva.</p>
+  </section>
+
+  <section id="sovereign">
     <h2>Sovereign Acerite</h2>
-    <p><strong>Sovereign Acerite</strong> amplia il pool delle Random Skills con tutti gli Enhancement Bonus non esclusivi di classe. È potentissima, ma la sua utilità pratica è limitata dal farming: l'Item deve già essere a +10, deve provenire da un drop nemico e deve ricevere la Skill desiderata casualmente.</p>
-
-    <h3>Come ottenerla</h3>
+    <p><strong>Sovereign Acerite</strong> aggiunge al pool delle Random Skills i bonus di Enhancement non esclusivi di categoria e altre abilità end-game. È pensato per Item già a <code>+10</code>, ottenuti da Monster drop e non dallo shop.</p>
+    <h3>Come ottenerlo</h3>
     <ul>
-        <li>Raggiungendo <strong>Shop level 15</strong>.</li>
-        <li>Da <strong>Metaboar</strong>, Dire Foe disponibile solo in New Game+.</li>
-        <li>Smantellando un Item a <strong>+10</strong>.</li>
+      <li>Shop level 15.</li>
+      <li><strong>Metaboar</strong>, Dire Foe disponibile in New Game+ e facilmente mancabile.</li>
+      <li>Dismantle di un Item a <code>+10</code>.</li>
     </ul>
-
-    <h3>Famiglie di effetti disponibili</h3>
-    <table>
-        <thead><tr><th>Famiglia</th><th>Range per Rank</th><th>Massimo cumulabile</th></tr></thead>
-        <tbody>
-            <tr><td>[Stat] increased by X</td><td>1.07× / 1.10× / 1.15×</td><td>1.32×</td></tr>
-            <tr><td>Max HP increased by X</td><td>1.05× / 1.10× / 1.20×</td><td>1.32×</td></tr>
-            <tr><td>HP recovery on attacking Stunned foes</td><td>+20 / +40 / +80</td><td>+100</td></tr>
-            <tr><td>Restore HP using healing Artes</td><td>+150 / +300 / +600</td><td>+1000</td></tr>
-            <tr><td>HP recovery standing or moving</td><td>+40 / +90 / +120</td><td>+150</td></tr>
-            <tr><td>Gel e Bottle recovery effect</td><td>+3% / +4% / +5%</td><td>+30%</td></tr>
-            <tr><td>Equipment drop rates</td><td>1.20× / 1.35× / 1.50×</td><td>2×</td></tr>
-            <tr><td>[Elemental] Malak Arte casting time</td><td>−10% / −15% / −20%</td><td>−50%</td></tr>
-            <tr><td>[Status Ailment] attack damage taken</td><td>−20% / −30% / −60%</td><td>−80%</td></tr>
-            <tr><td>EXP vs. [Enemy Type]</td><td>+20% / +30% / +40%</td><td>+100%</td></tr>
-            <tr><td>Danno sopra 1000</td><td>−20% / −40% / −50%</td><td>−80%</td></tr>
-            <tr><td>Break Soul HP recovery</td><td>1.20× / 1.30× / 1.50×</td><td>2×</td></tr>
-            <tr><td>SG recuperato dopo weak point combo</td><td>+10% / — / —</td><td>+30%</td></tr>
-            <tr><td>Souls non scendono sotto 3 subendo danno</td><td>Effetto unico</td><td>—</td></tr>
-            <tr><td>Instant kill su nemico Stunned</td><td>1% / 2% / 2%</td><td>3%</td></tr>
-        </tbody>
+    <h3>Random Skills aggiunte dal pool Sovereign</h3>
+    <table class="wide-table">
+      <thead><tr><th>Effetto</th><th>R1 / R2 / R3</th><th>Limite</th></tr></thead>
+      <tbody>
+        <tr><td>[Stat] increased by X</td><td>1.07× / 1.10× / 1.15×</td><td>1.32×</td></tr>
+        <tr><td>Max HP increased by X</td><td>1.05× / 1.10× / 1.20×</td><td>1.32×</td></tr>
+        <tr><td>HP recovery on attacking Stunned foes</td><td>20 / 40 / 80</td><td>100</td></tr>
+        <tr><td>Restore own HP when using healing Artes</td><td>150 / 300 / 600</td><td>1000</td></tr>
+        <tr><td>HP recovery when standing or moving</td><td>40 / 90 / 120</td><td>150</td></tr>
+        <tr><td>Recovery effect for Gel e Bottle</td><td>3 / 4 / 5</td><td>30%</td></tr>
+        <tr><td>Equipment drop rate</td><td>1.20× / 1.35× / 1.50×</td><td>2×</td></tr>
+        <tr><td>[Elemental] Malak Arte casting time</td><td>-10% / -15% / -20%</td><td>-50%</td></tr>
+        <tr><td>[Status Ailment] attack damage</td><td>-20% / -30% / -60%</td><td>-80%</td></tr>
+        <tr><td>EXP from defeating [Enemy Type]</td><td>20% / 30% / 40%</td><td>100%</td></tr>
+        <tr><td>Primo step: aggiunge un hit [Elemental]</td><td>—</td><td>1 istanza</td></tr>
+        <tr><td>+30% Atk/A.Atk/Def/A.Def/Focus dopo Paralysis/Burn/Slow/Poison/Fatigue</td><td>—</td><td>Limite speciale/non determinato</td></tr>
+        <tr><td>Primo step: chance di Paralysis/Burn/Slow/Poison/Fatigue durante il rispettivo buff</td><td>8% / 12% / 16%</td><td>16%</td></tr>
+        <tr><td>Damage over 1000 reduced</td><td>20% / 40% / 50%</td><td>80%</td></tr>
+        <tr><td>Healing Arte effect riapplicato dopo 5 secondi</td><td>30% / 50% / 60%</td><td>100%</td></tr>
+        <tr><td>Break Soul HP recovery</td><td>1.20× / 1.30× / 1.50×</td><td>2×</td></tr>
+        <tr><td>Reflected damage recuperato come HP</td><td>50% / 100% / 100%</td><td>200%</td></tr>
+        <tr><td>-1 Mystic Arte BG cost while Invulnerable</td><td>—</td><td>1</td></tr>
+        <tr><td>SG reclaimed after weak point combos</td><td>10% / 20% / 30%</td><td>30%</td></tr>
+        <tr><td>Souls non scendono sotto 3 quando subisci danno</td><td>—</td><td>Effetto singolo</td></tr>
+        <tr><td>Chance to instantly defeat a Stunned foe</td><td>1% / 2% / 2%</td><td>3%</td></tr>
+      </tbody>
     </table>
+    <p>I cinque buff condizionali (+30% Atk, A.Atk, Def, A.Def e Focus) non hanno un limite cumulativo affidabile documentato. Considerali un’aggiunta situazionale; le voci con limite numerico sono quelle più pianificabili.</p>
+    <div class="callout warning"><p><strong>Quattro vincoli essenziali:</strong> l’Item deve essere già a <code>+10</code>; deve essere un drop di Monster; la chance aumenta con la quantità di Sovereign Acerite posseduta ma resta molto bassa anche con 99; l’Equipment non passa in New Game+.</p></div>
+  </section>
 
-    <p>Il pool include anche effetti condizionali: hit elementale aggiunto alla prima parte della combo, +30% a una Stat dopo aver applicato un ailment, possibilità di riapplicare una healing Arte dopo cinque secondi, danno riflesso recuperato come HP e riduzione del costo BG della Mystic Arte durante l'invulnerabilità. Sono effetti potenti, ma inseguirne uno specifico può richiedere molti Sovereign Acerite.</p>
-</section>
-
-<section>
-    <h2>Decisioni rapide</h2>
-    <table>
-        <thead><tr><th>Situazione</th><th>Scelta sicura</th></tr></thead>
-        <tbody>
-            <tr><td>Hai ottenuto un Item con più Rarity ma Stat distribuite male.</td><td>Confrontalo con il tuo Item attuale a +N: non sostituirlo automaticamente.</td></tr>
-            <tr><td>Vuoi materiali.</td><td>Porta gli scarti a +1, poi smantellali.</td></tr>
-            <tr><td>Hai un Item che userai fino a diverse aree dopo.</td><td>+3 è quasi sempre giustificato; +6 va valutato se hai materiali e la distribuzione è ottima.</td></tr>
-            <tr><td>Ti mancano Powder.</td><td>Usa +1 per Coarse, +5 per Standard e +8 per Fine; per Fine, considera prima gli shiny drop di endgame.</td></tr>
-            <tr><td>Stai cercando un Common specifico.</td><td>Combatti il Monster che ha il Rare drop della stessa categoria, una Rarity sopra l'Item desiderato.</td></tr>
-            <tr><td>Stai cercando un Rare specifico.</td><td>Usa Dangerous Encounters, l'Ignicite appropriato e un Character con bonus di drop rate se disponibile.</td></tr>
-            <tr><td>Hai trovato una Random Skill forte.</td><td>Conservala se la base dell'Item è già valida; non tenere un Item pessimo soltanto per una Skill.</td></tr>
-            <tr><td>Vuoi un +10.</td><td>Rimanda al post-game, preferibilmente dopo Alchemist's Acerite.</td></tr>
-        </tbody>
-    </table>
-</section>
-
-<section>
-    <h2>Note editoriali</h2>
-    <p>Questa è una guida italiana riscritta per la consultazione sul web: spiega le regole, conserva i nomi in inglese usati dal gioco e privilegia passaggi verificabili per chi non conosce il sistema. Non contiene collegamenti, riferimenti promozionali o dipendenze da forum esterni.</p>
-</section>
+  <section id="checklist">
+    <h2>Checklist finale</h2>
+    <ul class="checklist">
+      <li>Ho capito quale statistica cerca ogni slot.</li>
+      <li>So che <code>+10</code> aggiunge 100 punti, non 100%.</li>
+      <li>Controllo Master Skill e Enhancement Bonus prima di sostituire un Item.</li>
+      <li>Conservo doppioni per Dismantle invece di venderli senza pensarci.</li>
+      <li>Distinguo Powder da Fluid e Enhancement level da Random Skill Rank.</li>
+      <li>Uso il catalogo per cercare Item, Main Ingredient e Monster dei Rare drop.</li>
+      <li>Rimando Random Skills Rank 4 e Sovereign Acerite al post-game.</li>
+    </ul>
+  </section>
+</article>
