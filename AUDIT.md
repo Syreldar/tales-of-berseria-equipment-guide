@@ -4,7 +4,7 @@
 
 | Workflow | Rete durante il job | Output | Scopo |
 |---|---:|---|---|
-| `Snapshot catalog` | Solo per creare una nuova snapshot | Commit di `site/content/catalogo.json` + deploy | Aggiornare intenzionalmente i dati locali. |
+| `Refresh catalog snapshot` | Solo per creare una nuova snapshot | Commit di `site/content/catalogo.json` + deploy | Aggiornare intenzionalmente i dati locali. |
 | `Deploy GitHub Pages` | Nessuna acquisizione del catalogo | Artifact statico | Pubblicare esclusivamente il JSON già revisionato e committato. |
 
 Il browser riceve soltanto file locali. Nessuna pagina pubblicata contiene URL esterni o riferimenti alla fonte di consultazione.
@@ -18,8 +18,8 @@ La snapshot viene rifiutata se non soddisfa tutti questi vincoli:
 | Categorie | 18 |
 | Item | 350 esatti |
 | Fasi per categoria | Main game e Post-game |
-| Coppie categoria/fase | 36 esatte |
-| Schede rapide | 36 esatte, senza duplicati |
+| Coppie categoria/fase | 34 esatte |
+| Schede rapide | 34 esatte, senza duplicati |
 | Tier post-game | R19, R20, R21 |
 | Vettore statistiche | 5 valori base e 5 valori `+10` |
 | Integrità | SHA-256 delle righe normalizzate |

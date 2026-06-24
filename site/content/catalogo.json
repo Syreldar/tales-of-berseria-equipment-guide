@@ -5,5 +5,5 @@
   "items": [],
   "reference_cards": [],
   "integrity": null,
-  "message": "Esegui il workflow manuale Snapshot catalog per materializzare e committare il catalogo locale completo."
+  "message": "Il primo deploy materializza e committa automaticamente il catalogo locale completo."
 }

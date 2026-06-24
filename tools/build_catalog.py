@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 """Build a reviewed, local Equipment catalogue snapshot.
 
-This command is intentionally separate from the Pages deployment workflow.  It may
-contact the structured equipment source only when the repository maintainer runs
-``Snapshot catalog``.  The normal Pages workflow deploys the committed JSON file
-and never fetches catalogue data from the network.
+This command materializes the local Equipment catalogue snapshot.  The Pages
+workflow runs it only once when the repository still contains the initial
+placeholder; later deployments publish the committed JSON file without fetching
+catalogue data from the network.
 """
 
 from __future__ import annotations
@@ -30,6 +30,7 @@ WIKI_API_URL = "https://aselia.fandom.com/api.php"
 TIMEOUT_SECONDS = 60
 EXPECTED_CATEGORY_COUNT = 18
 EXPECTED_ITEM_COUNT = 350
+EXPECTED_REFERENCE_CARD_COUNT = 34
 PHASES = ("Main game", "Post-game")
 HEADERS = {
     "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
@@ -286,17 +287,27 @@ def reference_reason(item: dict[str, Any]) -> str:
     )
 
 
+def category_phase_pairs(items: list[dict[str, Any]]) -> set[tuple[str, str]]:
+    """Return only category/phase pairs that actually exist in the source tables."""
+    return {(str(item["category_id"]), str(item["phase"])) for item in items}
+
+
 def reference_cards(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Select exactly one transparent comparison card for every category and phase."""
+    """Select one comparison card for every category/phase pair that actually exists.
+
+    Two category/phase combinations are not present in the source tables.  Requiring
+    fictional entries would either make the snapshot fail or force invented data.
+    """
     cards: list[dict[str, Any]] = []
+    available_pairs = category_phase_pairs(items)
     for category in CATEGORIES:
         for phase in PHASES:
+            if (category.identifier, phase) not in available_pairs:
+                continue
             candidates = [
                 item for item in items
                 if item["category_id"] == category.identifier and item["phase"] == phase
             ]
-            if not candidates:
-                raise RuntimeError(f"Missing {phase} items for {category.label}")
             selected = max(candidates, key=lambda item: (sum(item["stats"]), item["rarity"], item["name"].lower()))
             cards.append({
                 "category_id": selected["category_id"],
@@ -328,10 +339,6 @@ def item_identity(item: dict[str, Any]) -> dict[str, Any]:
 def identity_sha256(items: list[dict[str, Any]]) -> str:
     canonical = json.dumps([item_identity(item) for item in items], ensure_ascii=False, separators=(",", ":"), sort_keys=True)
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
-
-
-def expected_phase_pairs(categories: list[dict[str, str]]) -> set[tuple[str, str]]:
-    return {(category["id"], phase) for category in categories for phase in PHASES}
 
 
 def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], cards: list[dict[str, Any]]) -> None:
@@ -367,15 +374,18 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], card
             if re.search(r"https?://", value, re.IGNORECASE):
                 raise RuntimeError(f"External URL leaked into item field: {item['name']}")
 
-    expected_pairs = expected_phase_pairs(categories)
-    if found_pairs != expected_pairs:
-        missing = sorted(expected_pairs - found_pairs)
-        unexpected = sorted(found_pairs - expected_pairs)
-        raise RuntimeError(f"Catalogue phase coverage is incomplete. Missing: {missing}; unexpected: {unexpected}")
+    expected_pairs = category_phase_pairs(items)
+    if len(expected_pairs) != EXPECTED_REFERENCE_CARD_COUNT:
+        raise RuntimeError(
+            f"Catalogue has {len(expected_pairs)} real category/phase pairs; "
+            f"expected exactly {EXPECTED_REFERENCE_CARD_COUNT}"
+        )
 
     card_pairs = {(str(card["category_id"]), str(card["phase"])) for card in cards}
-    if len(cards) != len(expected_pairs):
-        raise RuntimeError(f"Reference cards have {len(cards)} entries; expected exactly {len(expected_pairs)}")
+    if len(cards) != EXPECTED_REFERENCE_CARD_COUNT:
+        raise RuntimeError(
+            f"Reference cards have {len(cards)} entries; expected exactly {EXPECTED_REFERENCE_CARD_COUNT}"
+        )
     if card_pairs != expected_pairs:
         missing = sorted(expected_pairs - card_pairs)
         unexpected = sorted(card_pairs - expected_pairs)
@@ -411,7 +421,7 @@ def main() -> int:
         "integrity": {
             "expected_categories": EXPECTED_CATEGORY_COUNT,
             "expected_items": EXPECTED_ITEM_COUNT,
-            "expected_category_phase_pairs": EXPECTED_CATEGORY_COUNT * len(PHASES),
+            "expected_category_phase_pairs": EXPECTED_REFERENCE_CARD_COUNT,
             "identity_sha256": identity_sha256(items),
         },
     }

@@ -241,7 +241,7 @@
             target.innerHTML = `
                 <div class="callout warning">
                     <h3>Catalogo non ancora materializzato</h3>
-                    <p>Questa copia contiene solo la struttura del sito. Nel repository, esegui manualmente il workflow <strong>Snapshot catalog</strong>: genera e committa il catalogo locale completo. Il deploy Pages normale rifiuta qualsiasi catalogo parziale.</p>
+                    <p>Questa copia locale non contiene ancora il catalogo completo. Al primo deploy, GitHub Actions lo materializza, lo valida e lo salva nel repository prima di pubblicare il sito.</p>
                 </div>
             `;
             return;

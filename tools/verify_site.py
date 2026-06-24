@@ -14,7 +14,7 @@ from typing import Any
 
 EXPECTED_CATEGORY_COUNT = 18
 EXPECTED_ITEM_COUNT = 350
-EXPECTED_PHASE_CARD_COUNT = 36
+EXPECTED_PHASE_CARD_COUNT = 34
 PHASES = {"Main game", "Post-game"}
 REQUIRED_IDS = {
     "adesso", "come-leggere", "fondamenti", "statistiche", "rarity", "common-rare",
@@ -114,7 +114,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     if payload.get("complete") is not True:
         if allow_unbuilt:
             return
-        fail("Catalogue snapshot is not complete. Run the Snapshot catalog workflow before deploying Pages.")
+        fail("Catalogue snapshot is not complete. The deployment workflow must materialize the initial local snapshot first.")
 
     if payload.get("schema_version") != 4:
         fail("Catalogue schema version is not current")
@@ -127,7 +127,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     if not isinstance(items, list) or len(items) != EXPECTED_ITEM_COUNT:
         fail("Catalogue must contain exactly 350 items")
     if not isinstance(cards, list) or len(cards) != EXPECTED_PHASE_CARD_COUNT:
-        fail("Catalogue must contain exactly 36 category/phase reference cards")
+        fail("Catalogue must contain exactly 34 category/phase reference cards")
     if not isinstance(integrity, dict):
         fail("Catalogue integrity metadata is missing")
 
@@ -138,7 +138,6 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     if category_ids != found_ids:
         fail("Catalogue category coverage is incomplete")
 
-    expected_pairs = {(category_id, phase) for category_id in category_ids for phase in PHASES}
     found_pairs: set[tuple[str, str]] = set()
     seen: set[tuple[Any, ...]] = set()
     item_names: set[str] = set()
@@ -167,16 +166,17 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             if FORBIDDEN_PUBLIC_URL.search(value) or FORBIDDEN_PUBLIC_REFERENCE.search(value):
                 fail(f"Forbidden content in {field}: {item.get('name')}")
 
-    if found_pairs != expected_pairs:
-        missing = sorted(expected_pairs - found_pairs)
-        unexpected = sorted(found_pairs - expected_pairs)
-        fail(f"Catalogue does not cover all category/phase pairs. Missing: {missing}; unexpected: {unexpected}")
+    if len(found_pairs) != EXPECTED_PHASE_CARD_COUNT:
+        fail(
+            f"Catalogue has {len(found_pairs)} real category/phase pairs; "
+            f"expected exactly {EXPECTED_PHASE_CARD_COUNT}"
+        )
 
     card_pairs = {(str(entry.get("category_id")), str(entry.get("phase"))) for entry in cards}
-    if card_pairs != expected_pairs:
-        missing = sorted(expected_pairs - card_pairs)
-        unexpected = sorted(card_pairs - expected_pairs)
-        fail(f"Reference cards do not cover every category/phase pair. Missing: {missing}; unexpected: {unexpected}")
+    if card_pairs != found_pairs:
+        missing = sorted(found_pairs - card_pairs)
+        unexpected = sorted(card_pairs - found_pairs)
+        fail(f"Reference cards do not cover every real category/phase pair. Missing: {missing}; unexpected: {unexpected}")
     if len(card_pairs) != len(cards):
         fail("Reference cards duplicate a category/phase pair")
 

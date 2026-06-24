@@ -15,22 +15,19 @@ La lettura parte da una domanda pratica: cosa indossare adesso. Poi collega, nel
 - farming, Mystic Artes, Common Target, shop reset, Ignicite e Equipment da farming;
 - Random Skills, Glacite e Sovereign Acerite;
 - catalogo locale filtrabile con 18 categorie e 350 Item;
-- 36 schede rapide di confronto: una per ogni combinazione categoria/fase;
+- 34 schede rapide di confronto: una per ogni combinazione categoria/fase realmente presente;
 - link interni da consigli, ricette e farming alle sezioni e agli Item corrispondenti.
 
-## Pubblicazione corretta
-
-Il progetto usa due workflow diversi per evitare che un deploy normale dipenda dalla rete o rigeneri dati non revisionati.
+## Pubblicazione
 
 1. Estrai l’archivio e sostituisci il contenuto del repository.
-2. Fai commit e push su `main`.
-3. In **Settings → Pages**, seleziona **GitHub Actions** come sorgente.
-4. In **Settings → Actions → General → Workflow permissions**, seleziona **Read and write permissions**: `Snapshot catalog` deve poter committare il JSON verificato.
-5. Apri **Actions → Snapshot catalog → Run workflow** sul branch `main`.
-6. Il workflow genera il catalogo locale, lo controlla, lo committa e pubblica il sito.
-7. Da quel momento, ogni push esegue soltanto **Deploy GitHub Pages**: convalida il JSON già committato e pubblica file statici.
+2. In **Settings → Pages**, seleziona **GitHub Actions** come sorgente.
+3. In **Settings → Actions → General → Workflow permissions**, seleziona **Read and write permissions**: il primo deploy salva nel repository il catalogo locale verificato.
+4. Fai commit e push su `main`.
 
-Il primo push può far fallire il deploy normale perché `catalogo.json` è volutamente un segnaposto. È previsto: non pubblica mai un catalogo parziale. Esegui `Snapshot catalog` una volta; il workflow effettua anche il deploy finale.
+Non devi eseguire workflow manuali. Se `catalogo.json` è il segnaposto iniziale, **Deploy GitHub Pages** materializza il catalogo, lo valida, lo committa e poi pubblica l’artefatto già completo. Dai push successivi viene controllato e pubblicato soltanto il JSON locale già committato.
+
+Per aggiornare volontariamente la snapshot in futuro, puoi usare **Actions → Refresh catalog snapshot → Run workflow**.
 
 ## Garanzie bloccanti
 
@@ -38,7 +35,7 @@ Il deploy non parte se il catalogo locale non contiene:
 
 - esattamente 18 categorie;
 - esattamente 350 Item;
-- entrambe le fasi per ogni categoria, per un totale di 36 combinazioni;
+- tutte le 34 combinazioni categoria/fase realmente presenti nelle tabelle sorgente;
 - statistiche base e valori `+10` coerenti;
 - Master Skill, Enhancement Bonus, Main Ingredient, Rare Drop, tipo di provenienza e testo di provenienza;
 - tutte le schede rapide categoria/fase;
@@ -59,4 +56,4 @@ Per vedere la guida prima della prima snapshot:
 python -m http.server 8000 --directory site
 ```
 
-Apri `http://localhost:8000/`. Prima della snapshot, la guida funziona ma il catalogo mostra un messaggio esplicito. Dopo `Snapshot catalog`, il file locale completo è incluso nel repository e nella pagina pubblicata.
+Apri `http://localhost:8000/`. Prima del primo deploy, il catalogo mostra un messaggio esplicito. Il primo deploy materializza e committa automaticamente il file locale completo.
