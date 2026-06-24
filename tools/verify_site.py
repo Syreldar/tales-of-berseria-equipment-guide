@@ -15,7 +15,7 @@ REQUIRED_IDS = {
     "main-ingredient", "dismantle", "fluid", "ricette", "armory", "farming",
     "catalogo", "primo-set", "postgame", "random-skills", "glacite", "sovereign", "glossario",
 }
-FORBIDDEN_PUBLIC = re.compile(r"gamefaqs|gamespot|https?://", re.IGNORECASE)
+FORBIDDEN_PUBLIC = re.compile(r"https?://", re.IGNORECASE)
 
 
 def plus_ten(stats: list[int]) -> list[int]:
@@ -37,7 +37,7 @@ def validate_public_tree(site: Path) -> None:
     for path in text_files(site):
         text = path.read_text(encoding="utf-8")
         if FORBIDDEN_PUBLIC.search(text):
-            fail(f"External/source reference found in published file: {path.relative_to(site)}")
+            fail(f"External URL found in published file: {path.relative_to(site)}")
 
 
 def validate_guide(guide: Path) -> None:
@@ -99,7 +99,7 @@ def validate_catalogue(catalogue: Path, allow_unbuilt: bool) -> None:
             if not value or value == "—":
                 fail(f"Missing {field}: {item.get('name')}")
             if FORBIDDEN_PUBLIC.search(value):
-                fail(f"External/source reference in item field: {item.get('name')}")
+                fail(f"External URL in item field: {item.get('name')}")
 
 
 def main() -> int:

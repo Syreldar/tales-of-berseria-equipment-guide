@@ -1,4 +1,3 @@
 __pycache__/
 *.py[cod]
 .venv/
-tools/reference-cache.txt

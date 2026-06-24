@@ -1,30 +1,20 @@
-# Audit di completezza
+# Audit di pubblicazione
 
-## Contenuto pubblicato
+## Regola fondamentale
 
-La guida pubblicata è priva di link e riferimenti esterni alla fonte di lavoro. Tutti i dati mostrati dal browser sono contenuti nei file del sito pubblicato.
+Il deploy non contatta né dipende da GameFAQs. Il catalogo viene trasformato in `site/content/catalogo.json` prima della pubblicazione e il browser legge soltanto questo file locale.
 
-## Catalogo
+## Controlli bloccanti
 
-La build genera un JSON locale che deve contenere:
+Il workflow rifiuta l’artifact quando non trova:
 
-- 18 categorie: 6 Weapons, 6 Accessories, 2 Armor, Rings e 3 Footwear;
-- almeno 350 schede Equipment;
-- Rarity, periodo Main game/Post-game, statistiche base, statistiche esatte a `+10`, Master Skill, Enhancement Bonus, Main Ingredient e acquisizione;
-- selezione delle schede notevoli per la progressione.
+- 18 categorie di Equipment;
+- almeno 350 Item;
+- valori base e `+10` coerenti;
+- Master Skill, Enhancement Bonus, Main Ingredient e acquisizione per ogni scheda;
+- almeno due schede di riferimento per ciascuna categoria;
+- anchor interni validi e tutte le sezioni didattiche richieste.
 
-Il validatore interrompe il deploy se una di queste condizioni non è rispettata.
+## Limite dichiarato dei dati di acquisizione
 
-## Revisione per novizi
-
-Le spiegazioni collegano esplicitamente:
-
-- Rarity → Main Ingredient → donor Matching → ricette di Enhancement;
-- Random Skill Rank → Fluid → costo dei Rare;
-- Monster/Chest/Shop → catalogo → Common Target;
-- Item da farming → singole schede del catalogo;
-- soglie Smith’s Acerite → obiettivi `+3`, `+6`, `+9` e `+10`.
-
-## Garanzie di pubblicazione
-
-Il file `catalogo.json` incluso nel repository è intenzionalmente un segnaposto non pubblicabile. La build deve sostituirlo con il catalogo statico completo; in caso contrario, la validazione fallisce e GitHub Pages non riceve alcun artifact. Questo evita di esporre una copia parziale o di eseguire importazioni nel browser.
+Il catalogo conserva sempre il `Rare Drop` quando presente nella tabella strutturata. Per gli Item senza una fonte puntuale disponibile nel dato strutturato, l’interfaccia dichiara esplicitamente che l’acquisizione va verificata in-game; non inventa Monster, chest, shop o località.

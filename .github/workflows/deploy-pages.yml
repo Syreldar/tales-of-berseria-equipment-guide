@@ -29,21 +29,13 @@ jobs:
         with:
           python-version: "3.12"
 
-      - name: Install catalogue builder dependencies
+      - name: Install catalogue build dependencies
         run: python -m pip install --disable-pip-version-check -r requirements.txt
 
-      - name: Build complete local catalogue
+      - name: Build local catalogue from structured data
         run: |
           set -euo pipefail
-          for attempt in 1 2 3; do
-            if python tools/build_catalog.py --output site/content/catalogo.json; then
-              exit 0
-            fi
-            if [ "$attempt" = "3" ]; then
-              exit 1
-            fi
-            sleep $((attempt * 5))
-          done
+          python tools/build_catalog.py --output site/content/catalogo.json
 
       - name: Validate published content
         run: |

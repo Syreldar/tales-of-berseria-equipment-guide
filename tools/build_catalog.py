@@ -1,9 +1,10 @@
 #!/usr/bin/env python3
-"""Build the complete, local Tales of Berseria Equipment catalogue.
+"""Build the published Tales of Berseria Equipment catalogue.
 
-The deployed site receives only the generated JSON. This builder collects structured
-item data, enriches it with progression/acquisition text, derives exact +10 values,
-and refuses to produce a partial catalogue.
+This script deliberately has no dependency on the original guide host.  It reads
+structured equipment tables from the Aselia Wiki API, turns them into a local JSON
+file, validates the complete result, and the Pages workflow publishes that file as
+part of the static artifact.
 """
 
 from __future__ import annotations
@@ -17,17 +18,18 @@ import unicodedata
 from dataclasses import dataclass
 from datetime import UTC, datetime
 from pathlib import Path
-from typing import Any, Iterable
+from typing import Any
 
 import requests
 from bs4 import BeautifulSoup, Tag
+from requests.adapters import HTTPAdapter
+from urllib3.util.retry import Retry
 
 WIKI_API_URL = "https://aselia.fandom.com/api.php"
-REFERENCE_GUIDE_URL = "https://gamefaqs.gamespot.com/pc/184665-tales-of-berseria/faqs/74517?print=1"
 TIMEOUT_SECONDS = 60
 HEADERS = {
-    "Accept": "text/html,application/json;q=0.9,*/*;q=0.8",
-    "User-Agent": "TalesOfBerseriaGuideBuilder/2.0 (static GitHub Pages build)",
+    "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
+    "User-Agent": "TalesOfBerseriaEquipmentGuide/3.0 (+static Pages build)",
 }
 
 
@@ -75,19 +77,7 @@ HEADER_ALIASES: dict[str, tuple[str, ...]] = {
     "rare_drop": ("rare drop",),
     "max_name": ("max enhancement name",),
 }
-
-REQUIRED_FIELDS = {
-    "rarity", "name", "p_atk", "a_atk", "p_def", "a_def", "focus",
-    "master_skill", "enhancement_bonus", "main_ingredient", "rare_drop", "max_name",
-}
-
-LOCATION_WORDS = re.compile(
-    r"\b(shop|chest|common drop|code red|story|titania|innominat|heavenly|figahl|"
-    r"hellawes|yseult|taliesin|meirchio|zekson|katz|ruins|forest|marsh|isle|"
-    r"mount|grotto|cavern|tunnel|laban|faldies|earthpulse|aldina|davahl|baird|"
-    r"morgana|vortigern|hexen|hallowed|ex-dungeon)\b",
-    re.IGNORECASE,
-)
+REQUIRED_FIELDS = set(HEADER_ALIASES)
 
 
 def clean(value: str) -> str:
@@ -147,15 +137,21 @@ def exact_plus_ten(stats: list[int]) -> list[int]:
     return [value + ((100 * value) // total) for value in stats]
 
 
-def fetch_reference_text(session: requests.Session) -> str:
-    response = session.get(REFERENCE_GUIDE_URL, headers=HEADERS, timeout=TIMEOUT_SECONDS)
-    response.raise_for_status()
-    soup = BeautifulSoup(response.text, "html.parser")
-    text = soup.get_text("\n", strip=True)
-    text = text.replace("\r", "")
-    if len(text) < 100_000:
-        raise RuntimeError("The reference guide response is unexpectedly short; refusing to build incomplete data.")
-    return text
+def make_session() -> requests.Session:
+    retry = Retry(
+        total=4,
+        connect=4,
+        read=4,
+        status=4,
+        backoff_factor=1.5,
+        allowed_methods=frozenset({"GET"}),
+        status_forcelist=(429, 500, 502, 503, 504),
+        respect_retry_after_header=True,
+    )
+    session = requests.Session()
+    session.headers.update(HEADERS)
+    session.mount("https://", HTTPAdapter(max_retries=retry))
+    return session
 
 
 def fetch_wiki_page(session: requests.Session, page: str) -> str:
@@ -167,19 +163,20 @@ def fetch_wiki_page(session: requests.Session, page: str) -> str:
             "prop": "text",
             "format": "json",
             "formatversion": "2",
+            "origin": "*",
         },
-        headers=HEADERS,
         timeout=TIMEOUT_SECONDS,
     )
     response.raise_for_status()
     payload = response.json()
     if "error" in payload:
-        raise RuntimeError(f"Structured item data error for {page}: {payload['error'].get('info', 'unknown error')}")
+        detail = payload["error"].get("info", "unknown error")
+        raise RuntimeError(f"Structured catalogue data error for {page}: {detail}")
     content = payload.get("parse", {}).get("text")
     if isinstance(content, dict):
         content = content.get("*")
     if not isinstance(content, str) or not content.strip():
-        raise RuntimeError(f"No structured item table returned for {page}")
+        raise RuntimeError(f"No equipment table returned for {page}")
     return content
 
 
@@ -203,143 +200,39 @@ def find_equipment_table(soup: BeautifulSoup) -> tuple[Tag, dict[str, int]]:
         positions = header_positions(table)
         if positions:
             return table, positions
-    raise RuntimeError("Equipment table not found on structured item page")
+    raise RuntimeError("Equipment table not found on structured catalogue page")
 
 
-def category_main_game_marker(reference: str, category: Category) -> int | None:
-    """Return the actual equipment-table marker, never the table-of-contents entry.
-
-    The printable guide repeats every category name in its table of contents.  The
-    ``<Category> (Main Game)`` marker occurs only in the actual category section,
-    so it is the reliable delimiter for the source text.
-    """
-    labels = (category.label, category.label.replace("’", "'"), category.label.replace("'", "’"))
-    candidates: list[int] = []
-    for label in labels:
-        for match in re.finditer(rf"(?im)^\s*{re.escape(label)}\s*\(Main\s*Game\)\s*$", reference):
-            candidates.append(match.start())
-    return min(candidates) if candidates else None
+def phase_from_rarity(rarity: int) -> str:
+    """The standard lists place the final Rarity tier in post-game."""
+    return "Post-game" if rarity >= 21 else "Main game"
 
 
-def find_category_segment(reference: str, category: Category) -> str:
-    marker = category_main_game_marker(reference, category)
-    if marker is None:
-        raise RuntimeError(f"Main-game source section not found for {category.label}")
-
-    labels = (category.label, category.label.replace("’", "'"), category.label.replace("'", "’"))
-    heading_positions: list[int] = []
-    for label in labels:
-        for match in re.finditer(rf"(?im)^\s*(?:###\s*)?{re.escape(label)}\s*$", reference[:marker]):
-            heading_positions.append(match.start())
-    start = max(heading_positions) if heading_positions else marker
-
-    later_markers = [
-        candidate
-        for other in CATEGORIES
-        if other.identifier != category.identifier
-        for candidate in [category_main_game_marker(reference, other)]
-        if candidate is not None and candidate > marker
-    ]
-    end = min(later_markers) if later_markers else len(reference)
-    return reference[start:end]
-
-
-def line_window(value: str, start: int, end: int) -> list[str]:
-    segment = value[start:end]
-    return [clean(line) for line in segment.splitlines() if clean(line)]
-
-
-def source_records(reference_segment: str) -> list[dict[str, Any]]:
-    """Split the equipment-table portion of a category into Rarity entries.
-
-    The source uses one Rarity marker per table row.  Names differ slightly in a few
-    places between data sources, so retaining the ordered Rarity record is more
-    reliable than matching only a display name.
-    """
-    base = re.split(r"(?im)^\s*(?:####\s*)?Noteworthy\b", reference_segment, maxsplit=1)[0]
-    matches = list(re.finditer(r"(?m)^\s*R\s*(\d{1,2})\b", base))
-    records: list[dict[str, Any]] = []
-    for index, match in enumerate(matches):
-        end = matches[index + 1].start() if index + 1 < len(matches) else len(base)
-        before = normalized(base[:match.start()])
-        records.append({
-            "rarity": int(match.group(1)),
-            "entry": base[match.start():end],
-            "phase": "Post-game" if re.search(r"post[- ]?game|ex[- ]?dungeon", before, re.IGNORECASE) else "Main game",
-        })
-    return records
-
-
-def item_entry(records: list[dict[str, Any]], rarity: int, name: str, occurrence: int) -> tuple[str, str]:
-    escaped = re.escape(name).replace("\\ ", r"\s+")
-    pattern = re.compile(rf"\bR\s*{rarity}\s+{escaped}\b", re.IGNORECASE)
-    exact = [record for record in records if pattern.search(record["entry"])]
-    if exact:
-        return exact[0]["entry"], exact[0]["phase"]
-    same_rarity = [record for record in records if record["rarity"] == rarity]
-    if occurrence < len(same_rarity):
-        return same_rarity[occurrence]["entry"], same_rarity[occurrence]["phase"]
-    if same_rarity:
-        return same_rarity[-1]["entry"], same_rarity[-1]["phase"]
-    return "", "Main game" if rarity <= 17 else "Post-game"
-
-
-def acquisition_from_entry(entry: str, rare_drop: str) -> str:
-    if not entry:
-        if rare_drop and rare_drop not in {"—", "N/A"}:
-            return f"Rare drop: {rare_drop}"
-        return "Fonte da verificare nella scheda di gioco"
-
-    lines = [clean(line) for line in entry.splitlines() if clean(line)]
-    marked = [index for index, line in enumerate(lines) if LOCATION_WORDS.search(line)]
-    if marked:
-        # Start at the first explicit acquisition marker.  The Monster is carried in
-        # the structured ``rare_drop`` field and is prepended below when applicable;
-        # this avoids accidentally treating a preceding stat line as a location.
-        result = " ".join(lines[marked[0]:])
-        result = re.sub(r"\s+", " ", result)
-        if rare_drop and rare_drop not in {"—", "N/A"} and normalized(rare_drop) not in normalized(result):
-            result = f"Rare drop: {rare_drop} · {result}"
-        if len(result) > 360:
-            result = result[:357].rstrip() + "…"
-        return result
-
+def acquisition_from_fields(rarity: int, rare_drop: str) -> str:
     if rare_drop and rare_drop not in {"—", "N/A"}:
         return f"Rare drop: {rare_drop}"
-    return "Fonte da verificare nella scheda di gioco"
+    if rarity % 2 == 0:
+        return "Common drop: Rarity pari; può provenire da Monster, chest, shop o storia."
+    return "Acquisizione non specificata nella tabella strutturata; verifica l’area di gioco."
 
 
 def noteworthy_reason(item: dict[str, Any]) -> str:
-    """Write a short Italian, data-backed recommendation for a selected Item."""
     labels = ("Atk", "A.Atk", "Def", "A.Def", "Focus")
-    primary_by_slot = {"Weapon": "Atk", "Accessory": "A.Atk", "Armor": "Def", "Ring": "A.Def", "Footwear": "Focus"}
     stats = [int(value) for value in item["stats"]]
     total = sum(stats)
-    nonzero = [(label, value) for label, value in zip(labels, stats) if value > 0]
-    primary = primary_by_slot[item["slot"]]
-    primary_value = stats[labels.index(primary)]
-
-    if total and primary_value / total >= 0.75:
-        stat_note = f"concentra quasi tutti i suoi punti in {primary}"
-    elif len(nonzero) == 1:
-        stat_note = f"concentra tutti i suoi punti in {nonzero[0][0]}"
-    else:
-        split = " e ".join(f"{label} {value}" for label, value in nonzero)
-        stat_note = f"distribuisce le statistiche tra {split}"
-
+    strongest_index = max(range(len(stats)), key=lambda index: stats[index])
+    strongest_label = labels[strongest_index]
+    strongest_value = stats[strongest_index]
     period = "durante la storia" if item["phase"] == "Main game" else "nel post-game"
     return (
-        f"Scelta consigliata {period}: {stat_note}. "
-        f"La Master Skill è {item['master_skill']}; l'Enhancement Bonus è {item['enhancement_bonus']}."
+        f"Riferimento utile {period}: totale statistiche {total}, con {strongest_label} {strongest_value} come valore principale. "
+        f"Controlla anche la Master Skill ({item['master_skill']}) prima di sostituire l’Equipment attuale."
     )
 
 
-def category_rows(session: requests.Session, category: Category, reference: str) -> list[dict[str, Any]]:
+def category_rows(session: requests.Session, category: Category) -> list[dict[str, Any]]:
     soup = BeautifulSoup(fetch_wiki_page(session, category.page), "html.parser")
     table, positions = find_equipment_table(soup)
-    reference_segment = find_category_segment(reference, category)
-    records = source_records(reference_segment)
-    rarity_occurrences: dict[int, int] = {}
     rows: list[dict[str, Any]] = []
 
     for row in table.find_all("tr")[1:]:
@@ -358,16 +251,13 @@ def category_rows(session: requests.Session, category: Category, reference: str)
             number_from_cell(cells[positions["focus"]]),
         ]
         rare_drop = first_english(cells[positions["rare_drop"]], "—")
-        occurrence = rarity_occurrences.get(rarity, 0)
-        rarity_occurrences[rarity] = occurrence + 1
-        entry, phase = item_entry(records, rarity, name, occurrence)
         rows.append({
             "category_id": category.identifier,
             "category": category.label,
             "slot": category.slot,
             "character": category.character,
             "rarity": rarity,
-            "phase": phase,
+            "phase": phase_from_rarity(rarity),
             "name": name,
             "max_name": first_english(cells[positions["max_name"]]),
             "stats": stats,
@@ -376,39 +266,37 @@ def category_rows(session: requests.Session, category: Category, reference: str)
             "enhancement_bonus": all_english(cells[positions["enhancement_bonus"]]),
             "main_ingredient": first_english(cells[positions["main_ingredient"]]),
             "rare_drop": rare_drop,
-            "acquisition": acquisition_from_entry(entry, rare_drop),
+            "acquisition": acquisition_from_fields(rarity, rare_drop),
         })
     if not rows:
-        raise RuntimeError(f"No rows parsed for {category.label}")
+        raise RuntimeError(f"No equipment rows parsed for {category.label}")
     return rows
 
 
-def notable_entries(reference: str, items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+def notable_entries(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Select one late-story and one post-game reference item per category.
+
+    These are navigation aids derived from the static statistics; they are not a
+    replacement for the detailed progression explanations in the guide.
+    """
     results: list[dict[str, Any]] = []
-    for item in items:
-        category_label = item["category"]
-        category_pattern = re.escape(category_label).replace("’", "[’']").replace("'", "[’']")
-        heading = re.compile(rf"Noteworthy\s+{category_pattern}", re.IGNORECASE)
-        found = heading.search(reference)
-        if not found:
-            continue
-        window = reference[found.end():found.end() + 35_000]
-        pattern = re.compile(rf"\bR\s*{item['rarity']}\s+{re.escape(item['name']).replace('\\ ', r'\s+')}\b", re.IGNORECASE)
-        if not pattern.search(window):
-            continue
-        results.append({
-            "category_id": item["category_id"],
-            "category": item["category"],
-            "character": item["character"],
-            "rarity": item["rarity"],
-            "name": item["name"],
-            "phase": item["phase"],
-            "reason": noteworthy_reason(item),
-        })
-    unique: dict[tuple[str, int, str], dict[str, Any]] = {}
-    for entry in results:
-        unique[(entry["category_id"], entry["rarity"], entry["name"])] = entry
-    return sorted(unique.values(), key=lambda entry: (entry["phase"] != "Main game", entry["rarity"], entry["name"].lower()))
+    for category in CATEGORIES:
+        group = [item for item in items if item["category_id"] == category.identifier]
+        for phase in ("Main game", "Post-game"):
+            candidates = [item for item in group if item["phase"] == phase]
+            if not candidates:
+                continue
+            selected = max(candidates, key=lambda item: (sum(item["stats"]), item["rarity"], item["name"].lower()))
+            results.append({
+                "category_id": selected["category_id"],
+                "category": selected["category"],
+                "character": selected["character"],
+                "rarity": selected["rarity"],
+                "name": selected["name"],
+                "phase": selected["phase"],
+                "reason": noteworthy_reason(selected),
+            })
+    return sorted(results, key=lambda entry: (entry["category_id"], entry["phase"], entry["rarity"]))
 
 
 def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], noteworthy: list[dict[str, Any]]) -> None:
@@ -421,10 +309,10 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], note
     if len(items) < 350:
         raise RuntimeError(f"Catalogue has {len(items)} items; at least 350 are required")
     if len(noteworthy) < 36:
-        raise RuntimeError(f"Only {len(noteworthy)} noteworthy entries found; expected at least 36")
+        raise RuntimeError(f"Only {len(noteworthy)} navigation entries found; expected at least 36")
     noteworthy_categories = {entry["category_id"] for entry in noteworthy}
     if noteworthy_categories != expected:
-        raise RuntimeError("Noteworthy recommendations must cover all 18 categories")
+        raise RuntimeError("Navigation entries must cover all 18 categories")
 
     keys: set[tuple[str, int, str]] = set()
     for item in items:
@@ -438,29 +326,20 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], note
             raise RuntimeError(f"Invalid stat vector for {item['name']}")
         if item["stats_plus10"] != exact_plus_ten(item["stats"]):
             raise RuntimeError(f"Incorrect +10 values for {item['name']}")
-        for field in ("name", "master_skill", "enhancement_bonus", "main_ingredient", "acquisition"):
-            if not str(item.get(field, "")).strip() or str(item.get(field)).strip() == "—":
+        for field in ("name", "max_name", "master_skill", "enhancement_bonus", "main_ingredient", "acquisition"):
+            value = str(item.get(field, "")).strip()
+            if not value or value == "—":
                 raise RuntimeError(f"Missing {field} for {item['name']}")
-        if re.search(r"https?://|gamefaqs|gamespot", item["acquisition"], re.IGNORECASE):
-            raise RuntimeError(f"External reference leaked into acquisition for {item['name']}")
+            if re.search(r"https?://", value, re.IGNORECASE):
+                raise RuntimeError(f"External URL leaked into item field: {item['name']}")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build a complete local Equipment catalogue.")
+    parser = argparse.ArgumentParser(description="Build the published local Equipment catalogue.")
     parser.add_argument("--output", type=Path, default=Path("site/content/catalogo.json"))
-    parser.add_argument("--reference-cache", type=Path, default=None, help="Optional cached reference text for reproducible/offline builds.")
     args = parser.parse_args()
 
-    session = requests.Session()
-    if args.reference_cache and args.reference_cache.exists():
-        reference = args.reference_cache.read_text(encoding="utf-8")
-    else:
-        print("[catalogue] fetching reference text", file=sys.stderr)
-        reference = fetch_reference_text(session)
-        if args.reference_cache:
-            args.reference_cache.parent.mkdir(parents=True, exist_ok=True)
-            args.reference_cache.write_text(reference, encoding="utf-8")
-
+    session = make_session()
     categories = [
         {"id": category.identifier, "label": category.label, "slot": category.slot, "character": category.character}
         for category in CATEGORIES
@@ -468,14 +347,14 @@ def main() -> int:
     items: list[dict[str, Any]] = []
     for category in CATEGORIES:
         print(f"[catalogue] {category.label}", file=sys.stderr)
-        items.extend(category_rows(session, category, reference))
+        items.extend(category_rows(session, category))
 
     items.sort(key=lambda item: (item["category_id"], item["rarity"], normalized(item["name"])))
-    noteworthy = notable_entries(reference, items)
+    noteworthy = notable_entries(items)
     validate(categories, items, noteworthy)
 
     payload = {
-        "schema_version": 2,
+        "schema_version": 3,
         "complete": True,
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "categories": categories,
@@ -484,7 +363,7 @@ def main() -> int:
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[catalogue] wrote {len(items)} items and {len(noteworthy)} noteworthy entries to {args.output}", file=sys.stderr)
+    print(f"[catalogue] wrote {len(items)} items and {len(noteworthy)} navigation entries to {args.output}", file=sys.stderr)
     return 0
 
 
