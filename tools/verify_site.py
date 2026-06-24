@@ -14,8 +14,8 @@ from typing import Any
 
 EXPECTED_CATEGORY_COUNT = 18
 EXPECTED_ITEM_COUNT = 350
-EXPECTED_PHASE_CARD_COUNT = 34
-PHASES = {"Main game", "Post-game"}
+PHASES = ("Main game", "Post-game")
+EXPECTED_PHASE_CARD_COUNT = EXPECTED_CATEGORY_COUNT * len(PHASES)
 REQUIRED_IDS = {
     "adesso", "come-leggere", "fondamenti", "statistiche", "rarity", "common-rare",
     "master-skill", "enhancement", "smith", "costi", "main-ingredient", "dismantle",
@@ -127,7 +127,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     if not isinstance(items, list) or len(items) != EXPECTED_ITEM_COUNT:
         fail("Catalogue must contain exactly 350 items")
     if not isinstance(cards, list) or len(cards) != EXPECTED_PHASE_CARD_COUNT:
-        fail("Catalogue must contain exactly 34 category/phase reference cards")
+        fail("Catalogue must contain exactly 36 category/phase reference cards")
     if not isinstance(integrity, dict):
         fail("Catalogue integrity metadata is missing")
 
@@ -137,6 +137,10 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     found_ids = {entry.get("category_id") for entry in items}
     if category_ids != found_ids:
         fail("Catalogue category coverage is incomplete")
+
+    required_pairs = {(str(category_id), phase) for category_id in category_ids for phase in PHASES}
+    if len(required_pairs) != EXPECTED_PHASE_CARD_COUNT:
+        fail("Catalogue category/phase matrix is inconsistent")
 
     found_pairs: set[tuple[str, str]] = set()
     seen: set[tuple[Any, ...]] = set()
@@ -166,17 +170,16 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             if FORBIDDEN_PUBLIC_URL.search(value) or FORBIDDEN_PUBLIC_REFERENCE.search(value):
                 fail(f"Forbidden content in {field}: {item.get('name')}")
 
-    if len(found_pairs) != EXPECTED_PHASE_CARD_COUNT:
-        fail(
-            f"Catalogue has {len(found_pairs)} real category/phase pairs; "
-            f"expected exactly {EXPECTED_PHASE_CARD_COUNT}"
-        )
+    if found_pairs != required_pairs:
+        missing = sorted(required_pairs - found_pairs)
+        unexpected = sorted(found_pairs - required_pairs)
+        fail(f"Catalogue category/phase coverage is incomplete. Missing: {missing}; unexpected: {unexpected}")
 
     card_pairs = {(str(entry.get("category_id")), str(entry.get("phase"))) for entry in cards}
-    if card_pairs != found_pairs:
-        missing = sorted(found_pairs - card_pairs)
-        unexpected = sorted(card_pairs - found_pairs)
-        fail(f"Reference cards do not cover every real category/phase pair. Missing: {missing}; unexpected: {unexpected}")
+    if card_pairs != required_pairs:
+        missing = sorted(required_pairs - card_pairs)
+        unexpected = sorted(card_pairs - required_pairs)
+        fail(f"Reference cards do not cover every required category/phase pair. Missing: {missing}; unexpected: {unexpected}")
     if len(card_pairs) != len(cards):
         fail("Reference cards duplicate a category/phase pair")
 

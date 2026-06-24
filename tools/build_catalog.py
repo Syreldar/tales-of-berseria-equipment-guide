@@ -30,8 +30,8 @@ WIKI_API_URL = "https://aselia.fandom.com/api.php"
 TIMEOUT_SECONDS = 60
 EXPECTED_CATEGORY_COUNT = 18
 EXPECTED_ITEM_COUNT = 350
-EXPECTED_REFERENCE_CARD_COUNT = 34
 PHASES = ("Main game", "Post-game")
+EXPECTED_REFERENCE_CARD_COUNT = EXPECTED_CATEGORY_COUNT * len(PHASES)
 HEADERS = {
     "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
     "User-Agent": "TalesOfBerseriaEquipmentGuide/4.0 (catalogue snapshot)",
@@ -287,23 +287,29 @@ def reference_reason(item: dict[str, Any]) -> str:
     )
 
 
+def expected_category_phase_pairs(categories: list[dict[str, str]]) -> set[tuple[str, str]]:
+    """Return the complete category/phase matrix required by the source catalogue."""
+    return {(str(category["id"]), phase) for category in categories for phase in PHASES}
+
+
 def category_phase_pairs(items: list[dict[str, Any]]) -> set[tuple[str, str]]:
-    """Return only category/phase pairs that actually exist in the source tables."""
     return {(str(item["category_id"]), str(item["phase"])) for item in items}
 
 
 def reference_cards(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Select one comparison card for every category/phase pair that actually exists.
-
-    Two category/phase combinations are not present in the source tables.  Requiring
-    fictional entries would either make the snapshot fail or force invented data.
-    """
+    """Select one comparison card for every required category/phase pair."""
     cards: list[dict[str, Any]] = []
     available_pairs = category_phase_pairs(items)
+    expected_pairs = expected_category_phase_pairs([
+        {"id": category.identifier}
+        for category in CATEGORIES
+    ])
+    missing_pairs = sorted(expected_pairs - available_pairs)
+    if missing_pairs:
+        raise RuntimeError(f"Catalogue is missing required category/phase pairs: {missing_pairs}")
+
     for category in CATEGORIES:
         for phase in PHASES:
-            if (category.identifier, phase) not in available_pairs:
-                continue
             candidates = [
                 item for item in items
                 if item["category_id"] == category.identifier and item["phase"] == phase
@@ -374,21 +380,25 @@ def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], card
             if re.search(r"https?://", value, re.IGNORECASE):
                 raise RuntimeError(f"External URL leaked into item field: {item['name']}")
 
-    expected_pairs = category_phase_pairs(items)
-    if len(expected_pairs) != EXPECTED_REFERENCE_CARD_COUNT:
+    required_pairs = expected_category_phase_pairs(categories)
+    if len(required_pairs) != EXPECTED_REFERENCE_CARD_COUNT:
         raise RuntimeError(
-            f"Catalogue has {len(expected_pairs)} real category/phase pairs; "
+            f"Internal category/phase matrix has {len(required_pairs)} pairs; "
             f"expected exactly {EXPECTED_REFERENCE_CARD_COUNT}"
         )
+    if found_pairs != required_pairs:
+        missing = sorted(required_pairs - found_pairs)
+        unexpected = sorted(found_pairs - required_pairs)
+        raise RuntimeError(f"Catalogue category/phase coverage mismatch. Missing: {missing}; unexpected: {unexpected}")
 
     card_pairs = {(str(card["category_id"]), str(card["phase"])) for card in cards}
     if len(cards) != EXPECTED_REFERENCE_CARD_COUNT:
         raise RuntimeError(
             f"Reference cards have {len(cards)} entries; expected exactly {EXPECTED_REFERENCE_CARD_COUNT}"
         )
-    if card_pairs != expected_pairs:
-        missing = sorted(expected_pairs - card_pairs)
-        unexpected = sorted(card_pairs - expected_pairs)
+    if card_pairs != required_pairs:
+        missing = sorted(required_pairs - card_pairs)
+        unexpected = sorted(card_pairs - required_pairs)
         raise RuntimeError(f"Reference-card coverage mismatch. Missing: {missing}; unexpected: {unexpected}")
 
 

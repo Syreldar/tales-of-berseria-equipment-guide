@@ -15,7 +15,7 @@ La lettura parte da una domanda pratica: cosa indossare adesso. Poi collega, nel
 - farming, Mystic Artes, Common Target, shop reset, Ignicite e Equipment da farming;
 - Random Skills, Glacite e Sovereign Acerite;
 - catalogo locale filtrabile con 18 categorie e 350 Item;
-- 34 schede rapide di confronto: una per ogni combinazione categoria/fase realmente presente;
+- 36 schede rapide di confronto: una per ogni combinazione categoria/fase della guida;
 - link interni da consigli, ricette e farming alle sezioni e agli Item corrispondenti.
 
 ## Pubblicazione
@@ -35,7 +35,7 @@ Il deploy non parte se il catalogo locale non contiene:
 
 - esattamente 18 categorie;
 - esattamente 350 Item;
-- tutte le 34 combinazioni categoria/fase realmente presenti nelle tabelle sorgente;
+- tutte le 36 combinazioni categoria/fase realmente presenti nelle tabelle sorgente;
 - statistiche base e valori `+10` coerenti;
 - Master Skill, Enhancement Bonus, Main Ingredient, Rare Drop, tipo di provenienza e testo di provenienza;
 - tutte le schede rapide categoria/fase;
