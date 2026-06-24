@@ -1,8 +1,9 @@
 {
-  "schema_version": 2,
+  "schema_version": 4,
   "complete": false,
   "categories": [],
   "items": [],
-  "noteworthy": [],
-  "message": "Il catalogo viene generato e convalidato dalla build di pubblicazione."
+  "reference_cards": [],
+  "integrity": null,
+  "message": "Esegui il workflow manuale Snapshot catalog per materializzare e committare il catalogo locale completo."
 }

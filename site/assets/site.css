@@ -707,7 +707,7 @@ small {
     display: grid;
     gap: 0.2rem;
     padding: 0.85rem 0.95rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: 0.65rem;
     background: var(--surface);
     text-decoration: none;
@@ -735,7 +735,7 @@ small {
 
 .item-link-list a {
     padding: 0.38rem 0.6rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: 999px;
     font-size: 0.88rem;
     text-decoration: none;
@@ -753,7 +753,7 @@ small {
 
 .noteworthy-card {
     padding: 1rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: 0.7rem;
     background: var(--surface);
 }
@@ -769,7 +769,7 @@ small {
     gap: 0.55rem 0.75rem;
     align-items: end;
     padding: 1rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: 0.7rem;
     background: var(--surface-muted);
 }
@@ -825,7 +825,7 @@ small {
 .phase-badge {
     display: inline-block;
     padding: 0.1rem 0.35rem;
-    border: 1px solid var(--border);
+    border: 1px solid var(--line);
     border-radius: 999px;
     white-space: nowrap;
 }
@@ -860,5 +860,64 @@ small {
         align-items: flex-start;
         flex-direction: column;
         gap: 0.25rem;
+    }
+}
+
+/* Navigation and accessibility refinements */
+.quick-start {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.35rem 1rem;
+    width: min(1440px, calc(100% - 2.4rem));
+    margin: 0 auto;
+    padding: 0 0 1rem;
+}
+
+.quick-start a {
+    color: var(--accent);
+    font-size: 0.88rem;
+    font-weight: 800;
+    text-decoration: none;
+}
+
+.quick-start a:hover,
+.quick-start a:focus-visible {
+    color: var(--accent-strong);
+    text-decoration: underline;
+    text-underline-offset: 0.18rem;
+}
+
+.link-grid a {
+    border-color: var(--line);
+}
+
+.link-grid a:focus-visible,
+.catalog-category summary:focus-visible,
+summary:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+}
+
+.catalog-table tr:target {
+    outline: 3px solid var(--accent);
+    outline-offset: -3px;
+    background: var(--accent-soft) !important;
+}
+
+.source-badge,
+.phase-badge {
+    white-space: nowrap;
+}
+
+@media (max-width: 850px) {
+    .quick-start {
+        padding-bottom: 0.85rem;
+    }
+}
+
+@media (max-width: 520px) {
+    .quick-start {
+        width: min(100% - 1rem, 1440px);
+        gap: 0.25rem 0.75rem;
     }
 }

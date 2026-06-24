@@ -24,8 +24,16 @@
 
   <section id="come-leggere">
     <h2>Come leggere una scheda nel catalogo</h2>
-    <p>Ogni riga del <a href="#catalogo">catalogo</a> descrive un Item reale e riporta: Rarity, statistiche base, valori esatti a <code>+10</code>, <a href="#master-skill">Master Skill</a>, Enhancement Bonus, Main Ingredient e acquisizione. Il nome nella colonna <strong>+10</strong> è il nome visualizzato dal gioco quando l’Item raggiunge quel livello.</p>
-    <p>Le etichette <strong>Main game</strong> e <strong>Post-game</strong> seguono la progressione prevista. Quando un Item può essere ottenuto in più momenti, la scheda conserva tutte le fonti note. Per trovare un Monster, cerca il suo nome nel campo <strong>Acquisizione</strong>; per trovare tutti gli Item di una stessa Rarity, usa il filtro del catalogo.</p>
+    <p>Ogni riga del <a href="#catalogo">catalogo</a> descrive un Item reale e riporta: Rarity, statistiche base, valori esatti a <code>+10</code>, <a href="#master-skill">Master Skill</a>, Enhancement Bonus, Main Ingredient e provenienza. Il nome nella colonna <strong>+10</strong> è il nome visualizzato dal gioco quando l’Item raggiunge quel livello.</p>
+    <p>Le etichette <strong>Main game</strong> e <strong>Post-game</strong> seguono la progressione della guida: <strong>R1–R18</strong> appartengono alla storia, <strong>R19–R21</strong> al post-game. Quando una tabella registra un Monster, il catalogo lo mostra come <strong>Rare drop</strong>; in assenza di un Monster, indica la regola di acquisizione senza inventare una località.</p>
+    <table class="compact-table">
+      <thead><tr><th>Se vedi…</th><th>Significa</th><th>Non significa</th><th>Vai qui</th></tr></thead>
+      <tbody>
+        <tr><td><strong>Rarity 12</strong></td><td>Il grado numerico dell’Item.</td><td>Che sia automaticamente migliore per il tuo set.</td><td><a href="#rarity">Rarity</a></td></tr>
+        <tr><td><strong>+6</strong></td><td>Quanto è stato potenziato quell’esemplare.</td><td>Il Rank di una Random Skill.</td><td><a href="#enhancement">Enhancement</a></td></tr>
+        <tr><td><strong>Rank 3</strong></td><td>Il livello di una Random Skill sul drop.</td><td>Il livello <code>+3</code> dell’Item.</td><td><a href="#random-skills">Random Skills</a></td></tr>
+      </tbody>
+    </table>
     <div class="callout info">
       <p><strong>Non devi imparare tutto subito.</strong> Le sezioni successive spiegano prima i concetti; il catalogo serve quando hai una domanda concreta, ad esempio: “Che cosa lascia <em>Orc Kong</em>?” oppure “Quale <em>Bag</em> aumenta A.Atk?”</p>
     </div>
@@ -33,9 +41,9 @@
 
   <section id="fondamenti">
     <h2>Fondamenti: i cinque slot e le statistiche</h2>
-    <p>Ogni personaggio equipaggia cinque pezzi separati: <strong>Weapon</strong>, <strong>Accessory</strong>, <strong>Armor</strong>, <strong>Ring</strong> e <strong>Footwear</strong>. Ogni slot è orientato verso una statistica, ma non è obbligatorio inseguire sempre e solo quella: una Master Skill utile o un Enhancement Bonus attivabile può cambiare la scelta.</p>
+    <p>Ogni personaggio equipaggia cinque pezzi separati: <strong>Weapon</strong>, <strong>Accessory</strong>, <strong>Armor</strong>, <strong>Ring</strong> e <strong>Footwear</strong>. Il catalogo mostra le cinque statistiche che un Item distribuisce; <strong>HP</strong> resta una statistica importante del personaggio, ma non è uno dei cinque slot mostrati nella tabella dell’Item.</p>
 
-    <h3 id="statistiche">Le sei statistiche</h3>
+    <h3 id="statistiche">Le sei statistiche rilevanti</h3>
     <table>
       <thead><tr><th>Statistica</th><th>Che cosa fa</th><th>Slot normalmente orientato a essa</th><th>Uso pratico</th></tr></thead>
       <tbody>
@@ -78,8 +86,8 @@
     <p class="muted"><sup>†</sup> Weapons e Accessories hanno valori specifici più alti a Rarity 19–20. <sup>‡</sup> A Rarity 21, Weapons e Accessories hanno valori specifici ancora più alti. Le statistiche effettive per singolo Item sono sempre nel <a href="#catalogo">catalogo</a>.</p>
 
     <h3 id="common-rare">Common e Rare non sono sinonimi di Rarity</h3>
-    <p>Qui la terminologia può confondere. Fino alle ultime Rarity speciali, gli Item di <strong>Rarity pari</strong> sono normalmente i <strong>Common drops</strong>; gli Item di <strong>Rarity dispari</strong> sono normalmente <strong>Rare drops</strong> di Monster specifici o Item da chest. Quindi <em>Common</em> e <em>Rare</em> descrivono il modo in cui un Item viene ottenuto, mentre la Rarity è il suo grado numerico.</p>
-    <p>Questa regola serve soprattutto per <a href="#farming">farming</a> e <a href="#ricette">Enhancement efficiente</a>. Il catalogo indica la fonte di ogni singola scheda, quindi non devi dedurre tutto dalla sola Rarity.</p>
+    <p>Qui la terminologia può confondere. Per le Rarity <strong>R1–R18</strong>, gli Item di <strong>Rarity pari</strong> sono normalmente <strong>Common drops</strong>; quelli di <strong>Rarity dispari</strong> sono normalmente <strong>Rare drops</strong> di Monster specifici oppure Item da chest/storia. Quindi <em>Common</em> e <em>Rare</em> descrivono il modo in cui un Item viene ottenuto, mentre la Rarity è il suo grado numerico.</p>
+    <p><strong>Eccezione importante:</strong> non applicare la regola pari/dispari a <strong>R19, R20 e R21</strong>. Sono tier di <a href="#postgame">post-game</a> con fonti proprie. Per questi tre tier usa sempre la scheda del catalogo e la sezione <a href="#farming">Farming</a>, non una scorciatoia basata sul numero.</p>
 
     <h3>Crescita naturale dei personaggi</h3>
     <p>Le statistiche ottenute salendo di livello si dimezzano dopo il livello 60 e ancora dal livello 101 al 200. Per questo l’Equipment conta sempre di più nella seconda metà del gioco.</p>
@@ -98,7 +106,7 @@
 
   <section id="master-skill">
     <h2>Master Skills: perché non vendere subito un drop</h2>
-    <p>Ogni Item ha una <strong>Master Skill</strong>. Equipaggiandolo e combattendo, il personaggio apprende quella Skill in modo permanente; quando l’apprendimento è finito, puoi cambiare Item senza perdere l’effetto appreso. Questo è il motivo principale per cui un Item temporaneamente peggiore può valere lo spazio nel set.</p>
+    <p>Ogni Item ha una <strong>Master Skill</strong>. Equipaggiandolo e combattendo, <strong>quel personaggio</strong> apprende la Skill in modo permanente; quando l’apprendimento è finito, puoi cambiare Item senza perdere l’effetto appreso. Questo è il motivo principale per cui un Item temporaneamente peggiore può valere lo spazio nel set.</p>
     <div class="callout info">
       <p><strong>Decisione rapida:</strong> se il nuovo Item migliora la statistica principale, indossalo. Se non la migliora molto ma ha una Master Skill utile e non l’hai ancora imparata, indossalo per il tempo necessario. Se è un doppione senza una nuova Master Skill, conservalo per <a href="#dismantle">Dismantle</a>.</p>
     </div>
@@ -110,7 +118,7 @@
     <p><strong>Enhancement</strong> porta un singolo Item da <code>+0</code> a <code>+10</code>. Ogni passaggio aumenta le statistiche, attiva un po’ di più il bonus del suo slot e consuma Gald, Main Ingredient e — dai livelli più alti — Powder oppure Fluid. Il tetto raggiungibile dipende dallo <a href="#smith">Smith’s Acerite</a> posseduto.</p>
 
     <h3>Regola fondamentale: +N aggiunge punti, non percentuali</h3>
-    <p>Un Item riceve in tutto <strong>100 punti statistica</strong> a <code>+10</code>. I punti sono distribuiti proporzionalmente alle sue statistiche base, con arrotondamento per difetto. Perciò un Item che concentra quasi tutto in Atk riceve quasi tutto il bonus in Atk; un Item diviso tra più statistiche distribuisce il bonus tra esse.</p>
+    <p>Un Item riceve in tutto <strong>100 punti statistica</strong> a <code>+10</code>. I punti sono distribuiti proporzionalmente alle sue statistiche base, con arrotondamento per difetto <strong>su ciascuna statistica</strong>. Per questo il totale visibile può essere 99 invece di 100: non è un errore e non devi ricalcolare il valore a mano; usa la colonna <code>+10</code> del <a href="#catalogo">catalogo</a>.</p>
     <table>
       <thead><tr><th>Livello raggiunto</th><th>Punti aggiunti nel passaggio</th><th>Totale aggiunto</th></tr></thead>
       <tbody>
@@ -145,7 +153,7 @@
     </table>
 
     <h3 id="costi">Costi diretti da +0 a +10</h3>
-    <p><strong>MI</strong> significa Main Ingredient dell’Item bersaglio. <strong>CTP/STP/FTP</strong> significano Coarse, Standard e Fine Tempering Powder. I Fluid sono invece legati alle <a href="#fluid">Random Skills</a>.</p>
+    <p><strong>MI</strong> significa Main Ingredient dell’Item bersaglio. <strong>CTP/STP/FTP</strong> significano Coarse, Standard e Fine Tempering Powder. I Fluid sono invece legati alle <a href="#fluid">Random Skills</a>. La colonna <strong>Rare</strong> non significa “Item di Rarity alta”: significa Item ottenuto come Rare drop/chest secondo la regola <a href="#common-rare">Common/Rare</a>.</p>
     <table class="wide-table">
       <thead><tr><th>Livello</th><th>Common</th><th>Rare</th><th>Gald (% del prezzo shop)</th><th>Totale Gald</th></tr></thead>
       <tbody>
@@ -185,7 +193,7 @@
     </table>
 
     <h3 id="dismantle">Dismantle: due sistemi separati</h3>
-    <p><strong>Enhancement level</strong> e <strong>Random Skill Rank</strong> non sono la stessa cosa. Il primo decide MI e Powder ottenuti; il secondo decide il Fluid. Mantenerli separati evita gli errori più comuni.</p>
+    <p><strong>Enhancement level</strong> e <strong>Random Skill Rank</strong> non sono la stessa cosa. Il primo decide MI e Powder ottenuti; il secondo decide il Fluid. Un Item senza Random Skills produce <strong>Odorless Fluid</strong>: non produce anche Balmy, Mellow, Pungent o Funky. Mantenerli separati evita gli errori più comuni.</p>
     <h4>Rendimento in base al livello +N</h4>
     <table>
       <thead><tr><th>Stato dell’Item</th><th>Materiali restituiti</th></tr></thead>
@@ -221,9 +229,19 @@
     <h2>Ricette di Enhancement efficienti</h2>
     <p><strong>Matching</strong> significa “della stessa <em>Rarity</em> dell’Item bersaglio”; non significa “stesso Main Ingredient”. Questa distinzione è cruciale soprattutto per Rings. Un donor <em>Any</em> può invece essere di qualunque Rarity quando la ricetta lo specifica.</p>
     <p>Le ricette sfruttano il profitto del ciclo <code>+1 → Dismantle</code>. Nella storia, <code>+3</code> e <code>+6</code> sono gli obiettivi più ragionevoli; <code>+9/+10</code> richiedono farming mirato e sono molto più efficienti dopo <a href="#alchemist">Alchemist’s Acerite</a>.</p>
+    <table>
+      <thead><tr><th>Situazione</th><th>Obiettivo sicuro</th><th>Perché</th><th>Prossimo passo</th></tr></thead>
+      <tbody>
+        <tr><td>Hai appena ottenuto Novice Smith’s Acerite.</td><td><code>+3</code> su un Item che usi davvero.</td><td>Il guadagno è concreto, ma gli Item vengono ancora sostituiti spesso.</td><td>Segui la ricetta <a href="#ricette-common">Common</a> o <a href="#ricette-rare">Rare</a>.</td></tr>
+        <tr><td>Hai Journeyman Smith’s Acerite e un set stabile.</td><td><code>+6</code> su Weapon/Accessory o difesa che senti utile.</td><td>È il punto più conveniente della storia per investire materiale.</td><td>Controlla <a href="#costi">costi</a> e donor <a href="#matching">Matching</a>.</td></tr>
+        <tr><td>Hai Master/Grandmaster Smith’s Acerite.</td><td><code>+9/+10</code> solo su set pianificato.</td><td>Richiede Powder/Fluid e Gald in quantità molto maggiori.</td><td>Vai a <a href="#alchemist">Alchemist’s Acerite</a> e <a href="#postgame">post-game</a>.</td></tr>
+      </tbody>
+    </table>
+    <h3 id="matching">Prima di iniziare: che cos’è un donor Matching?</h3>
+    <p>Un donor <strong>Matching</strong> ha la <strong>stessa Rarity</strong> dell’Item bersaglio. Non basta condividere il Main Ingredient. Per esempio, un Ring e un’altra categoria possono usare lo stesso materiale ma non essere Matching; quando una ricetta richiede Matching, confronta sempre la Rarity nel <a href="#catalogo">catalogo</a>.</p>
     <div class="callout info"><p><strong>Scorciatoia per il Fine Tempering Powder:</strong> nei dungeon finali come <em>Zamahl Grotto</em>, <em>Mount Killaraus</em> e <em>Innominat</em>, i shiny drops possono fornire FTP. Uscire e rientrare nell’area ripristina gli shiny drops. Per la storia è spesso meno tedioso cercare questi materiali che costruire Item a <code>+8</code> soltanto per smantellarli.</p></div>
 
-    <details>
+    <details id="ricette-common">
       <summary><strong>Common +3</strong> — procedura più semplice</summary>
       <ol class="steps"><li>Prendi 3 Item <em>Matching</em>.</li><li>Portali tutti a <code>+1</code>.</li><li>Smantellali: ottieni 6 MI e 3 CTP.</li><li>Usa 3 MI e 1 CTP sul bersaglio per portarlo a <code>+3</code>.</li></ol>
       <p><strong>Risultato:</strong> il bersaglio è a <code>+3</code>, con 3 MI e 2 CTP di margine. Questo è il modo naturale di trattare i Common doppioni.</p>
@@ -243,7 +261,7 @@
       <ol class="steps"><li>Parti con <strong>6 FTP</strong>: il bersaglio ne consumerà 2 a <code>+9</code> e 4 a <code>+10</code>.</li><li>Smantella 38 donor <em>Matching</em> a <code>+1</code>.</li><li>Prepara quattro donor Common a <code>+5</code>, ciascuno da otto Common <code>+1</code>. I quattro donor forniscono gli 8 STP necessari.</li><li>Usa i materiali così ottenuti per completare il bersaglio fino a <code>+10</code>.</li></ol>
       <p><strong>Base ideale:</strong> 38 Matching, 4 gruppi da 9 Common della stessa Rarity, 38 MI Matching, 4 gruppi da 8 MI Common, 0 CTP, 0 STP (8 preferibili) e 6 FTP. È un progetto post-game, non una tappa richiesta per finire la storia.</p>
     </details>
-    <details>
+    <details id="ricette-rare">
       <summary><strong>Rare +3 e +6</strong> — ricette operative</summary>
       <table>
         <thead><tr><th>Obiettivo</th><th>Donor Matching +1</th><th>Fluid iniziali</th><th>Risultato della ricetta</th></tr></thead>
@@ -292,7 +310,16 @@
 
   <section id="farming">
     <h2>Farming e acquisizione: trovare l’Equipment giusto</h2>
-    <p>Il percorso corretto dipende da ciò che cerchi. Per un Item specifico, vai al <a href="#catalogo">catalogo</a>, apri la categoria e leggi <strong>Acquisizione</strong>. Per aumentare il volume dei drop, applica le regole qui sotto. Per costruire un Item <a href="#common-rare">Common</a> di Rarity precisa, usa il Common Target.</p>
+    <p>Il percorso corretto dipende da ciò che cerchi. Per un Item specifico, vai al <a href="#catalogo">catalogo</a>, apri la categoria e leggi <strong>Provenienza</strong>. Se la riga nomina un Monster, è un Rare drop da cercare; se indica Common drop o chest/storia, usa la regola mostrata senza cercare un Monster che la scheda non promette. Per aumentare il volume dei drop, applica le regole qui sotto.</p>
+    <table>
+      <thead><tr><th>Voglio…</th><th>Procedura per novizi</th><th>Link utile</th></tr></thead>
+      <tbody>
+        <tr><td>Imparare una Master Skill.</td><td>Indossa l’Item e scegli battaglie facili/rapide; gli Item con bonus di apprendimento aiutano.</td><td><a href="#master-skill">Master Skills</a></td></tr>
+        <tr><td>Un Rare drop preciso.</td><td>Cerca l’Item o il Monster nel catalogo, poi aumenta i drop con Mystic Artes e difficoltà.</td><td><a href="#farming-equipment">Farming Equipment</a></td></tr>
+        <tr><td>Un Common di una Rarity precisa.</td><td>Trova il Rare della Rarity successiva nella stessa categoria e usa il Common Target.</td><td><a href="#common-target">Common Target</a></td></tr>
+        <tr><td>Materiali per Enhancement.</td><td>Conserva doppioni, migliora i donor solo quando la ricetta lo richiede e usa Dismantle.</td><td><a href="#dismantle">Dismantle</a></td></tr>
+      </tbody>
+    </table>
 
     <h3>Difficoltà, Mystic Artes e ordine dei kill</h3>
     <ul>
@@ -338,8 +365,8 @@
 
   <section id="catalogo">
     <h2>Catalogo completo dell’Equipment</h2>
-    <p>Il catalogo sottostante contiene tutte le 18 categorie, i dati di ogni Item e fonti di acquisizione localizzate. Le schede sono generate nella build di pubblicazione e restano interamente locali una volta online: nessun dato viene richiesto dal browser a siti esterni.</p>
-    <p>Usa i filtri insieme: ad esempio <strong>Rokurou + Talismans + Main game</strong>, oppure cerca un Monster nel campo testuale. Ogni Item ha un URL interno, quindi puoi collegare una scheda specifica a una discussione o a una nota personale.</p>
+    <p>Il catalogo sottostante contiene tutte le 18 categorie e 350 Item. Ogni scheda conserva statistiche, valori esatti a <code>+10</code>, Master Skill, Enhancement Bonus, Main Ingredient e un’indicazione di provenienza. Il browser legge soltanto il file locale pubblicato con il sito: non consulta fonti esterne.</p>
+    <p>Usa i filtri insieme: ad esempio <strong>Rokurou + Talismans + Main game</strong>, oppure cerca un Monster nel campo testuale. Il filtro di un personaggio include automaticamente <strong>Rings</strong> e <strong>Shoes</strong> utilizzabili da tutti. Ogni Item ha un URL interno, quindi puoi collegare una scheda specifica a una discussione o a una nota personale.</p>
     <div id="catalogo-dinamico" aria-live="polite"></div>
   </section>
 
@@ -353,9 +380,9 @@
       <li><strong>Late game:</strong> considera gli Item con Enhancement Bonus condizionale che sai attivare con le tue Artes.</li>
       <li><strong>Post-game:</strong> passa alla sezione <a href="#massimizzazione">Massimizzazione</a> solo dopo avere raccolto abbastanza materiale e capito quali Random Skills vuoi davvero.</li>
     </ol>
-    <h3>Item notevoli, in ordine di acquisizione</h3>
-    <p>Questa lista è compilata dalle schede notevoli della guida e collega ogni scelta direttamente al catalogo. Le ragioni sono concise: apri la scheda per statistiche, fonte e alternative della stessa Rarity.</p>
-    <div id="noteworthy-dynamic" class="noteworthy-list" aria-live="polite"></div>
+    <h3>Schede rapide per categoria e fase</h3>
+    <p>Queste 36 schede sono <strong>riferimenti di confronto</strong>: una per ogni categoria in Main game e una in post-game. Non sono una lista obbligatoria né sostituiscono la scelta basata su statistica, Master Skill e stile di gioco. Apri la scheda per confrontarla con gli altri Item della stessa categoria.</p>
+    <div id="reference-cards-dynamic" class="noteworthy-list" aria-live="polite"></div>
   </section>
 
   <section id="postgame">
@@ -406,7 +433,7 @@
     <p class="muted">Phoenix dimezza la propria possibilità dopo ogni resurrection riuscita e la ripristina alla battaglia successiva.</p>
 
     <h3 id="sovereign">Sovereign Acerite</h3>
-    <p>Sovereign Acerite amplia il pool delle Random Skills con effetti da end-game. Gli Item ottengono una chance di attingere a quel pool quando sono Monster drops a <code>+10</code>; aumentare il numero di Sovereign posseduti aumenta la chance, ma anche con 99 resta bassa. L’Equipment non passa in New Game+, quindi non costruire un piano attorno a un singolo drop perfetto.</p>
+    <p>Sovereign Acerite amplia il pool delle Random Skills con effetti da end-game. Per rendere un tipo di Item idoneo, devi averlo già portato almeno una volta a <code>+10</code> nella tua libreria; in seguito, gli esemplari idonei devono provenire da <strong>Monster drop</strong>, non da shop. Il Monster non deve lasciare cadere un Item già a <code>+10</code>. Aumentare il numero di Sovereign posseduti aumenta la chance, ma anche con 99 resta bassa. L’Equipment non passa in New Game+, quindi non costruire un piano attorno a un singolo drop perfetto.</p>
     <h4>Ottenimento</h4>
     <ul><li>Shop level 15.</li><li>Metaboar, Dire Foe disponibile in New Game+.</li><li>Dismantle di un Item a <code>+10</code>.</li></ul>
     <h4>Effetti aggiunti al pool Sovereign</h4>
@@ -448,7 +475,7 @@
       <dt>Enhancement Bonus</dt><dd>Bonus del tipo di slot che cresce a ogni livello +N.</dd>
       <dt>Fluid</dt><dd>Materiale ottenuto dalle Random Skills; il tipo dipende dal loro Rank.</dd>
       <dt>Main Ingredient (MI)</dt><dd>Materiale determinato dalla Rarity e usato per potenziare l’Item.</dd>
-      <dt>Matching</dt><dd>Donor della stessa Rarity dell’Item bersaglio.</dd>
+      <dt>Matching</dt><dd>Donor della stessa Rarity dell’Item bersaglio; non basta lo stesso Main Ingredient.</dd>
       <dt>Master Skill</dt><dd>Skill legata all’Item, appresa in modo permanente combattendo mentre l’Item è equipaggiato.</dd>
       <dt>Random Skill</dt><dd>Skill generata sul drop, con Rank 1–4; non viene modificata dall’Enhancement.</dd>
       <dt>Rare</dt><dd>Item normalmente legato a Monster specifico o chest; non è una Rarity.</dd>

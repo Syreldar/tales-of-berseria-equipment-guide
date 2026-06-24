@@ -151,26 +151,26 @@
     }
 
     function sourceBadge(item) {
-        const text = normalizeText(getAcquisition(item));
+        const kind = String(item.source_kind || "").trim();
 
-        if (text.includes("chest")) {
-            return "Chest";
-        }
-
-        if (text.includes("shop")) {
-            return "Shop";
-        }
-
-        if (text.includes("common drop")) {
-            return "Common drop";
-        }
-
-        if (item.rare_drop && item.rare_drop !== "—" && item.rare_drop !== "N/A") {
+        if (kind === "rare_drop") {
             return "Rare drop";
         }
-
-        return "Story / altro";
+        if (kind === "common_drop") {
+            return "Common drop";
+        }
+        if (kind === "postgame_enemy_drop") {
+            return "Enemy drop post-game";
+        }
+        if (kind === "postgame_chest_or_drop") {
+            return "Post-game";
+        }
+        if (kind === "chest_or_story") {
+            return "Chest / storia";
+        }
+        return "Indicazione";
     }
+
 
     function resolveItemLinks(data) {
         const lookup = new Map();
@@ -196,19 +196,19 @@
         });
     }
 
-    function renderNoteworthy(data) {
-        const target = guide.querySelector("#noteworthy-dynamic");
+    function renderReferenceCards(data) {
+        const target = guide.querySelector("#reference-cards-dynamic");
         if (!target) {
             return;
         }
 
-        const entries = Array.isArray(data.noteworthy) ? data.noteworthy : [];
+        const entries = Array.isArray(data.reference_cards) ? data.reference_cards : [];
         const itemByKey = new Map(data.items.map(function(item) {
             return [`${item.category_id}|${item.rarity}|${normalizeText(item.name)}`, item];
         }));
 
         if (!entries.length) {
-            target.innerHTML = "<p class=\"muted\">Le note di progressione sono incluse nelle schede disponibili nel catalogo. Usa il filtro <strong>Main game</strong> per seguire l’ordine di acquisizione.</p>";
+            target.innerHTML = "<p class=\"muted\">Le schede rapide saranno disponibili dopo la creazione del catalogo locale completo.</p>";
             return;
         }
 
@@ -224,11 +224,12 @@
                 <article class="noteworthy-card">
                     <p class="noteworthy-meta">${escapeHtml(category)}${character ? ` · ${escapeHtml(character)}` : ""} · ${escapeHtml(phase)} · Rarity ${escapeHtml(entry.rarity || "—")}</p>
                     <h4><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></h4>
-                    <p>${escapeHtml(entry.reason || "Item notevole per statistiche, Master Skill o Enhancement Bonus.")}</p>
+                    <p>${escapeHtml(entry.reason || "Scheda di confronto: verifica statistiche, Master Skill e Enhancement Bonus.")}</p>
                 </article>
             `;
         }).join("");
     }
+
 
     function renderCatalogue(data) {
         const target = guide.querySelector("#catalogo-dinamico");
@@ -239,30 +240,21 @@
         if (!data || data.complete !== true || !Array.isArray(data.items) || !data.items.length) {
             target.innerHTML = `
                 <div class="callout warning">
-                    <h3>Catalogo non disponibile in questa copia</h3>
-                    <p>Il repository genera il catalogo locale durante la pubblicazione e blocca il deploy se mancano categorie, Item o fonti essenziali. Apri la versione pubblicata dopo che il workflow ha terminato.</p>
+                    <h3>Catalogo non ancora materializzato</h3>
+                    <p>Questa copia contiene solo la struttura del sito. Nel repository, esegui manualmente il workflow <strong>Snapshot catalog</strong>: genera e committa il catalogo locale completo. Il deploy Pages normale rifiuta qualsiasi catalogo parziale.</p>
                 </div>
             `;
             return;
         }
 
         const categories = Array.isArray(data.categories) ? data.categories : [];
-        const categoryItems = new Map();
-        data.items.forEach(function(item) {
-            const key = item.category_id || "other";
-            if (!categoryItems.has(key)) {
-                categoryItems.set(key, []);
-            }
-            categoryItems.get(key).push(item);
-        });
-
         const categoryOptions = categories.map(function(category) {
             return `<option value="${escapeHtml(category.id)}">${escapeHtml(category.label)}</option>`;
         }).join("");
-        const characters = ["Velvet", "Rokurou", "Laphicet", "Eizen", "Magilou", "Eleanor", "All"];
+        const characters = ["Velvet", "Rokurou", "Laphicet", "Eizen", "Magilou", "Eleanor"];
         const characterOptions = characters.map(function(character) {
             return `<option value="${escapeHtml(character)}">${escapeHtml(character)}</option>`;
-        }).join("");
+        }).join("") + "<option value=\"All\">Solo universali (Rings/Shoes)</option>";
 
         target.innerHTML = `
             <div class="catalog-toolbar">
@@ -299,8 +291,16 @@
             };
 
             const matching = data.items.filter(function(item) {
-                if (filters.character && !String(item.character || "").split("·").map(function(value) { return value.trim(); }).includes(filters.character)) {
-                    return false;
+                if (filters.character) {
+                    const users = String(item.character || "").split("·").map(function(value) { return value.trim(); });
+                    const universal = users.includes("All");
+                    if (filters.character === "All") {
+                        if (!universal) {
+                            return false;
+                        }
+                    } else if (!universal && !users.includes(filters.character)) {
+                        return false;
+                    }
                 }
                 if (filters.category && item.category_id !== filters.category) {
                     return false;
@@ -351,7 +351,7 @@
                 return `
                     <details class="catalog-category" open>
                         <summary><span>${escapeHtml(cat.label)}</span><small>${escapeHtml(cat.slot)} · ${escapeHtml(cat.character)} · ${rows.length} Item</small></summary>
-                        <div class="table-wrap"><table class="catalog-table"><thead><tr><th>Rarity</th><th>Item<br><small>nome a +10</small></th><th>Periodo</th><th>Base</th><th>+10</th><th>Master Skill</th><th>Enhancement Bonus</th><th>Main Ingredient</th><th>Acquisizione</th></tr></thead><tbody>${body}</tbody></table></div>
+                        <div class="table-wrap"><table class="catalog-table"><thead><tr><th>Rarity</th><th>Item<br><small>nome a +10</small></th><th>Periodo</th><th>Base</th><th>+10</th><th>Master Skill</th><th>Enhancement Bonus</th><th>Main Ingredient</th><th>Provenienza</th></tr></thead><tbody>${body}</tbody></table></div>
                     </details>
                 `;
             }).join("") || "<p class=\"muted\">Nessun Item soddisfa questi filtri.</p>";
@@ -359,24 +359,43 @@
             status.textContent = `${matching.length} Item trovati · ${categories.length} categorie disponibili.`;
             wrapTables(results);
 
-            if (window.location.hash) {
-                const targetNode = document.getElementById(window.location.hash.slice(1));
-                if (targetNode) {
-                    const parent = targetNode.closest("details");
-                    if (parent) {
-                        parent.open = true;
-                    }
-                    window.setTimeout(function() {
-                        targetNode.scrollIntoView({ block: "center" });
-                    }, 0);
-                }
+            revealHashTarget();
+        }
+
+        function revealHashTarget() {
+            const id = window.location.hash.slice(1);
+            if (!id || !id.startsWith("item-")) {
+                return;
             }
+
+            const targetNode = document.getElementById(id);
+            if (!targetNode) {
+                const hasActiveFilter = Boolean(query.value || character.value || category.value || phase.value || rarity.value);
+                if (hasActiveFilter) {
+                    query.value = "";
+                    character.value = "";
+                    category.value = "";
+                    phase.value = "";
+                    rarity.value = "";
+                    renderRows();
+                }
+                return;
+            }
+
+            const parent = targetNode.closest("details");
+            if (parent) {
+                parent.open = true;
+            }
+            window.setTimeout(function() {
+                targetNode.scrollIntoView({ block: "center" });
+            }, 0);
         }
 
         [query, character, category, phase, rarity].forEach(function(control) {
             control.addEventListener("input", renderRows);
             control.addEventListener("change", renderRows);
         });
+        window.addEventListener("hashchange", revealHashTarget);
 
         renderRows();
         resolveItemLinks(data);
@@ -441,7 +460,7 @@
             .then(function(data) {
                 if (data) {
                     renderCatalogue(data);
-                    renderNoteworthy(data);
+                    renderReferenceCards(data);
                 }
             })
             .catch(showError);

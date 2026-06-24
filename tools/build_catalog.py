@@ -1,15 +1,16 @@
 #!/usr/bin/env python3
-"""Build the published Tales of Berseria Equipment catalogue.
+"""Build a reviewed, local Equipment catalogue snapshot.
 
-This script deliberately has no dependency on the original guide host.  It reads
-structured equipment tables from the Aselia Wiki API, turns them into a local JSON
-file, validates the complete result, and the Pages workflow publishes that file as
-part of the static artifact.
+This command is intentionally separate from the Pages deployment workflow.  It may
+contact the structured equipment source only when the repository maintainer runs
+``Snapshot catalog``.  The normal Pages workflow deploys the committed JSON file
+and never fetches catalogue data from the network.
 """
 
 from __future__ import annotations
 
 import argparse
+import hashlib
 import html
 import json
 import re
@@ -27,9 +28,12 @@ from urllib3.util.retry import Retry
 
 WIKI_API_URL = "https://aselia.fandom.com/api.php"
 TIMEOUT_SECONDS = 60
+EXPECTED_CATEGORY_COUNT = 18
+EXPECTED_ITEM_COUNT = 350
+PHASES = ("Main game", "Post-game")
 HEADERS = {
     "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
-    "User-Agent": "TalesOfBerseriaEquipmentGuide/3.0 (+static Pages build)",
+    "User-Agent": "TalesOfBerseriaEquipmentGuide/4.0 (catalogue snapshot)",
 }
 
 
@@ -131,10 +135,30 @@ def rarity_from_cell(cell: Tag) -> int | None:
 
 
 def exact_plus_ten(stats: list[int]) -> list[int]:
+    """Return the displayed +10 values: each stat receives floor(100 * stat / total)."""
     total = sum(stats)
     if total <= 0:
         return list(stats)
     return [value + ((100 * value) // total) for value in stats]
+
+
+def phase_from_rarity(rarity: int) -> str:
+    """R19, R20 and R21 are the post-game equipment tiers."""
+    return "Post-game" if rarity >= 19 else "Main game"
+
+
+def source_from_fields(rarity: int, rare_drop: str) -> tuple[str, str]:
+    """Create a transparent acquisition label without inventing a location."""
+    has_rare_monster = rare_drop and rare_drop not in {"—", "N/A"}
+    if has_rare_monster:
+        return "rare_drop", f"Rare drop — {rare_drop}"
+    if rarity <= 18 and rarity % 2 == 0:
+        return "common_drop", "Common drop — Rarity pari; usa la regola Common Target nella sezione Farming."
+    if rarity <= 18:
+        return "chest_or_story", "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+    if rarity in {19, 20}:
+        return "postgame_chest_or_drop", "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+    return "postgame_enemy_drop", "Post-game enemy drop — nessun Monster è registrato nella tabella strutturata."
 
 
 def make_session() -> requests.Session:
@@ -203,33 +227,6 @@ def find_equipment_table(soup: BeautifulSoup) -> tuple[Tag, dict[str, int]]:
     raise RuntimeError("Equipment table not found on structured catalogue page")
 
 
-def phase_from_rarity(rarity: int) -> str:
-    """The standard lists place the final Rarity tier in post-game."""
-    return "Post-game" if rarity >= 21 else "Main game"
-
-
-def acquisition_from_fields(rarity: int, rare_drop: str) -> str:
-    if rare_drop and rare_drop not in {"—", "N/A"}:
-        return f"Rare drop: {rare_drop}"
-    if rarity % 2 == 0:
-        return "Common drop: Rarity pari; può provenire da Monster, chest, shop o storia."
-    return "Acquisizione non specificata nella tabella strutturata; verifica l’area di gioco."
-
-
-def noteworthy_reason(item: dict[str, Any]) -> str:
-    labels = ("Atk", "A.Atk", "Def", "A.Def", "Focus")
-    stats = [int(value) for value in item["stats"]]
-    total = sum(stats)
-    strongest_index = max(range(len(stats)), key=lambda index: stats[index])
-    strongest_label = labels[strongest_index]
-    strongest_value = stats[strongest_index]
-    period = "durante la storia" if item["phase"] == "Main game" else "nel post-game"
-    return (
-        f"Riferimento utile {period}: totale statistiche {total}, con {strongest_label} {strongest_value} come valore principale. "
-        f"Controlla anche la Master Skill ({item['master_skill']}) prima di sostituire l’Equipment attuale."
-    )
-
-
 def category_rows(session: requests.Session, category: Category) -> list[dict[str, Any]]:
     soup = BeautifulSoup(fetch_wiki_page(session, category.page), "html.parser")
     table, positions = find_equipment_table(soup)
@@ -251,6 +248,7 @@ def category_rows(session: requests.Session, category: Category) -> list[dict[st
             number_from_cell(cells[positions["focus"]]),
         ]
         rare_drop = first_english(cells[positions["rare_drop"]], "—")
+        source_kind, acquisition = source_from_fields(rarity, rare_drop)
         rows.append({
             "category_id": category.identifier,
             "category": category.label,
@@ -266,94 +264,126 @@ def category_rows(session: requests.Session, category: Category) -> list[dict[st
             "enhancement_bonus": all_english(cells[positions["enhancement_bonus"]]),
             "main_ingredient": first_english(cells[positions["main_ingredient"]]),
             "rare_drop": rare_drop,
-            "acquisition": acquisition_from_fields(rarity, rare_drop),
+            "source_kind": source_kind,
+            "acquisition": acquisition,
         })
     if not rows:
         raise RuntimeError(f"No equipment rows parsed for {category.label}")
     return rows
 
 
-def notable_entries(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
-    """Select one late-story and one post-game reference item per category.
+def reference_reason(item: dict[str, Any]) -> str:
+    labels = ("Atk", "A.Atk", "Def", "A.Def", "Focus")
+    stats = [int(value) for value in item["stats"]]
+    strongest_index = max(range(len(stats)), key=lambda index: stats[index])
+    strongest_label = labels[strongest_index]
+    strongest_value = stats[strongest_index]
+    period = "storia" if item["phase"] == "Main game" else "post-game"
+    return (
+        f"Scheda di confronto per la {period}: Rarity {item['rarity']}, "
+        f"{strongest_label} {strongest_value} come valore più alto. "
+        f"Confronta Master Skill e Enhancement Bonus prima di decidere."
+    )
 
-    These are navigation aids derived from the static statistics; they are not a
-    replacement for the detailed progression explanations in the guide.
-    """
-    results: list[dict[str, Any]] = []
+
+def reference_cards(items: list[dict[str, Any]]) -> list[dict[str, Any]]:
+    """Select exactly one transparent comparison card for every category and phase."""
+    cards: list[dict[str, Any]] = []
     for category in CATEGORIES:
-        group = [item for item in items if item["category_id"] == category.identifier]
-        for phase in ("Main game", "Post-game"):
-            candidates = [item for item in group if item["phase"] == phase]
+        for phase in PHASES:
+            candidates = [
+                item for item in items
+                if item["category_id"] == category.identifier and item["phase"] == phase
+            ]
             if not candidates:
-                continue
+                raise RuntimeError(f"Missing {phase} items for {category.label}")
             selected = max(candidates, key=lambda item: (sum(item["stats"]), item["rarity"], item["name"].lower()))
-            results.append({
+            cards.append({
                 "category_id": selected["category_id"],
                 "category": selected["category"],
                 "character": selected["character"],
                 "rarity": selected["rarity"],
                 "name": selected["name"],
                 "phase": selected["phase"],
-                "reason": noteworthy_reason(selected),
+                "reason": reference_reason(selected),
             })
-    return sorted(results, key=lambda entry: (entry["category_id"], entry["phase"], entry["rarity"]))
+    return sorted(cards, key=lambda entry: (entry["phase"] != "Main game", entry["rarity"], entry["category_id"]))
 
 
-MIN_NAVIGATION_ENTRIES = 34
+def item_identity(item: dict[str, Any]) -> dict[str, Any]:
+    return {
+        "category_id": item["category_id"],
+        "rarity": item["rarity"],
+        "name": normalized(item["name"]),
+        "max_name": normalized(item["max_name"]),
+        "stats": item["stats"],
+        "master_skill": normalized(item["master_skill"]),
+        "enhancement_bonus": normalized(item["enhancement_bonus"]),
+        "main_ingredient": normalized(item["main_ingredient"]),
+        "rare_drop": normalized(item["rare_drop"]),
+        "source_kind": item["source_kind"],
+    }
 
 
-def navigation_pairs(entries: list[dict[str, Any]]) -> set[tuple[str, str]]:
-    return {(str(entry["category_id"]), str(entry["phase"])) for entry in entries}
+def identity_sha256(items: list[dict[str, Any]]) -> str:
+    canonical = json.dumps([item_identity(item) for item in items], ensure_ascii=False, separators=(",", ":"), sort_keys=True)
+    return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
-def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], noteworthy: list[dict[str, Any]]) -> None:
-    expected = {category["id"] for category in categories}
-    found = {item["category_id"] for item in items}
-    if found != expected:
-        raise RuntimeError(f"Category mismatch. Missing: {sorted(expected - found)}; unexpected: {sorted(found - expected)}")
-    if len(categories) != 18:
-        raise RuntimeError("The category manifest must contain all 18 categories")
-    if len(items) < 350:
-        raise RuntimeError(f"Catalogue has {len(items)} items; at least 350 are required")
+def expected_phase_pairs(categories: list[dict[str, str]]) -> set[tuple[str, str]]:
+    return {(category["id"], phase) for category in categories for phase in PHASES}
+
+
+def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], cards: list[dict[str, Any]]) -> None:
+    if len(categories) != EXPECTED_CATEGORY_COUNT:
+        raise RuntimeError(f"The category manifest must contain exactly {EXPECTED_CATEGORY_COUNT} categories")
+    if len(items) != EXPECTED_ITEM_COUNT:
+        raise RuntimeError(f"Catalogue has {len(items)} items; expected exactly {EXPECTED_ITEM_COUNT}")
+
+    expected_categories = {category["id"] for category in categories}
+    found_categories = {item["category_id"] for item in items}
+    if found_categories != expected_categories:
+        raise RuntimeError(f"Category mismatch. Missing: {sorted(expected_categories - found_categories)}; unexpected: {sorted(found_categories - expected_categories)}")
 
     keys: set[tuple[str, int, str]] = set()
+    found_pairs: set[tuple[str, str]] = set()
     for item in items:
-        key = (item["category_id"], int(item["rarity"]), normalized(item["name"]))
+        key = (str(item["category_id"]), int(item["rarity"]), normalized(str(item["name"])))
         if key in keys:
             raise RuntimeError(f"Duplicate catalogue row: {key}")
         keys.add(key)
-        if item["phase"] not in {"Main game", "Post-game"}:
-            raise RuntimeError(f"Invalid phase for {item['name']}")
+        expected_phase = phase_from_rarity(int(item["rarity"]))
+        if item["phase"] != expected_phase:
+            raise RuntimeError(f"Incorrect phase for {item['name']}: expected {expected_phase}")
+        found_pairs.add((str(item["category_id"]), str(item["phase"])))
         if len(item["stats"]) != 5 or len(item["stats_plus10"]) != 5:
             raise RuntimeError(f"Invalid stat vector for {item['name']}")
         if item["stats_plus10"] != exact_plus_ten(item["stats"]):
             raise RuntimeError(f"Incorrect +10 values for {item['name']}")
-        for field in ("name", "max_name", "master_skill", "enhancement_bonus", "main_ingredient", "acquisition"):
+        for field in ("name", "max_name", "master_skill", "enhancement_bonus", "main_ingredient", "rare_drop", "source_kind", "acquisition"):
             value = str(item.get(field, "")).strip()
             if not value or value == "—":
                 raise RuntimeError(f"Missing {field} for {item['name']}")
             if re.search(r"https?://", value, re.IGNORECASE):
                 raise RuntimeError(f"External URL leaked into item field: {item['name']}")
 
-    expected_pairs = navigation_pairs(items)
-    noteworthy_pairs = navigation_pairs(noteworthy)
-    if len(noteworthy) < MIN_NAVIGATION_ENTRIES:
-        raise RuntimeError(
-            f"Only {len(noteworthy)} navigation entries found; at least {MIN_NAVIGATION_ENTRIES} are required"
-        )
-    if len(noteworthy) != len(noteworthy_pairs):
-        raise RuntimeError("Navigation entries must not duplicate a category/phase pair")
-    if noteworthy_pairs != expected_pairs:
-        missing = sorted(expected_pairs - noteworthy_pairs)
-        unexpected = sorted(noteworthy_pairs - expected_pairs)
-        raise RuntimeError(
-            "Navigation coverage does not match the catalogue phases. "
-            f"Missing: {missing}; unexpected: {unexpected}"
-        )
+    expected_pairs = expected_phase_pairs(categories)
+    if found_pairs != expected_pairs:
+        missing = sorted(expected_pairs - found_pairs)
+        unexpected = sorted(found_pairs - expected_pairs)
+        raise RuntimeError(f"Catalogue phase coverage is incomplete. Missing: {missing}; unexpected: {unexpected}")
+
+    card_pairs = {(str(card["category_id"]), str(card["phase"])) for card in cards}
+    if len(cards) != len(expected_pairs):
+        raise RuntimeError(f"Reference cards have {len(cards)} entries; expected exactly {len(expected_pairs)}")
+    if card_pairs != expected_pairs:
+        missing = sorted(expected_pairs - card_pairs)
+        unexpected = sorted(card_pairs - expected_pairs)
+        raise RuntimeError(f"Reference-card coverage mismatch. Missing: {missing}; unexpected: {unexpected}")
 
 
 def main() -> int:
-    parser = argparse.ArgumentParser(description="Build the published local Equipment catalogue.")
+    parser = argparse.ArgumentParser(description="Build the committed local Equipment catalogue snapshot.")
     parser.add_argument("--output", type=Path, default=Path("site/content/catalogo.json"))
     args = parser.parse_args()
 
@@ -368,20 +398,26 @@ def main() -> int:
         items.extend(category_rows(session, category))
 
     items.sort(key=lambda item: (item["category_id"], item["rarity"], normalized(item["name"])))
-    noteworthy = notable_entries(items)
-    validate(categories, items, noteworthy)
+    cards = reference_cards(items)
+    validate(categories, items, cards)
 
     payload = {
-        "schema_version": 3,
+        "schema_version": 4,
         "complete": True,
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "categories": categories,
         "items": items,
-        "noteworthy": noteworthy,
+        "reference_cards": cards,
+        "integrity": {
+            "expected_categories": EXPECTED_CATEGORY_COUNT,
+            "expected_items": EXPECTED_ITEM_COUNT,
+            "expected_category_phase_pairs": EXPECTED_CATEGORY_COUNT * len(PHASES),
+            "identity_sha256": identity_sha256(items),
+        },
     }
     args.output.parent.mkdir(parents=True, exist_ok=True)
     args.output.write_text(json.dumps(payload, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
-    print(f"[catalogue] wrote {len(items)} items and {len(noteworthy)} navigation entries to {args.output}", file=sys.stderr)
+    print(f"[catalogue] wrote {len(items)} items and {len(cards)} reference cards to {args.output}", file=sys.stderr)
     return 0
 
 
