@@ -38,3 +38,8 @@ La snapshot viene rifiutata se non soddisfa tutti questi vincoli:
 ## Limite dichiarato della provenienza
 
 La snapshot conserva sempre il Monster quando la tabella strutturata registra un `Rare drop`. Per tutte le righe senza Monster non dichiara una località fittizia: mostra invece `Common drop`, `Chest / storia` o una regola post-game. Questo evita di trasformare dati mancanti in istruzioni sbagliate per un nuovo giocatore.
+
+## Cross-reference hotfix
+
+- Corrected the farming-link target from `Velvet Amphibole Belt` to the canonical catalogue name `Amphibole Belt`.
+- The validator remains strict: every `data-item-ref` in the guide must resolve to a committed Equipment row after the catalogue snapshot is built.

@@ -57,3 +57,7 @@ python -m http.server 8000 --directory site
 ```
 
 Apri `http://localhost:8000/`. Prima del primo deploy, il catalogo mostra un messaggio esplicito. Il primo deploy materializza e committa automaticamente il file locale completo.
+
+### Cross-reference validation
+
+The validation step intentionally fails if an Equipment link in the written guide does not match an Item name in the local catalogue. This protects in-page navigation from silently pointing to a missing row. The current guide uses the canonical Item name `Amphibole Belt`.
