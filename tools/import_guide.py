@@ -135,7 +135,7 @@ def main() -> int:
     generated_at = datetime.now(UTC).replace(microsecond=0).isoformat()
 
     manifest = {
-        "author": "TheDarkn1ght",
+        "author": "Syreldar",
         "source_url": source_url,
         "original_version": "1.5",
         "original_last_updated": "2018-12-12",

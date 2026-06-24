@@ -1,6 +1,6 @@
 # Tales of Berseria — Equipment Guide
 
-A self-hosted, responsive edition of **TheDarkn1ght's Tales of Berseria Equipment Guide**.
+A self-hosted, responsive edition of **Syreldar's Tales of Berseria Equipment Guide**.
 
 The source guide is preserved in two forms when the import workflow runs:
 
@@ -28,6 +28,6 @@ Run **Archive GameFAQs guide and deploy** again. It replaces the preserved sourc
 
 ## Ownership and attribution
 
-Guide text © 2018–2026 **TheDarkn1ght**. All rights reserved.
+Guide text © 2018–2026 **Syreldar**. All rights reserved.
 
 This repository deliberately preserves the original byline, version history, acknowledgement text, and a link to the GameFAQs publication. *Tales of Berseria* and related names are trademarks of their respective owners.
