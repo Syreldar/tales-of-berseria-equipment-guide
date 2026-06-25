@@ -16,7 +16,9 @@ La lettura parte da una domanda pratica: cosa indossare adesso. Poi collega, nel
 - Random Skills, Glacite e Sovereign Acerite;
 - catalogo locale filtrabile con 18 categorie e 350 Item;
 - 36 schede rapide di confronto: una per ogni combinazione categoria/fase della guida;
-- link interni da consigli, ricette e farming alle sezioni e agli Item corrispondenti.
+- link interni da consigli, ricette e farming alle sezioni e agli Item corrispondenti;
+- schede personaggi con avatar online, sfondi tematici e collegamento diretto ai filtri del catalogo;
+- filtro anti-spoiler attivo per impostazione predefinita: nasconde nome, avatar, ruolo, categorie e Item degli alleati non ancora sbloccati.
 
 ## Pubblicazione
 
@@ -42,7 +44,14 @@ Il deploy non parte se il catalogo locale non contiene:
 - un hash di integrità corrispondente alle righe committate;
 - tutti i riferimenti della guida a Item realmente presenti;
 - anchor e collegamenti interni validi;
-- nessun URL o riferimento esterno nei file pubblicati.
+- nessun URL o riferimento a GameFAQs/GameSpot nei file pubblicati;
+- solo URL immagine approvati per le sei schede personaggi, senza immagini generate con IA.
+
+## Filtro anti-spoiler
+
+Il filtro è attivo al primo accesso e salva localmente la scelta. Il pulsante **Ho sbloccato un nuovo alleato** aumenta la progressione senza mostrare in anticipo il prossimo nome. Finché il filtro resta attivo, la pagina non mostra nemmeno quanti alleati mancano: compare una sola scheda `???` generica. Anche il catalogo nasconde categorie, filtri, Item, schede rapide e righe della guida legati a personaggi non ancora sbloccati. `Rings` e `Shoes` restano disponibili perché universali.
+
+Le immagini delle schede sono online, non generate: il browser carica i cut-in da Aselia Wiki / Fandom. I dettagli e le pagine media sono in [`ASSET_SOURCES.md`](ASSET_SOURCES.md).
 
 ## Provenienza nel catalogo
 
@@ -61,3 +70,9 @@ Apri `http://localhost:8000/`. Prima del primo deploy, il catalogo mostra un mes
 ### Cross-reference validation
 
 The validation step intentionally fails if an Equipment link in the written guide does not match an Item name in the local catalogue. This protects in-page navigation from silently pointing to a missing row. The current guide uses the canonical Item name `Amphibole Belt`.
+
+## Schede personaggi e filtro anti-spoiler
+
+Le schede personaggi usano **illustrazioni online** caricate dal browser tramite URL esterni e non includono immagini generate con IA. Le fonti delle immagini sono documentate in `ASSET_SOURCES.md`.
+
+Il filtro anti-spoiler è attivo per impostazione predefinita. Nasconde nome, immagine, ruolo, categorie, righe della guida e Item del catalogo relativi agli alleati non ancora indicati come sbloccati. Il pulsante `Ho sbloccato un alleato` avanza di una sola scheda senza mostrare in anticipo chi arriverà dopo. La preferenza e il progresso restano solo nel browser dell’utente tramite `localStorage`.

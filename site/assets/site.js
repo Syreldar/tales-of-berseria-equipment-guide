@@ -7,7 +7,84 @@
     const searchStatus = document.getElementById("search-status");
     const themeToggle = document.getElementById("theme-toggle");
     const storageKey = "tob-equipment-guide-theme";
+    const spoilerModeKey = "tob-equipment-guide-spoiler-mode";
+    const spoilerProgressKey = "tob-equipment-guide-spoiler-progress";
     const statLabels = ["Atk", "A.Atk", "Def", "A.Def", "Focus"];
+
+    const partyMembers = Object.freeze([
+        {
+            id: "velvet",
+            name: "Velvet",
+            stage: 0,
+            tone: "velvet",
+            role: "Attaccante fisica",
+            summary: "Per iniziare, privilegia Atk e una Master Skill che non hai ancora imparato.",
+            categories: ["Belts", "Rings", "Shoes"],
+            tip: "Disponibile dall’inizio",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
+        },
+        {
+            id: "rokurou",
+            name: "Rokurou",
+            stage: 1,
+            tone: "rokurou",
+            role: "Combattente fisico",
+            summary: "Cerca un miglioramento immediato per Atk senza trascurare Def e le Master Skills nuove.",
+            categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Men’s Shoes"],
+            tip: "Consiglio: confronta Atk",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
+        },
+        {
+            id: "laphicet",
+            name: "Laphicet",
+            stage: 2,
+            tone: "laphicet",
+            role: "Supporto Arte",
+            summary: "A.Atk e A.Def sono ottimi punti di partenza; guarda sempre le Master Skills prima di smantellare.",
+            categories: ["Guardians", "Bags", "Men’s Armor", "Rings", "Men’s Shoes"],
+            tip: "Consiglio: confronta A.Atk",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Laphicet_Cut-in_%28ToB%29.png"
+        },
+        {
+            id: "eizen",
+            name: "Eizen",
+            stage: 3,
+            tone: "eizen",
+            role: "Combattente bilanciato",
+            summary: "Cerca un set equilibrato: Atk per il danno, Focus per Stun e difese per restare in prima linea.",
+            categories: ["Bracelets", "Pendants", "Men’s Armor", "Rings", "Men’s Shoes"],
+            tip: "Consiglio: non ignorare Focus",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eizen_Cut-in_%28ToB%29.png"
+        },
+        {
+            id: "magilou",
+            name: "Magilou",
+            stage: 4,
+            tone: "magilou",
+            role: "Caster di controllo",
+            summary: "A.Atk è la priorità più semplice; una Master Skill utile vale spesso più di pochi punti statistica.",
+            categories: ["Paper", "Earrings", "Women’s Armor", "Rings", "Women’s Shoes"],
+            tip: "Consiglio: confronta A.Atk",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Magilou_Cut-in_%28ToB%29.png"
+        },
+        {
+            id: "eleanor",
+            name: "Eleanor",
+            stage: 5,
+            tone: "eleanor",
+            role: "Lancia e Arte",
+            summary: "Valuta sia Atk sia A.Atk: il catalogo permette di scegliere l’Item in base alla tua priorità del momento.",
+            categories: ["Spears", "Ribbons", "Women’s Armor", "Rings", "Women’s Shoes"],
+            tip: "Consiglio: scegli una priorità",
+            image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eleanor_Cut-in_%28ToB%29.png"
+        }
+    ]);
+
+    let spoilerFilterEnabled = true;
+    let unlockedStage = 0;
+    let catalogueData = null;
+    let cataloguePendingCharacter = "";
+    let catalogueHashHandlerBound = false;
 
     function slugify(value) {
         return String(value || "")
@@ -27,6 +104,15 @@
             .replace(/'/g, "&#039;");
     }
 
+    function normalizeText(value) {
+        return String(value || "")
+            .toLocaleLowerCase("it-IT")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .replace(/\s+/g, " ")
+            .trim();
+    }
+
     function setTheme(theme) {
         document.documentElement.dataset.theme = theme;
         themeToggle.textContent = (theme === "dark") ? "Tema chiaro" : "Tema scuro";
@@ -42,6 +128,78 @@
             const next = (document.documentElement.dataset.theme === "dark") ? "light" : "dark";
             window.localStorage.setItem(storageKey, next);
             setTheme(next);
+        });
+    }
+
+    function initializeSpoilerState() {
+        const savedMode = window.localStorage.getItem(spoilerModeKey);
+        const savedProgress = Number(window.localStorage.getItem(spoilerProgressKey));
+        spoilerFilterEnabled = savedMode !== "off";
+        unlockedStage = Number.isInteger(savedProgress) ? Math.max(0, Math.min(partyMembers.length - 1, savedProgress)) : 0;
+    }
+
+    function saveSpoilerState() {
+        window.localStorage.setItem(spoilerModeKey, spoilerFilterEnabled ? "on" : "off");
+        window.localStorage.setItem(spoilerProgressKey, String(unlockedStage));
+    }
+
+    function getMemberByName(name) {
+        const key = normalizeText(name);
+        return partyMembers.find(function(member) {
+            return normalizeText(member.name) === key;
+        }) || null;
+    }
+
+    function memberIsVisible(member) {
+        return !spoilerFilterEnabled || member.stage <= unlockedStage;
+    }
+
+    function visibleMembers() {
+        return partyMembers.filter(memberIsVisible);
+    }
+
+    function splitCharacterList(value) {
+        return String(value || "")
+            .split(/[·/;,]/)
+            .map(function(entry) { return entry.trim(); })
+            .filter(Boolean);
+    }
+
+    function isNamedCharacterVisible(name) {
+        const member = getMemberByName(name);
+        return !member || memberIsVisible(member);
+    }
+
+    function itemIsVisible(item) {
+        if (!spoilerFilterEnabled) {
+            return true;
+        }
+
+        const users = splitCharacterList(item.character);
+        if (!users.length || users.includes("All")) {
+            return true;
+        }
+
+        return users.some(isNamedCharacterVisible);
+    }
+
+    function categoryIsVisible(category) {
+        if (!spoilerFilterEnabled) {
+            return true;
+        }
+
+        const users = splitCharacterList(category.character);
+        if (!users.length || users.includes("All")) {
+            return true;
+        }
+
+        return users.some(isNamedCharacterVisible);
+    }
+
+    function applySpoilerMask() {
+        guide.querySelectorAll("[data-spoiler-stage]").forEach(function(node) {
+            const stage = Number(node.dataset.spoilerStage);
+            node.hidden = spoilerFilterEnabled && Number.isFinite(stage) && stage > unlockedStage;
         });
     }
 
@@ -108,15 +266,6 @@
         return `item-${slugify(item.category_id)}-${item.rarity}-${slugify(item.name)}`;
     }
 
-    function normalizeText(value) {
-        return String(value || "")
-            .toLocaleLowerCase("it-IT")
-            .normalize("NFD")
-            .replace(/[\u0300-\u036f]/g, "")
-            .replace(/\s+/g, " ")
-            .trim();
-    }
-
     function allText(item) {
         return normalizeText([
             item.name,
@@ -171,6 +320,141 @@
         return "Indicazione";
     }
 
+    function renderCharacterCards() {
+        const target = guide.querySelector("#character-cards-dynamic");
+        if (!target) {
+            return;
+        }
+
+        const unlocked = visibleMembers();
+        const hasHiddenMembers = spoilerFilterEnabled && unlocked.length < partyMembers.length;
+
+        function renderMember(member) {
+            const chips = member.categories.map(function(category) {
+                return `<span>${escapeHtml(category)}</span>`;
+            }).join("");
+            return `
+                <article class="character-card tone-${escapeHtml(member.tone)}">
+                    <img class="character-art" src="${escapeHtml(member.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true">
+                    <div class="character-card-content">
+                        <div class="character-card-header">
+                            <div class="character-portrait">
+                                <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
+                            </div>
+                            <div>
+                                <p class="character-kicker">Scheda Equipment</p>
+                                <h3>${escapeHtml(member.name)}</h3>
+                                <p class="character-role">${escapeHtml(member.role)}</p>
+                            </div>
+                        </div>
+                        <p class="character-summary">${escapeHtml(member.summary)}</p>
+                        <div class="character-category-list" aria-label="Categorie utilizzabili da ${escapeHtml(member.name)}">${chips}</div>
+                        <div class="character-card-footer">
+                            <span class="character-card-tip">★ ${escapeHtml(member.tip)}</span>
+                            <button class="character-card-action" type="button" data-open-character-catalog="${escapeHtml(member.name)}">Apri equipaggiamento <span aria-hidden="true">→</span></button>
+                        </div>
+                    </div>
+                </article>
+            `;
+        }
+
+        const cards = unlocked.map(renderMember);
+        if (hasHiddenMembers) {
+            cards.push(`
+                <article class="character-card locked-character-card" aria-label="Personaggio non ancora sbloccato">
+                    <div class="locked-character-content">
+                        <div class="locked-silhouette" aria-hidden="true"><span>🔒</span></div>
+                        <p class="character-kicker">Filtro anti-spoiler attivo</p>
+                        <h3>???</h3>
+                        <p>Questa scheda non mostra nome, avatar, ruolo né categorie finché non scegli di aggiornare il tuo progresso.</p>
+                        <button class="character-card-action" type="button" data-advance-party>Ho sbloccato un nuovo alleato <span aria-hidden="true">→</span></button>
+                    </div>
+                </article>
+            `);
+        }
+
+        target.innerHTML = `
+            <div class="character-toolbar">
+                <label class="spoiler-toggle" for="spoiler-filter">
+                    <input id="spoiler-filter" type="checkbox" ${spoilerFilterEnabled ? "checked" : ""}>
+                    <span class="spoiler-toggle-control" aria-hidden="true"></span>
+                    <span class="spoiler-copy"><strong>Filtro anti-spoiler</strong><small>Nasconde automaticamente i personaggi e i dati che non hai ancora incontrato.</small></span>
+                </label>
+                <div class="character-progress" aria-label="Gestione del progresso senza spoiler">
+                    <span class="character-progress-count">Progresso salvato nel browser</span>
+                    <button class="character-action" type="button" data-advance-party ${unlocked.length >= partyMembers.length ? "disabled" : ""}>Ho sbloccato un alleato</button>
+                    <button class="character-action" type="button" data-reset-party>Ripristina</button>
+                </div>
+            </div>
+            <div class="character-grid">${cards.join("")}</div>
+            <div class="character-help">
+                <div><strong>Protezione predefinita</strong>Il filtro è attivo al primo accesso e conserva la tua scelta soltanto in questo browser.</div>
+                <div><strong>Nessuna anticipazione visiva</strong>Finché è attivo, non compaiono nome, avatar, ruolo, categorie o numero degli alleati che arriveranno più avanti.</div>
+                <div><strong>Catalogo coerente</strong>Con il filtro attivo, categorie e Item degli alleati non ancora sbloccati non compaiono nei filtri né nei risultati.</div>
+            </div>
+        `;
+
+        if (target.dataset.eventsBound === "true") {
+            return;
+        }
+        target.dataset.eventsBound = "true";
+
+        target.addEventListener("error", function(event) {
+            if (event.target && event.target.matches(".character-portrait img")) {
+                event.target.classList.add("portrait-unavailable");
+                event.target.setAttribute("aria-hidden", "true");
+            }
+        }, true);
+
+        target.addEventListener("change", function(event) {
+            if (event.target && event.target.id === "spoiler-filter") {
+                spoilerFilterEnabled = event.target.checked;
+                saveSpoilerState();
+                refreshSpoilerSensitiveViews();
+            }
+        });
+
+        target.addEventListener("click", function(event) {
+            const advance = event.target.closest("[data-advance-party]");
+            const reset = event.target.closest("[data-reset-party]");
+            const openCatalog = event.target.closest("[data-open-character-catalog]");
+
+            if (advance) {
+                unlockedStage = Math.min(partyMembers.length - 1, unlockedStage + 1);
+                saveSpoilerState();
+                refreshSpoilerSensitiveViews();
+                return;
+            }
+
+            if (reset) {
+                unlockedStage = 0;
+                spoilerFilterEnabled = true;
+                saveSpoilerState();
+                refreshSpoilerSensitiveViews();
+                return;
+            }
+
+            if (openCatalog) {
+                cataloguePendingCharacter = openCatalog.dataset.openCharacterCatalog || "";
+                if (catalogueData) {
+                    renderCatalogue(catalogueData);
+                }
+                const catalog = guide.querySelector("#catalogo");
+                if (catalog) {
+                    catalog.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+            }
+        });
+    }
+
+    function refreshSpoilerSensitiveViews() {
+        applySpoilerMask();
+        renderCharacterCards();
+        if (catalogueData) {
+            renderCatalogue(catalogueData);
+            renderReferenceCards(catalogueData);
+        }
+    }
 
     function resolveItemLinks(data) {
         const lookup = new Map();
@@ -185,14 +469,17 @@
         guide.querySelectorAll("[data-item-ref]").forEach(function(link) {
             const item = lookup.get(normalizeText(link.dataset.itemRef));
 
-            if (!item) {
+            if (!item || !itemIsVisible(item)) {
                 link.classList.add("item-link-missing");
-                link.title = "Scheda non trovata nel catalogo";
+                link.title = item ? "Nascosto dal filtro anti-spoiler" : "Scheda non trovata nel catalogo";
+                link.removeAttribute("href");
                 return;
             }
 
             link.href = `#${itemId(item)}`;
             link.dataset.catalogItem = itemId(item);
+            link.classList.remove("item-link-missing");
+            link.removeAttribute("title");
         });
     }
 
@@ -202,13 +489,20 @@
             return;
         }
 
-        const entries = Array.isArray(data.reference_cards) ? data.reference_cards : [];
+        if (!data || data.complete !== true || !Array.isArray(data.items)) {
+            target.innerHTML = "<p class=\"muted\">Le schede rapide saranno disponibili dopo la creazione del catalogo locale completo.</p>";
+            return;
+        }
+
+        const entries = (Array.isArray(data.reference_cards) ? data.reference_cards : []).filter(function(entry) {
+            return !spoilerFilterEnabled || splitCharacterList(entry.character).some(isNamedCharacterVisible) || !entry.character || String(entry.character).includes("All");
+        });
         const itemByKey = new Map(data.items.map(function(item) {
             return [`${item.category_id}|${item.rarity}|${normalizeText(item.name)}`, item];
         }));
 
         if (!entries.length) {
-            target.innerHTML = "<p class=\"muted\">Le schede rapide saranno disponibili dopo la creazione del catalogo locale completo.</p>";
+            target.innerHTML = "<p class=\"muted\">Le schede rapide degli alleati non ancora sbloccati sono nascoste dal filtro anti-spoiler.</p>";
             return;
         }
 
@@ -230,7 +524,6 @@
         }).join("");
     }
 
-
     function renderCatalogue(data) {
         const target = guide.querySelector("#catalogo-dinamico");
         if (!target) {
@@ -247,11 +540,11 @@
             return;
         }
 
-        const categories = Array.isArray(data.categories) ? data.categories : [];
+        const categories = (Array.isArray(data.categories) ? data.categories : []).filter(categoryIsVisible);
         const categoryOptions = categories.map(function(category) {
             return `<option value="${escapeHtml(category.id)}">${escapeHtml(category.label)}</option>`;
         }).join("");
-        const characters = ["Velvet", "Rokurou", "Laphicet", "Eizen", "Magilou", "Eleanor"];
+        const characters = visibleMembers().map(function(member) { return member.name; });
         const characterOptions = characters.map(function(character) {
             return `<option value="${escapeHtml(character)}">${escapeHtml(character)}</option>`;
         }).join("") + "<option value=\"All\">Solo universali (Rings/Shoes)</option>";
@@ -261,14 +554,14 @@
                 <label for="catalog-search">Cerca nel catalogo</label>
                 <input id="catalog-search" type="search" placeholder="Es. Brillante, Orc Kong, Atk, Adamantine" autocomplete="off">
                 <label for="catalog-character">Personaggio</label>
-                <select id="catalog-character"><option value="">Tutti</option>${characterOptions}</select>
+                <select id="catalog-character"><option value="">Tutti visibili</option>${characterOptions}</select>
                 <label for="catalog-category">Categoria</label>
-                <select id="catalog-category"><option value="">Tutte le categorie</option>${categoryOptions}</select>
+                <select id="catalog-category"><option value="">Tutte le categorie visibili</option>${categoryOptions}</select>
                 <label for="catalog-phase">Periodo</label>
                 <select id="catalog-phase"><option value="">Main game e post-game</option><option value="Main game">Main game</option><option value="Post-game">Post-game</option></select>
                 <label for="catalog-rarity">Rarity</label>
                 <select id="catalog-rarity"><option value="">Tutte</option>${Array.from({ length: 21 }, function(_, i) { return `<option value="${i + 1}">${i + 1}</option>`; }).join("")}</select>
-                <p id="catalog-status" class="catalog-status">${data.items.length} Item · ${categories.length} categorie · dati locali.</p>
+                <p id="catalog-status" class="catalog-status">${data.items.length} Item · ${categories.length} categorie visibili · dati locali.</p>
             </div>
             <div id="catalog-results"></div>
         `;
@@ -281,6 +574,11 @@
         const rarity = target.querySelector("#catalog-rarity");
         const status = target.querySelector("#catalog-status");
 
+        if (cataloguePendingCharacter && characters.includes(cataloguePendingCharacter)) {
+            character.value = cataloguePendingCharacter;
+        }
+        cataloguePendingCharacter = "";
+
         function renderRows() {
             const queryText = normalizeText(query.value);
             const filters = {
@@ -291,8 +589,11 @@
             };
 
             const matching = data.items.filter(function(item) {
+                if (!itemIsVisible(item)) {
+                    return false;
+                }
                 if (filters.character) {
-                    const users = String(item.character || "").split("·").map(function(value) { return value.trim(); });
+                    const users = splitCharacterList(item.character);
                     const universal = users.includes("All");
                     if (filters.character === "All") {
                         if (!universal) {
@@ -354,11 +655,10 @@
                         <div class="table-wrap"><table class="catalog-table"><thead><tr><th>Rarity</th><th>Item<br><small>nome a +10</small></th><th>Periodo</th><th>Base</th><th>+10</th><th>Master Skill</th><th>Enhancement Bonus</th><th>Main Ingredient</th><th>Provenienza</th></tr></thead><tbody>${body}</tbody></table></div>
                     </details>
                 `;
-            }).join("") || "<p class=\"muted\">Nessun Item soddisfa questi filtri.</p>";
+            }).join("") || "<p class=\"muted\">Nessun Item visibile soddisfa questi filtri.</p>";
 
-            status.textContent = `${matching.length} Item trovati · ${categories.length} categorie disponibili.`;
+            status.textContent = `${matching.length} Item trovati · ${categories.length} categorie visibili.${spoilerFilterEnabled ? " Filtro anti-spoiler attivo." : ""}`;
             wrapTables(results);
-
             revealHashTarget();
         }
 
@@ -395,10 +695,18 @@
             control.addEventListener("input", renderRows);
             control.addEventListener("change", renderRows);
         });
-        window.addEventListener("hashchange", revealHashTarget);
 
         renderRows();
         resolveItemLinks(data);
+
+        if (!catalogueHashHandlerBound) {
+            catalogueHashHandlerBound = true;
+            window.addEventListener("hashchange", function() {
+                if (catalogueData) {
+                    renderCatalogue(catalogueData);
+                }
+            });
+        }
     }
 
     function filterGuide(queryText) {
@@ -454,18 +762,20 @@
                 guide.innerHTML = html;
                 wrapTables(guide);
                 buildTableOfContents();
+                applySpoilerMask();
+                renderCharacterCards();
                 search.addEventListener("input", function() { filterGuide(search.value); });
                 return loadJson();
             })
             .then(function(data) {
-                if (data) {
-                    renderCatalogue(data);
-                    renderReferenceCards(data);
-                }
+                catalogueData = data;
+                renderCatalogue(data);
+                renderReferenceCards(data);
             })
             .catch(showError);
     }
 
     initializeTheme();
+    initializeSpoilerState();
     loadGuide();
 }());

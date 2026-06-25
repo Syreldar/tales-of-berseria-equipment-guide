@@ -17,14 +17,15 @@ EXPECTED_ITEM_COUNT = 350
 PHASES = ("Main game", "Post-game")
 EXPECTED_PHASE_CARD_COUNT = EXPECTED_CATEGORY_COUNT * len(PHASES)
 REQUIRED_IDS = {
-    "adesso", "come-leggere", "fondamenti", "statistiche", "rarity", "common-rare",
+    "adesso", "personaggi", "come-leggere", "fondamenti", "statistiche", "rarity", "common-rare",
     "master-skill", "enhancement", "smith", "costi", "main-ingredient", "dismantle",
     "fluid", "ricette", "matching", "ricette-common", "ricette-rare", "alchemist", "armory",
     "farming", "farming-equipment", "common-target", "catalogo",
     "primo-set", "postgame", "massimizzazione", "random-skills", "glacite", "sovereign",
     "glossario", "checklist",
 }
-FORBIDDEN_PUBLIC_URL = re.compile(r"https?://", re.IGNORECASE)
+PUBLIC_URL = re.compile(r"https?://[^\s\"'<>]+", re.IGNORECASE)
+ALLOWED_REMOTE_IMAGE_PREFIX = "https://aselia.fandom.com/wiki/Special:Redirect/file/"
 FORBIDDEN_PUBLIC_REFERENCE = re.compile("game" + "faqs|game" + "spot", re.IGNORECASE)
 
 
@@ -79,8 +80,9 @@ def text_files(root: Path) -> list[Path]:
 def validate_public_tree(site: Path) -> None:
     for path in text_files(site):
         text = path.read_text(encoding="utf-8")
-        if FORBIDDEN_PUBLIC_URL.search(text):
-            fail(f"External URL found in published file: {path.relative_to(site)}")
+        for url in PUBLIC_URL.findall(text):
+            if not url.startswith(ALLOWED_REMOTE_IMAGE_PREFIX):
+                fail(f"Unapproved external URL found in published file: {path.relative_to(site)}")
         if FORBIDDEN_PUBLIC_REFERENCE.search(text):
             fail(f"Forbidden source reference found in published file: {path.relative_to(site)}")
 
@@ -91,10 +93,12 @@ def validate_guide(guide: Path) -> list[str]:
     missing = REQUIRED_IDS - ids
     if missing:
         fail(f"Guide is missing required anchors: {', '.join(sorted(missing))}")
-    if text.count("<table") < 21:
-        fail("Guide must retain at least 21 explanatory tables for the novice flow")
-    if "catalogo-dinamico" not in text or "reference-cards-dynamic" not in text:
-        fail("Guide is missing dynamic catalogue or reference-card container")
+    if text.count("<table") < 22:
+        fail("Guide must retain at least 22 explanatory tables for the novice flow")
+    if "catalogo-dinamico" not in text or "reference-cards-dynamic" not in text or "character-cards-dynamic" not in text:
+        fail("Guide is missing dynamic catalogue, reference-card, or character-card container")
+    if "filtro anti-spoiler" not in text.lower() or "data-spoiler-stage" not in text:
+        fail("Guide is missing the spoiler-safe character flow")
 
     anchors = re.findall(r'<a\s+[^>]*href=["\']#([^"\']+)["\']', text)
     if len(anchors) < 40:
@@ -167,7 +171,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             value = str(item.get(field, "")).strip()
             if not value or value == "—":
                 fail(f"Missing {field}: {item.get('name')}")
-            if FORBIDDEN_PUBLIC_URL.search(value) or FORBIDDEN_PUBLIC_REFERENCE.search(value):
+            if PUBLIC_URL.search(value) or FORBIDDEN_PUBLIC_REFERENCE.search(value):
                 fail(f"Forbidden content in {field}: {item.get('name')}")
 
     if found_pairs != required_pairs:

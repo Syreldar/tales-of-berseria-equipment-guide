@@ -4,10 +4,10 @@
 
 | Workflow | Rete durante il job | Output | Scopo |
 |---|---:|---|---|
-| `Refresh catalog snapshot` | Solo per creare una nuova snapshot | Commit di `site/content/catalogo.json` + deploy | Aggiornare intenzionalmente i dati locali. |
-| `Deploy GitHub Pages` | Nessuna acquisizione del catalogo | Artifact statico | Pubblicare esclusivamente il JSON già revisionato e committato. |
+| `Refresh catalog snapshot` | Sì, per creare una nuova snapshot | Commit di `site/content/catalogo.json` + deploy | Aggiornare intenzionalmente i dati locali. |
+| `Deploy GitHub Pages` | Solo al primo bootstrap, quando il JSON è un segnaposto | Snapshot validata + artifact statico | Materializzare una volta il catalogo locale, poi pubblicare il JSON già committato ai push successivi. |
 
-Il browser riceve soltanto file locali. Nessuna pagina pubblicata contiene URL esterni o riferimenti alla fonte di consultazione.
+Il browser riceve il testo e il catalogo come file locali. Le sole richieste esterne ammesse nel client sono sei URL immagine approvati dell’Aselia Wiki / Fandom, usati per gli avatar delle schede personaggi; non sono immagini generate con IA. Nessuna pagina pubblicata contiene riferimenti a GameFAQs/GameSpot.
 
 ## Contratto del catalogo
 
@@ -34,6 +34,8 @@ La snapshot viene rifiutata se non soddisfa tutti questi vincoli:
 - Dismantle separa il rendimento da `+N` dal Fluid determinato dal Rank delle Random Skills.
 - Il filtro di un personaggio include le categorie universali `All`.
 - Sovereign richiede un tipo di Item già registrato a `+10`; gli esemplari idonei successivi devono essere Monster drop, non acquisti da shop.
+- Il filtro anti-spoiler è attivo per default, usa una progressione senza nomi o conteggi futuri e nasconde schede, righe della guida, categorie, Item e filtri non ancora rilevanti.
+- Le uniche immagini remote sono i sei cut-in delle schede; ogni altro URL esterno nel client causa errore di validazione.
 
 ## Limite dichiarato della provenienza
 

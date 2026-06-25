@@ -19,7 +19,15 @@
       <a href="#farming"><strong>Devo trovare un Item</strong><span>Drop, Monster e difficoltà.</span></a>
       <a href="#catalogo"><strong>Conosco il nome dell’Item</strong><span>Catalogo completo e filtri.</span></a>
       <a href="#postgame"><strong>Sono nel post-game</strong><span>Random Skills e set avanzati.</span></a>
+      <a href="#personaggi"><strong>Ho sbloccato un alleato</strong><span>Schede e filtri senza spoiler.</span></a>
     </div>
+  </section>
+
+  <section id="personaggi" class="character-section">
+    <p class="kicker">Navigazione senza spoiler</p>
+    <h2>Schede personaggi e filtro anti-spoiler</h2>
+    <p>Queste schede spiegano soltanto quale Equipment può usare ciascun alleato e come aprire il relativo filtro nel <a href="#catalogo">catalogo</a>. Con il filtro attivo, i personaggi che non hai ancora sbloccato restano anonimi: niente nome, immagine, ruolo o categorie.</p>
+    <div id="character-cards-dynamic" class="character-cards-shell" aria-live="polite"></div>
   </section>
 
   <section id="come-leggere">
@@ -57,16 +65,30 @@
     </table>
 
     <h3>Le 18 categorie</h3>
+    <p>All’inizio non devi memorizzare chi usa ogni categoria: guarda la tua <a href="#personaggi">scheda personaggio</a> e usa il pulsante <strong>Apri equipaggiamento</strong>. Rings e Shoes sono universali e quindi rimangono sempre consultabili.</p>
     <table>
-      <thead><tr><th>Slot</th><th>Categorie</th><th>Utilizzatori</th></tr></thead>
+      <thead><tr><th>Slot</th><th>Categorie</th><th>Regola utile per iniziare</th></tr></thead>
       <tbody>
-        <tr><td>Weapon</td><td>Blades, Short Swords, Paper, Bracelets, Guardians, Spears</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
-        <tr><td>Accessory</td><td>Belts, Talismans, Bags, Pendants, Earrings, Ribbons</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
-        <tr><td>Armor</td><td>Men’s Armor, Women’s Armor</td><td>Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
-        <tr><td>Ring</td><td>Rings</td><td>Tutti</td></tr>
-        <tr><td>Footwear</td><td>Shoes, Men’s Shoes, Women’s Shoes</td><td>Tutti; Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
+        <tr><td>Weapon</td><td>Blades, Short Swords, Paper, Bracelets, Guardians, Spears</td><td>È il primo posto dove cercare la statistica offensiva principale.</td></tr>
+        <tr><td>Accessory</td><td>Belts, Talismans, Bags, Pendants, Earrings, Ribbons</td><td>Serve soprattutto per specializzare Atk oppure A.Atk.</td></tr>
+        <tr><td>Armor</td><td>Men’s Armor, Women’s Armor</td><td>Confronta Def e A.Def prima del nome o della Rarity.</td></tr>
+        <tr><td>Ring</td><td>Rings</td><td>È universale: ogni personaggio può usare Rings.</td></tr>
+        <tr><td>Footwear</td><td>Shoes, Men’s Shoes, Women’s Shoes</td><td>Shoes sono universali; le varianti specifiche dipendono dal personaggio.</td></tr>
       </tbody>
     </table>
+    <div class="spoiler-sensitive" data-spoiler-stage="5">
+      <h4>Associazione completa categorie/personaggi</h4>
+      <table>
+        <thead><tr><th>Slot</th><th>Categorie</th><th>Utilizzatori</th></tr></thead>
+        <tbody>
+          <tr><td>Weapon</td><td>Blades, Short Swords, Paper, Bracelets, Guardians, Spears</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
+          <tr><td>Accessory</td><td>Belts, Talismans, Bags, Pendants, Earrings, Ribbons</td><td>Velvet, Rokurou, Laphicet, Eizen, Magilou, Eleanor</td></tr>
+          <tr><td>Armor</td><td>Men’s Armor, Women’s Armor</td><td>Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
+          <tr><td>Ring</td><td>Rings</td><td>Tutti</td></tr>
+          <tr><td>Footwear</td><td>Shoes, Men’s Shoes, Women’s Shoes</td><td>Tutti; Rokurou/Laphicet/Eizen; Velvet/Magilou/Eleanor</td></tr>
+        </tbody>
+      </table>
+    </div>
 
     <h3 id="rarity">Rarity: cosa indica e cosa non indica</h3>
     <p>La <strong>Rarity</strong> determina il livello di potenza base, il <a href="#main-ingredient">Main Ingredient</a> richiesto e molte regole di acquisizione. Non significa automaticamente “questo è l’Item migliore”: un Item con statistiche concentrate nella tua priorità può essere più utile di uno di Rarity superiore ma disperso.</p>
@@ -94,12 +116,12 @@
     <table class="compact-table">
       <thead><tr><th>Personaggio</th><th>HP</th><th>Atk</th><th>A.Atk</th><th>Def</th><th>A.Def</th><th>Focus</th></tr></thead>
       <tbody>
-        <tr><td>Velvet</td><td>66</td><td>2.44</td><td>2.44</td><td>2.85</td><td>1.63</td><td>2.85</td></tr>
-        <tr><td>Rokurou</td><td>70</td><td>2.75</td><td>1.97</td><td>3.15</td><td>1.97</td><td>1.97</td></tr>
-        <tr><td>Laphicet</td><td>54</td><td>1.81</td><td>3.17</td><td>2.26</td><td>3.62</td><td>2.72</td></tr>
-        <tr><td>Eizen</td><td>64</td><td>2.48</td><td>2.48</td><td>1.65</td><td>2.48</td><td>3.31</td></tr>
-        <tr><td>Magilou</td><td>58</td><td>2.18</td><td>3.49</td><td>2.62</td><td>3.05</td><td>1.75</td></tr>
-        <tr><td>Eleanor</td><td>62</td><td>3.37</td><td>1.68</td><td>2.53</td><td>2.53</td><td>2.53</td></tr>
+        <tr data-spoiler-stage="0"><td>Velvet</td><td>66</td><td>2.44</td><td>2.44</td><td>2.85</td><td>1.63</td><td>2.85</td></tr>
+        <tr data-spoiler-stage="1"><td>Rokurou</td><td>70</td><td>2.75</td><td>1.97</td><td>3.15</td><td>1.97</td><td>1.97</td></tr>
+        <tr data-spoiler-stage="2"><td>Laphicet</td><td>54</td><td>1.81</td><td>3.17</td><td>2.26</td><td>3.62</td><td>2.72</td></tr>
+        <tr data-spoiler-stage="3"><td>Eizen</td><td>64</td><td>2.48</td><td>2.48</td><td>1.65</td><td>2.48</td><td>3.31</td></tr>
+        <tr data-spoiler-stage="4"><td>Magilou</td><td>58</td><td>2.18</td><td>3.49</td><td>2.62</td><td>3.05</td><td>1.75</td></tr>
+        <tr data-spoiler-stage="5"><td>Eleanor</td><td>62</td><td>3.37</td><td>1.68</td><td>2.53</td><td>2.53</td><td>2.53</td></tr>
       </tbody>
     </table>
   </section>
@@ -294,7 +316,7 @@
     <table>
       <thead><tr><th>Armory Acerite</th><th>Livello totale richiesto</th><th>Bonus</th><th>Fonte</th></tr></thead>
       <tbody>
-        <tr><td>I</td><td>5</td><td>+1 Maximum BG</td><td>Eizen, storia</td></tr>
+        <tr data-spoiler-stage="3"><td>I</td><td>5</td><td>+1 Maximum BG</td><td>Eizen, storia</td></tr>
         <tr><td>II</td><td>10</td><td>HP recovery fuori combattimento +50%</td><td>Swordbreaker, storia</td></tr>
         <tr><td>III</td><td>15</td><td>+1 Maximum BG</td><td>Dullahan, storia</td></tr>
         <tr><td>IV</td><td>20</td><td>+1 Maximum Souls</td><td>King Peacock, Code Red #16, Davahl Forest</td></tr>
@@ -366,7 +388,7 @@
   <section id="catalogo">
     <h2>Catalogo completo dell’Equipment</h2>
     <p>Il catalogo sottostante contiene tutte le 18 categorie e 350 Item. Ogni scheda conserva statistiche, valori esatti a <code>+10</code>, Master Skill, Enhancement Bonus, Main Ingredient e un’indicazione di provenienza. Il browser legge soltanto il file locale pubblicato con il sito: non consulta fonti esterne.</p>
-    <p>Usa i filtri insieme: ad esempio <strong>Rokurou + Talismans + Main game</strong>, oppure cerca un Monster nel campo testuale. Il filtro di un personaggio include automaticamente <strong>Rings</strong> e <strong>Shoes</strong> utilizzabili da tutti. Ogni Item ha un URL interno, quindi puoi collegare una scheda specifica a una discussione o a una nota personale.</p>
+    <p>Usa i filtri insieme: ad esempio <strong>personaggio già sbloccato + categoria + Main game</strong>, oppure cerca un Monster nel campo testuale. Il filtro di un personaggio include automaticamente <strong>Rings</strong> e <strong>Shoes</strong> utilizzabili da tutti. Ogni Item ha un URL interno, quindi puoi collegare una scheda specifica a una discussione o a una nota personale.</p>
     <div id="catalogo-dinamico" aria-live="polite"></div>
   </section>
 
@@ -395,7 +417,7 @@
     <table>
       <thead><tr><th>Potentite</th><th>Effetto</th><th>Fonte</th></tr></thead>
       <tbody>
-        <tr><td>Intermediate Ignicite</td><td>Sblocca Random Skills Rank 2.</td><td>Eleanor, storia</td></tr>
+        <tr data-spoiler-stage="5"><td>Intermediate Ignicite</td><td>Sblocca Random Skills Rank 2.</td><td>Eleanor, storia</td></tr>
         <tr><td>Aspirant’s Ignicite</td><td>Aumenta la possibilità di Rank 2.</td><td>Spider Queen, Code Red #5, Yvolg Ruins · Normal+</td></tr>
         <tr><td>Superior Ignicite</td><td>Sblocca Random Skills Rank 3.</td><td>Therion Medissa, storia</td></tr>
         <tr><td>Expert’s Ignicite</td><td>Aumenta la possibilità di Rank 3.</td><td>Phantom, Code Red #23, Earthpulse · Normal+</td></tr>
@@ -424,7 +446,7 @@
         <tr><td>Miser Glacite</td><td>Hard+</td><td>Chance di dimezzare SG consumption: 5 / 7 / 9 / 20</td><td>100%</td><td>Dangeroma, Code Red #18</td></tr>
         <tr><td>Disruptor Glacite</td><td>Hard+</td><td>Chance di non perdere Soul con Break Soul: 6 / 8 / 10 / 15</td><td>30%</td><td>Kraken, Code Red #13</td></tr>
         <tr><td>Mirrored Glacite</td><td>Intense+</td><td>Reflect damage dopo annullamento: 7 / 10 / 13 / 25</td><td>95%</td><td>Iron Bones, Code Red #20</td></tr>
-        <tr><td>Dazing Glacite</td><td>Intense+</td><td>Durata Stun inflitto: 1.10 / 1.16 / 1.24 / 1.50</td><td>4×</td><td>Weighty Witch, Magilou Menagerie</td></tr>
+        <tr data-spoiler-stage="4"><td>Dazing Glacite</td><td>Intense+</td><td>Durata Stun inflitto: 1.10 / 1.16 / 1.24 / 1.50</td><td>4×</td><td>Weighty Witch, Magilou Menagerie</td></tr>
         <tr><td>Roaring Glacite</td><td>Chaos</td><td>Velocità charge: 12 / 15 / 20 / 32</td><td>50%</td><td>Chaos Bison, Heddin</td></tr>
         <tr><td>Juggernaut Glacite</td><td>Chaos</td><td>Invulnerabilità iniziale: 3 / 5 / 7 / 12 secondi</td><td>120 s</td><td>Titan, Code Red #27</td></tr>
         <tr><td>Phoenix Glacite</td><td>Normal+</td><td>Revive: 10 / 15 / 18 / 50</td><td>100%</td><td>Phoenix, Titania</td></tr>
