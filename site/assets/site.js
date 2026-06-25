@@ -19,7 +19,7 @@
             tone: "velvet",
             role: "Attaccante in prima linea · combo, Stun e Therion Form",
             battleAdvice: "Se la affidi al controllo automatico, falla puntare un nemico resistente: la sua combo ha il tempo di finire e può entrare in Therion Form. Questa scelta non elimina gli spostamenti: se il bersaglio è lontano, Velvet dovrà comunque raggiungerlo.",
-            equipmentAdvice: "Blades privilegiano Atk; Belts, il suo Accessory, possono aggiungere Focus per lo Stun. Su Armor, Rings e Footwear conserva prima le Master Skills che non hai ancora appreso.",
+            equipmentAdvice: "Le Lame privilegiano Atk; le Cinture, il suo accessorio, possono aggiungere Focus per lo Stun. Su armatura, anelli e calzature conserva prima le Master Skills che non hai ancora appreso.",
             categories: ["Blades", "Belts", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Target Strong Enemies · Be Aggressive",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
@@ -31,7 +31,7 @@
             tone: "rokurou",
             role: "Duellante in prima linea · Souls, counter e colpi mirati",
             battleAdvice: "Target Enemy with Most Souls fa scegliere all’AI il bersaglio con più Souls. Non garantisce che resti sempre lontano da Velvet, ma evita una priorità casuale. Defense Only privilegia schivate e sicurezza quando il gruppo è sotto pressione.",
-            equipmentAdvice: "Cerca Atk su Short Swords e Talismans; Armor e Footwear servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
+            equipmentAdvice: "Cerca Atk su Spade corte e Talismani; armatura e calzature servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
             categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Most Souls · Defense Only",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
@@ -41,9 +41,9 @@
             name: "Laphicet",
             stage: 2,
             tone: "laphicet",
-            role: "Caster di supporto · magie rapide, cure e controllo",
+            role: "Incantatore di supporto · magie rapide, cure e controllo",
             battleAdvice: "Lascialo a distanza con poche Malak Artes affidabili: Kaleidos Ray, Blessed Drops, Void Mire e Dark Fangs. Una lista corta riduce i cast lunghi e le occasioni in cui l’AI viene interrotta.",
-            equipmentAdvice: "Paper e Bags favoriscono A.Atk. A.Def e Focus sono utili quando viene preso di mira; prima di sostituire un pezzo, impara la sua Master Skill.",
+            equipmentAdvice: "Fogli e Borse favoriscono A.Atk. A.Def e Focus sono utili quando viene preso di mira; prima di sostituire un pezzo, impara la sua Master Skill.",
             categories: ["Paper", "Bags", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Range · 4 Malak Artes",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Laphicet_Cut-in_%28ToB%29.png"
@@ -65,9 +65,9 @@
             name: "Magilou",
             stage: 4,
             tone: "magilou",
-            role: "Caster offensiva · magie rapide da lontano",
+            role: "Incantatrice offensiva · magie rapide da lontano",
             battleAdvice: "L’AI è più affidabile con Aqua Split e Blood Moon; Crown Fire è opzionale. Tenere poche Malak Artes abbrevia i cast e riduce le aperture in cui può essere interrotta.",
-            equipmentAdvice: "Guardians ed Earrings favoriscono A.Atk. A.Def è utile perché un personaggio che lancia magie colpito durante un cast perde più valore di pochi punti aggiuntivi di danno.",
+            equipmentAdvice: "Guardiani e Orecchini favoriscono A.Atk. A.Def è utile perché un personaggio che lancia magie colpito durante un cast perde più valore di pochi punti aggiuntivi di danno.",
             categories: ["Guardians", "Earrings", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Range · Aqua Split / Blood Moon",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Magilou_Cut-in_%28ToB%29.png"
@@ -87,24 +87,58 @@
     ]);
 
     const categorySlots = Object.freeze({
-        "Blades": "Weapon",
-        "Short Swords": "Weapon",
-        "Paper": "Weapon",
-        "Bracelets": "Weapon",
-        "Guardians": "Weapon",
-        "Spears": "Weapon",
-        "Belts": "Accessory",
-        "Talismans": "Accessory",
-        "Bags": "Accessory",
-        "Pendants": "Accessory",
-        "Earrings": "Accessory",
-        "Ribbons": "Accessory",
-        "Men’s Armor": "Armor",
-        "Women’s Armor": "Armor",
-        "Rings": "Ring",
-        "Shoes": "Footwear universale",
-        "Men’s Shoes": "Footwear",
-        "Women’s Shoes": "Footwear"
+        "Blades": "Arma",
+        "Short Swords": "Arma",
+        "Paper": "Arma",
+        "Bracelets": "Arma",
+        "Guardians": "Arma",
+        "Spears": "Arma",
+        "Belts": "Accessorio",
+        "Talismans": "Accessorio",
+        "Bags": "Accessorio",
+        "Pendants": "Accessorio",
+        "Earrings": "Accessorio",
+        "Ribbons": "Accessorio",
+        "Men’s Armor": "Armatura",
+        "Women’s Armor": "Armatura",
+        "Rings": "Anello",
+        "Shoes": "Calzature universali",
+        "Men’s Shoes": "Calzature",
+        "Women’s Shoes": "Calzature"
+    });
+
+    const categoryLabels = Object.freeze({
+        "Blades": "Lame",
+        "Short Swords": "Spade corte",
+        "Paper": "Fogli",
+        "Bracelets": "Bracciali",
+        "Guardians": "Guardiani",
+        "Spears": "Lance",
+        "Belts": "Cinture",
+        "Talismans": "Talismani",
+        "Bags": "Borse",
+        "Pendants": "Pendenti",
+        "Earrings": "Orecchini",
+        "Ribbons": "Nastri",
+        "Men’s Armor": "Armatura maschile",
+        "Women’s Armor": "Armatura femminile",
+        "Rings": "Anelli",
+        "Shoes": "Scarpe",
+        "Men’s Shoes": "Scarpe maschili",
+        "Women’s Shoes": "Scarpe femminili"
+    });
+
+    const slotLabels = Object.freeze({
+        "Weapon": "Arma",
+        "Accessory": "Accessorio",
+        "Armor": "Armatura",
+        "Ring": "Anello",
+        "Footwear": "Calzature"
+    });
+
+    const phaseLabels = Object.freeze({
+        "Main game": "Storia principale",
+        "Post-game": "Post-game"
     });
 
     let spoilerFilterEnabled = true;
@@ -139,6 +173,24 @@
             .replace(/[\u0300-\u036f]/g, "")
             .replace(/\s+/g, " ")
             .trim();
+    }
+
+    function displayCategory(value) {
+        return categoryLabels[String(value || "")] || String(value || "Categoria");
+    }
+
+    function displaySlot(value) {
+        return slotLabels[String(value || "")] || String(value || "Slot");
+    }
+
+    function displayPhase(value) {
+        return phaseLabels[String(value || "")] || String(value || "Progressione");
+    }
+
+    function displayReferenceReason(value) {
+        return String(value || "Scheda di confronto: verifica statistiche, Master Skill e Enhancement Bonus.")
+            .replace(/\bRarity\b/g, "rarità")
+            .replace(/\bMain game\b/g, "storia principale");
     }
 
     function setTheme(theme) {
@@ -234,6 +286,27 @@
         return !member || memberIsVisible(member);
     }
 
+    function visibleCharacterNames(value) {
+        const users = splitCharacterList(value);
+
+        if (!users.length) {
+            return "";
+        }
+        if (users.includes("All")) {
+            return "Tutti";
+        }
+
+        return users.filter(isNamedCharacterVisible).join(" · ");
+    }
+
+    function visibleText(node) {
+        const copy = node.cloneNode(true);
+        copy.querySelectorAll("[hidden], .is-filtered-out").forEach(function(hiddenNode) {
+            hiddenNode.remove();
+        });
+        return copy.textContent || "";
+    }
+
     function itemIsVisible(item) {
         if (!spoilerFilterEnabled) {
             return true;
@@ -261,9 +334,13 @@
     }
 
     function applySpoilerMask() {
-        guide.querySelectorAll("[data-spoiler-stage]").forEach(function(node) {
+        guide.querySelectorAll("[data-spoiler-stage], [data-spoiler-members]").forEach(function(node) {
             const stage = Number(node.dataset.spoilerStage);
-            node.hidden = spoilerFilterEnabled && Number.isFinite(stage) && stage > unlockedStage;
+            const members = splitCharacterList(node.dataset.spoilerMembers || "");
+            const stageIsVisible = !spoilerFilterEnabled || !Number.isFinite(stage) || stage <= unlockedStage;
+            const membersAreVisible = !spoilerFilterEnabled || members.every(isNamedCharacterVisible);
+
+            node.hidden = !stageIsVisible || !membersAreVisible;
         });
     }
 
@@ -286,6 +363,10 @@
         const fragment = document.createDocumentFragment();
 
         headings.forEach(function(heading) {
+            if (heading.closest("[hidden]") || heading.closest(".is-filtered-out")) {
+                return;
+            }
+
             const base = heading.id || slugify(heading.textContent) || "sezione";
             const count = used.get(base) || 0;
             const id = count ? `${base}-${count + 1}` : base;
@@ -334,9 +415,9 @@
         return normalizeText([
             item.name,
             item.max_name,
-            item.category,
-            item.character,
-            item.phase,
+            displayCategory(item.category),
+            visibleCharacterNames(item.character),
+            displayPhase(item.phase),
             item.rarity,
             item.master_skill,
             item.enhancement_bonus,
@@ -349,17 +430,27 @@
     }
 
     function getAcquisition(item) {
-        const source = String(item.acquisition || "").trim();
+        const kind = String(item.source_kind || "").trim();
         const rare = String(item.rare_drop || "").trim();
 
-        if (source && source !== "—") {
-            return source;
+        if (kind === "rare_drop" && rare && rare !== "—" && rare !== "N/A") {
+            return `Drop raro — ${rare}`;
         }
-
+        if (kind === "common_drop") {
+            return "Drop comune — rarità equivalente; usa la regola Common Target nella sezione dedicata al farming.";
+        }
+        if (kind === "chest_or_story") {
+            return "Forziere / negozio / storia — per questa scheda non è registrato alcun mostro raro.";
+        }
+        if (kind === "postgame_chest_or_drop") {
+            return "Post-game — forziere o altra fonte finale; per questa scheda non è registrato alcun mostro raro.";
+        }
+        if (kind === "postgame_enemy_drop") {
+            return "Drop dei nemici nel post-game — nella tabella strutturata non è registrato alcun mostro.";
+        }
         if (rare && rare !== "—" && rare !== "N/A") {
-            return `Rare drop: ${rare}`;
+            return `Drop raro — ${rare}`;
         }
-
         return "Fonte non registrata";
     }
 
@@ -367,19 +458,19 @@
         const kind = String(item.source_kind || "").trim();
 
         if (kind === "rare_drop") {
-            return "Rare drop";
+            return "Drop raro";
         }
         if (kind === "common_drop") {
-            return "Common drop";
+            return "Drop comune";
         }
         if (kind === "postgame_enemy_drop") {
-            return "Enemy drop post-game";
+            return "Drop dei nemici nel post-game";
         }
         if (kind === "postgame_chest_or_drop") {
             return "Post-game";
         }
         if (kind === "chest_or_story") {
-            return "Chest / storia";
+            return "Forziere / storia";
         }
         return "Indicazione";
     }
@@ -396,8 +487,8 @@
         function renderMember(member) {
             const chips = member.categories.map(function(category) {
                 const href = catalogueLink(member, category);
-                const slot = categorySlots[category] || "Categoria Equipment";
-                return `<a href="${escapeHtml(href)}" data-catalogue-link title="Apri ${escapeHtml(category)} (${escapeHtml(slot)}) nel catalogo filtrato per ${escapeHtml(member.name)}" aria-label="Apri ${escapeHtml(category)}, ${escapeHtml(slot)}, nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(category)}</a>`;
+                const slot = categorySlots[category] || "Categoria di equipaggiamento";
+                return `<a href="${escapeHtml(href)}" data-catalogue-link title="Apri ${escapeHtml(displayCategory(category))} (${escapeHtml(slot)}) nel catalogo filtrato per ${escapeHtml(member.name)}" aria-label="Apri ${escapeHtml(displayCategory(category))}, ${escapeHtml(slot)}, nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(displayCategory(category))}</a>`;
             }).join("");
             const catalogHref = catalogueLink(member, "");
             const aiHref = `./ai.html#ai-${escapeHtml(member.id)}`;
@@ -411,18 +502,18 @@
                                 <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
                             </div>
                             <div>
-                                <p class="character-kicker">Equipment e comportamento automatico</p>
+                                <p class="character-kicker">Equipaggiamento e comportamento automatico</p>
                                 <h3>${escapeHtml(member.name)}</h3>
                                 <p class="character-role">${escapeHtml(member.role)}</p>
                             </div>
                         </div>
                         <p class="character-summary"><strong>In battaglia:</strong> ${escapeHtml(member.battleAdvice)}</p>
-                        <p class="character-equipment-focus"><strong>Equipment:</strong> ${escapeHtml(member.equipmentAdvice)}</p>
+                        <p class="character-equipment-focus"><strong>Equipaggiamento:</strong> ${escapeHtml(member.equipmentAdvice)}</p>
                         <div class="character-category-list" aria-label="Categorie utilizzabili da ${escapeHtml(member.name)}">${chips}</div>
                         <div class="character-card-footer">
                             <span class="character-card-tip">★ ${escapeHtml(member.tip)}</span>
                             <div class="character-card-actions">
-                                <a class="character-card-action" href="${escapeHtml(catalogHref)}">Vedi tutti gli Item <span aria-hidden="true">→</span></a>
+                                <a class="character-card-action" href="${escapeHtml(catalogHref)}">Vedi tutti gli oggetti <span aria-hidden="true">→</span></a>
                                 <a class="character-card-action" href="${aiHref}">Preset AI <span aria-hidden="true">→</span></a>
                             </div>
                         </div>
@@ -462,8 +553,8 @@
             <div class="character-grid">${cards.join("")}</div>
             <div class="character-help">
                 <div><strong>Ruolo spiegato</strong>Ogni scheda dice che cosa fa l’alleato, perché il preset automatico usa quelle scelte e quali statistiche cercare per prime.</div>
-                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli Item</strong> mostra tutte le categorie utilizzabili; Shoes e la variante maschile o femminile sono alternative dello stesso slot Footwear.</div>
-                <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset automatici e Item futuri restano esclusi da schede, ricerca e catalogo.</div>
+                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli oggetti</strong> mostra tutte le categorie utilizzabili; le Scarpe e la variante maschile o femminile sono alternative dello stesso slot Calzature.</div>
+                <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset automatici e oggetti futuri restano esclusi da schede, ricerca e catalogo.</div>
             </div>
         `;
 
@@ -509,6 +600,7 @@
 
     function refreshSpoilerSensitiveViews() {
         applySpoilerMask();
+        buildTableOfContents();
         renderCharacterCards();
         if (catalogueData) {
             renderCatalogue(catalogueData);
@@ -528,8 +620,10 @@
 
         guide.querySelectorAll("[data-item-ref]").forEach(function(link) {
             const item = lookup.get(normalizeText(link.dataset.itemRef));
+            const visible = Boolean(item && itemIsVisible(item));
+            link.hidden = Boolean(item) && !visible;
 
-            if (!item || !itemIsVisible(item)) {
+            if (!visible) {
                 link.classList.add("item-link-missing");
                 link.title = item ? "Nascosto dal filtro anti-spoiler" : "Scheda non trovata nel catalogo";
                 link.removeAttribute("href");
@@ -540,6 +634,11 @@
             link.dataset.catalogItem = itemId(item);
             link.classList.remove("item-link-missing");
             link.removeAttribute("title");
+        });
+
+        guide.querySelectorAll(".item-link-list").forEach(function(list) {
+            const links = Array.from(list.querySelectorAll("[data-item-ref]"));
+            list.hidden = links.length > 0 && links.every(function(link) { return link.hidden; });
         });
     }
 
@@ -570,15 +669,15 @@
             const item = itemByKey.get(`${entry.category_id}|${entry.rarity}|${normalizeText(entry.name)}`);
             const href = item ? `#${itemId(item)}` : "#catalogo";
             const title = item ? item.name : entry.name;
-            const phase = entry.phase || (item && item.phase) || "Progressione";
-            const category = entry.category || (item && item.category) || "Equipment";
-            const character = entry.character || (item && item.character) || "";
+            const phase = displayPhase(entry.phase || (item && item.phase) || "Progressione");
+            const category = displayCategory(entry.category || (item && item.category) || "Categoria");
+            const character = visibleCharacterNames(entry.character || (item && item.character) || "");
 
             return `
                 <article class="noteworthy-card">
-                    <p class="noteworthy-meta">${escapeHtml(category)}${character ? ` · ${escapeHtml(character)}` : ""} · ${escapeHtml(phase)} · Rarity ${escapeHtml(entry.rarity || "—")}</p>
+                    <p class="noteworthy-meta">${escapeHtml(category)}${character ? ` · ${escapeHtml(character)}` : ""} · ${escapeHtml(phase)} · Rarità ${escapeHtml(entry.rarity || "—")}</p>
                     <h4><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></h4>
-                    <p>${escapeHtml(entry.reason || "Scheda di confronto: verifica statistiche, Master Skill e Enhancement Bonus.")}</p>
+                    <p>${escapeHtml(displayReferenceReason(entry.reason))}</p>
                 </article>
             `;
         }).join("");
@@ -602,12 +701,12 @@
 
         const categories = (Array.isArray(data.categories) ? data.categories : []).filter(categoryIsVisible);
         const categoryOptions = categories.map(function(category) {
-            return `<option value="${escapeHtml(category.id)}">${escapeHtml(category.label)}</option>`;
+            return `<option value="${escapeHtml(category.id)}">${escapeHtml(displayCategory(category.label))}</option>`;
         }).join("");
         const characters = visibleMembers().map(function(member) { return member.name; });
         const characterOptions = characters.map(function(character) {
             return `<option value="${escapeHtml(character)}">${escapeHtml(character)}</option>`;
-        }).join("") + "<option value=\"All\">Solo universali (Rings/Shoes)</option>";
+        }).join("") + "<option value=\"All\">Solo categorie universali (anelli/scarpe)</option>";
 
         target.innerHTML = `
             <div class="catalog-toolbar">
@@ -618,10 +717,10 @@
                 <label for="catalog-category">Categoria</label>
                 <select id="catalog-category"><option value="">Tutte le categorie visibili</option>${categoryOptions}</select>
                 <label for="catalog-phase">Periodo</label>
-                <select id="catalog-phase"><option value="">Main game e post-game</option><option value="Main game">Main game</option><option value="Post-game">Post-game</option></select>
-                <label for="catalog-rarity">Rarity</label>
+                <select id="catalog-phase"><option value="">Storia principale e post-game</option><option value="Main game">Storia principale</option><option value="Post-game">Post-game</option></select>
+                <label for="catalog-rarity">Rarità</label>
                 <select id="catalog-rarity"><option value="">Tutte</option>${Array.from({ length: 21 }, function(_, i) { return `<option value="${i + 1}">${i + 1}</option>`; }).join("")}</select>
-                <p id="catalog-status" class="catalog-status">${data.items.length} Item · ${categories.length} categorie visibili · dati locali.</p>
+                <p id="catalog-status" class="catalog-status">${data.items.length} oggetti · ${categories.length} categorie visibili · dati locali.</p>
             </div>
             <div id="catalog-results"></div>
         `;
@@ -702,7 +801,7 @@
                         <tr id="${escapeHtml(itemAnchor)}" data-catalog-row>
                             <td>R${escapeHtml(item.rarity)}</td>
                             <td><strong>${escapeHtml(item.name)}</strong><br><small>${escapeHtml(item.max_name || "—")}</small></td>
-                            <td><span class="phase-badge">${escapeHtml(item.phase || "—")}</span></td>
+                            <td><span class="phase-badge">${escapeHtml(displayPhase(item.phase || "—"))}</span></td>
                             <td>${escapeHtml(formatStats(base))}</td>
                             <td>${escapeHtml(formatStats(plusTen))}</td>
                             <td>${escapeHtml(item.master_skill || "—")}</td>
@@ -715,13 +814,13 @@
 
                 return `
                     <details class="catalog-category" open>
-                        <summary><span>${escapeHtml(cat.label)}</span><small>${escapeHtml(cat.slot)} · ${escapeHtml(cat.character)} · ${rows.length} Item</small></summary>
-                        <div class="table-wrap"><table class="catalog-table"><thead><tr><th>Rarity</th><th>Item<br><small>nome a +10</small></th><th>Periodo</th><th>Base</th><th>+10</th><th>Master Skill</th><th>Enhancement Bonus</th><th>Main Ingredient</th><th>Provenienza</th></tr></thead><tbody>${body}</tbody></table></div>
+                        <summary><span>${escapeHtml(displayCategory(cat.label))}</span><small>${escapeHtml(displaySlot(cat.slot))} · ${escapeHtml(visibleCharacterNames(cat.character) || "Tutti")} · ${rows.length} oggetti</small></summary>
+                        <div class="table-wrap"><table class="catalog-table"><thead><tr><th>Rarità</th><th>Oggetto<br><small>nome a +10</small></th><th>Periodo</th><th>Base</th><th>+10</th><th>Master Skill</th><th>Enhancement Bonus</th><th>Materiale principale</th><th>Provenienza</th></tr></thead><tbody>${body}</tbody></table></div>
                     </details>
                 `;
-            }).join("") || "<p class=\"muted\">Nessun Item visibile soddisfa questi filtri.</p>";
+            }).join("") || "<p class=\"muted\">Nessun oggetto visibile soddisfa questi filtri.</p>";
 
-            status.textContent = `${matching.length} Item trovati · ${categories.length} categorie visibili.${spoilerFilterEnabled ? " Filtro anti-spoiler attivo." : ""}`;
+            status.textContent = `${matching.length} oggetti trovati · ${categories.length} categorie visibili.${spoilerFilterEnabled ? " Filtro anti-spoiler attivo." : ""}`;
             wrapTables(results);
             revealHashTarget();
         }
@@ -781,18 +880,20 @@
         if (!term) {
             blocks.forEach(function(block) { block.classList.remove("is-filtered-out"); });
             searchStatus.textContent = "";
+            buildTableOfContents();
             return;
         }
 
         let count = 0;
         blocks.forEach(function(block) {
-            const visible = normalizeText(block.textContent).includes(term);
+            const visible = normalizeText(visibleText(block)).includes(term);
             block.classList.toggle("is-filtered-out", !visible);
             if (visible) {
                 count += 1;
             }
         });
         searchStatus.textContent = `${count} sezioni pertinenti.`;
+        buildTableOfContents();
     }
 
     function showError() {
@@ -826,8 +927,8 @@
             .then(function(html) {
                 guide.innerHTML = html;
                 wrapTables(guide);
-                buildTableOfContents();
                 applySpoilerMask();
+                buildTableOfContents();
                 renderCharacterCards();
                 search.addEventListener("input", function() { filterGuide(search.value); });
                 return loadJson();

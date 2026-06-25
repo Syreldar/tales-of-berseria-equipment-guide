@@ -1683,7 +1683,17 @@ summary:focus-visible {
     display: none !important;
 }
 
-html:not([data-ai-spoiler="off"]) [data-spoiler-stage]:not([data-spoiler-stage="0"]) {
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="0"] [data-spoiler-stage]:not([data-spoiler-stage="0"]),
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="1"] [data-spoiler-stage="2"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="1"] [data-spoiler-stage="3"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="1"] [data-spoiler-stage="4"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="1"] [data-spoiler-stage="5"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="2"] [data-spoiler-stage="3"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="2"] [data-spoiler-stage="4"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="2"] [data-spoiler-stage="5"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="3"] [data-spoiler-stage="4"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="3"] [data-spoiler-stage="5"],
+html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage="5"] {
     display: none !important;
 }
 

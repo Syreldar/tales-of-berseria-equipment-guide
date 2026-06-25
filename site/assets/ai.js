@@ -105,6 +105,7 @@
 
     function applySpoilerMask() {
         root.dataset.aiSpoiler = spoilerFilterEnabled ? "on" : "off";
+        root.dataset.aiSpoilerStage = String(unlockedStage);
         guide.querySelectorAll("[data-spoiler-stage]").forEach(function(node) {
             const stage = Number(node.dataset.spoilerStage);
             node.hidden = spoilerFilterEnabled && Number.isFinite(stage) && stage > unlockedStage;
