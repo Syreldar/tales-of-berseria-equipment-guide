@@ -18,7 +18,8 @@ La lettura parte da una domanda pratica: cosa indossare adesso. Poi collega, nel
 - 36 schede rapide di confronto: una per ogni combinazione categoria/fase della guida;
 - link interni da consigli, ricette e farming alle sezioni e agli Item corrispondenti;
 - schede personaggi con avatar online, sfondi tematici e collegamento diretto ai filtri del catalogo;
-- filtro anti-spoiler attivo per impostazione predefinita: nasconde nome, avatar, ruolo, categorie e Item degli alleati non ancora sbloccati.
+- filtro anti-spoiler attivo per impostazione predefinita: nasconde nome, avatar, ruolo, categorie e Item degli alleati non ancora sbloccati;
+- pagina separata <code>ai.html</code> con preset AI, Artes da attivare/disattivare, due build di Eizen, spiegazioni per novizi e gli stessi controlli anti-spoiler.
 
 ## Pubblicazione
 
@@ -46,6 +47,12 @@ Il deploy non parte se il catalogo locale non contiene:
 - anchor e collegamenti interni validi;
 - nessun URL o riferimento a GameFAQs/GameSpot nei file pubblicati;
 - solo URL immagine approvati per le sei schede personaggi, senza immagini generate con IA.
+
+## Preset AI
+
+La pagina `ai.html` aggiunge un percorso AI separato dall’Equipment. Riporta le cinque voci della Strategy nell’ordine del gioco, le Artes da spegnere o lasciare attive e le motivazioni pratiche: recovery lunga, posizionamento sfavorevole, miss, follow-up incoerenti o cast troppo lunghi per l’AI. Include i due set completi di Eizen e distingue tra configurazione generale e modifiche sensate per boss, Dangerous Encounters e Chaos.
+
+Il preset indica di ordinare `Go All Out` a inizio di ogni combattimento. La pagina non espone fonti esterne nel sito pubblicato; il contenuto è riformulato come istruzioni locali.
 
 ## Filtro anti-spoiler
 

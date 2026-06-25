@@ -12,4 +12,4 @@ Le immagini delle schede personaggi non sono generate con IA e non sono copiate 
 Le immagini e i personaggi restano proprietà dei rispettivi titolari. Il progetto usa soltanto URL immagine approvati nel client pubblicato; nessun URL della fonte testuale della guida viene esposto nelle pagine GitHub Pages.
 
 
-Le immagini vengono usate come avatar e sfondo decorativo delle schede. Se un host remoto non risponde, il sito conserva layout, contenuto e filtro anti-spoiler senza dipendere dall’immagine.
+Le immagini vengono usate come avatar e sfondo decorativo delle schede della guida Equipment e come ritratti delle sezioni nella pagina `ai.html`. Se un host remoto non risponde, il sito conserva layout, contenuto e filtro anti-spoiler senza dipendere dall’immagine.

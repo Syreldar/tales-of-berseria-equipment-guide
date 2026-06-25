@@ -16,6 +16,10 @@ EXPECTED_CATEGORY_COUNT = 18
 EXPECTED_ITEM_COUNT = 350
 PHASES = ("Main game", "Post-game")
 EXPECTED_PHASE_CARD_COUNT = EXPECTED_CATEGORY_COUNT * len(PHASES)
+REQUIRED_AI_IDS = {
+    "partenza", "decisioni", "preset", "ai-velvet", "ai-rokurou", "ai-magilou",
+    "ai-laphicet", "ai-eizen", "ai-eleanor", "titles", "adattamenti", "consenso", "checklist-ai",
+}
 REQUIRED_IDS = {
     "adesso", "personaggi", "come-leggere", "fondamenti", "statistiche", "rarity", "common-rare",
     "master-skill", "enhancement", "smith", "costi", "main-ingredient", "dismantle",
@@ -111,6 +115,37 @@ def validate_guide(guide: Path) -> list[str]:
     if len(item_refs) < 18:
         fail("Guide needs at least 18 direct Equipment references")
     return item_refs
+
+
+def validate_ai_page(page: Path, script: Path) -> None:
+    text = page.read_text(encoding="utf-8")
+    ids = set(re.findall(r'\bid=["\']([^"\']+)["\']', text))
+    missing = REQUIRED_AI_IDS - ids
+    if missing:
+        fail(f"AI page is missing required anchors: {', '.join(sorted(missing))}")
+    if "./assets/ai.js" not in text:
+        fail("AI page must load its dedicated behavior script")
+    if "Go All Out" not in text:
+        fail("AI page is missing the mandatory battle-start command")
+    if "data-ai-advance-party" not in text or "ai-spoiler-filter" not in text:
+        fail("AI page is missing spoiler-safe progress controls")
+    if text.count("data-spoiler-stage") < 7:
+        fail("AI page must protect all future-character sections and Title guidance")
+    if text.count("<table") < 4:
+        fail("AI page must retain its novice-oriented explanation tables")
+    for skill in ("Scale Crusher", "Hell Gate", "Stone Lance", "Flame Beast", "Maelstrom", "Incapacitator"):
+        if skill not in text:
+            fail(f"AI page is missing a required final-preset reference: {skill}")
+    anchors = re.findall(r'<a\s+[^>]*href=["\']#([^"\']+)["\']', text)
+    missing_targets = sorted({anchor for anchor in anchors if anchor not in ids})
+    if missing_targets:
+        fail(f"AI page has broken internal anchors: {', '.join(missing_targets)}")
+    if not script.is_file():
+        fail("AI page behavior script is missing")
+    script_text = script.read_text(encoding="utf-8")
+    for token in ("tob-equipment-guide-spoiler-mode", "tob-equipment-guide-spoiler-progress", "injectVisiblePortraits", "applySpoilerMask"):
+        if token not in script_text:
+            fail(f"AI behavior script is missing required spoiler-state behavior: {token}")
 
 
 def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: bool) -> None:
@@ -211,6 +246,7 @@ def main() -> int:
         fail(f"Site directory not found: {site}")
     validate_public_tree(site)
     item_refs = validate_guide(site / "content" / "guide.html")
+    validate_ai_page(site / "ai.html", site / "assets" / "ai.js")
     validate_catalogue(site / "content" / "catalogo.json", item_refs, args.allow_unbuilt)
     print("Static-site validation passed.")
     return 0

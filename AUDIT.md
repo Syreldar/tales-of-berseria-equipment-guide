@@ -45,3 +45,12 @@ La snapshot conserva sempre il Monster quando la tabella strutturata registra un
 
 - Corrected the farming-link target from `Velvet Amphibole Belt` to the canonical catalogue name `Amphibole Belt`.
 - The validator remains strict: every `data-item-ref` in the guide must resolve to a committed Equipment row after the catalogue snapshot is built.
+
+## Pagina AI e Artes
+
+- `site/ai.html` è una pagina statica dedicata ai preset AI, separata dalla guida Equipment.
+- Riporta il comando iniziale `Go All Out`, i cinque valori Strategy nell’ordine visualizzato dal gioco, le liste OFF/ON, i due build completi di Eizen e le eccezioni per boss, Dangerous Encounters e Chaos.
+- Le spiegazioni non classificano una mossa OFF come inutile manualmente: il criterio è esclusivamente l’affidabilità dell’AI.
+- La pagina distingue esplicitamente tra impostazioni forti, scelte contestuali e punti controversi; non presenta una discussione come consenso universale.
+- Usa le stesse chiavi `localStorage` della guida Equipment. Con filtro anti-spoiler attivo, rimuove dal DOM visuale i preset degli alleati non ancora segnati come sbloccati, il loro avatar, nome, Artes e voci dell’indice/ricerca.
+- Le immagini dei preset AI usano gli stessi sei URL cut-in approvati e documentati in `ASSET_SOURCES.md`; nessuna immagine generata è inclusa o caricata.

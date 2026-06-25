@@ -1,0 +1,308 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Preset AI senza spoiler per Tales of Berseria: strategie, Artes da attivare e disattivare, motivazioni e adattamenti per i combattimenti difficili.">
+    <title>Tales of Berseria — Preset AI e Artes</title>
+    <script>
+        try {
+            if (window.localStorage.getItem("tob-equipment-guide-spoiler-mode") === "off") {
+                document.documentElement.dataset.aiSpoiler = "off";
+            }
+        } catch (error) {
+            /* Default: spoiler filter enabled. */
+        }
+    </script>
+    <link rel="stylesheet" href="./assets/site.css">
+</head>
+<body>
+    <a class="skip-link" href="#partenza">Vai ai preset AI</a>
+
+    <header class="site-header">
+        <div class="header-content">
+            <div>
+                <p class="eyebrow">Tales of Berseria · AI</p>
+                <h1>Preset AI e Artes consigliate</h1>
+                <p class="subtitle">Configurazioni pratiche, senza spoiler, per far combattere gli alleati in modo più affidabile.</p>
+            </div>
+            <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Attiva il tema chiaro">Tema chiaro</button>
+        </div>
+        <div class="quick-start" aria-label="Percorsi rapidi">
+            <a href="./">Guida Equipment</a>
+            <a href="#partenza">Imposta subito</a>
+            <a href="#preset">Preset per alleato</a>
+            <a href="#decisioni">Perché alcune Artes sono OFF</a>
+            <a href="#adattamenti">Quando cambiare</a>
+            <a href="#checklist-ai">Checklist</a>
+        </div>
+    </header>
+
+    <main class="layout">
+        <aside class="sidebar" aria-label="Navigazione dei preset AI">
+            <div class="sidebar-sticky">
+                <label class="search-label" for="ai-search">Cerca nei preset AI</label>
+                <input id="ai-search" type="search" placeholder="Es. Hell Gate, Change Out" autocomplete="off">
+                <p id="ai-search-status" class="search-status" aria-live="polite"></p>
+                <nav id="ai-toc" class="toc" aria-label="Indice dei preset AI"></nav>
+            </div>
+        </aside>
+
+        <article id="ai-guide" class="guide ai-guide" aria-live="polite">
+            <section id="partenza" class="ai-hero" data-ai-searchable>
+                <p class="eyebrow">Parti da qui</p>
+                <h2>La regola che rende validi questi preset</h2>
+                <div class="callout success ai-go-all-out">
+                    <p class="ai-callout-label">A ogni battaglia</p>
+                    <h3>Ordina <code>Go All Out</code> appena inizia lo scontro.</h3>
+                    <p>Questa è una parte necessaria del preset: impostare solo le cinque voci della Strategy non basta. Usa l’ordine all’inizio di <strong>ogni</strong> combattimento, poi lascia lavorare gli alleati.</p>
+                </div>
+                <p>I cinque valori elencati per ogni alleato sono nell’ordine mostrato dal gioco, da sinistra a destra. Copiali esattamente. Le liste <strong>OFF</strong> non dicono che un’Arte è inutile per un giocatore manuale: indicano soltanto che l’AI la usa male o la usa in situazioni dove un’alternativa è più stabile.</p>
+
+                <div class="ai-spoiler-toolbar" role="group" aria-label="Filtro anti-spoiler">
+                    <label class="spoiler-toggle" for="ai-spoiler-filter">
+                        <input id="ai-spoiler-filter" type="checkbox">
+                        <span class="spoiler-toggle-control" aria-hidden="true"></span>
+                        <span class="spoiler-copy"><strong>Filtro anti-spoiler</strong><small>Nascondi i preset degli alleati non ancora sbloccati.</small></span>
+                    </label>
+                    <div class="character-progress" aria-label="Gestione del progresso senza spoiler">
+                        <span class="character-progress-count">Progresso salvato nel browser</span>
+                        <button class="character-action" type="button" data-ai-advance-party>Ho sbloccato un alleato</button>
+                        <button class="character-action" type="button" data-ai-reset-party>Ripristina</button>
+                    </div>
+                </div>
+
+                <div class="ai-rule-grid">
+                    <article>
+                        <h3>Usa il preset come base</h3>
+                        <p>È progettato come configurazione generale per gruppi di nemici e combattimenti normali, non come soluzione immutabile per ogni boss.</p>
+                    </article>
+                    <article>
+                        <h3>Intervieni quando serve</h3>
+                        <p>Puoi sempre ordinare, usare un oggetto, lanciare una Mystic Arte, curare o fare uno Switch Blast manuale.</p>
+                    </article>
+                    <article>
+                        <h3>Non confondere “sicuro” con “passivo”</h3>
+                        <p><code>Defense Only</code> nelle voci del preset convive con <code>Go All Out</code>: il comando iniziale è ciò che mantiene l’AI attiva.</p>
+                    </article>
+                </div>
+
+                <table class="compact-table ai-order-table">
+                    <thead><tr><th>Quando</th><th>Che cosa fai</th><th>Perché</th></tr></thead>
+                    <tbody>
+                        <tr><td>Prima del combattimento</td><td>Imposta le cinque voci della Strategy e le Artes OFF.</td><td>Riduci le decisioni che l’AI gestisce peggio.</td></tr>
+                        <tr><td>Appena compare il nemico</td><td>Ordina <code>Go All Out</code>.</td><td>Attiva il comportamento previsto dai preset.</td></tr>
+                        <tr><td>Durante un’emergenza</td><td>Usa manualmente Item, cure, Mystic Arte o Switch Blast.</td><td>L’AI non valuta il contesto di un giocatore umano.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="decisioni" data-ai-searchable>
+                <p class="kicker">Come leggere le liste OFF</p>
+                <h2>Perché alcune Artes sono disattivate</h2>
+                <p>Il criterio non è “questa Arte fa poco danno”. L’AI soffre soprattutto quando una mossa la lascia esposta, la porta nel punto sbagliato, fa mancare il colpo o spezza la sequenza successiva. Una mossa può restare ottima nelle mani del giocatore e restare pessima per l’AI.</p>
+                <div class="cards ai-reason-cards">
+                    <article class="card"><h3>Recovery lunga</h3><p>Dopo alcune animazioni l’AI resta ferma troppo a lungo e viene colpita prima di continuare la combo.</p></article>
+                    <article class="card"><h3>Posizione sfavorevole</h3><p>L’AI non pianifica bene il colpo successivo: un’Arte che allontana il bersaglio o l’utilizzatore può far mancare la mossa dopo.</p></article>
+                    <article class="card"><h3>Copertura ridondante</h3><p>Se un’altra Arte mantiene lo stesso ruolo con meno rischio, il preset preferisce la scelta più coerente.</p></article>
+                    <article class="card"><h3>Cast lunghi</h3><p>I caster AI non gestiscono bene i cast prolungati in mezzo a più nemici; per questo i preset mantengono poche Malak Artes selezionate.</p></article>
+                </div>
+                <div class="callout info">
+                    <p><strong>Regola pratica:</strong> quando una voce dice “tutto tranne…”, spegni davvero tutte le Artes di quella famiglia e riaccendi solo quelle nominate. Non interpretare la frase come “usa soprattutto queste”.</p>
+                </div>
+                <table class="wide-table">
+                    <thead><tr><th>Stato</th><th>Come applicarlo</th><th>Che cosa non conclude</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Lascia ON</strong></td><td>È una scelta che il preset vuole disponibile all’AI.</td><td>Che debba essere usata in ogni catena manuale.</td></tr>
+                        <tr><td><strong>Metti OFF</strong></td><td>Non lasciarla scegliere all’AI nella configurazione standard.</td><td>Che sia inutilizzabile se la controlli tu.</td></tr>
+                        <tr><td><strong>Opzionale</strong></td><td>Provala solo insieme alla variante indicata.</td><td>Che sia necessaria per far funzionare il preset.</td></tr>
+                        <tr><td><strong>Contestuale</strong></td><td>Può cambiare con boss, gruppo nemico o difficoltà.</td><td>Che esista una risposta universale.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="preset" class="ai-preset-overview" data-ai-searchable>
+                <p class="kicker">Configurazioni finali</p>
+                <h2>Preset per alleato</h2>
+                <p>Le sezioni seguenti riportano il preset aggiornato. Con il filtro anti-spoiler attivo compaiono solo gli alleati che hai indicato come già sbloccati. Le informazioni nascoste non entrano neppure nella ricerca o nell’indice.</p>
+                <p class="muted">Il preset è una riformulazione italiana dell’ultima configurazione aggiornata da Xcite. Dove la discussione non arriva a una conclusione unica, questa pagina lo indica invece di presentare una preferenza come regola assoluta.</p>
+            </section>
+
+            <section id="ai-velvet" class="ai-character-preset tone-velvet" data-member-id="velvet" data-spoiler-stage="0" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="velvet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Velvet</h2><p class="character-role">Pressione costante e sfruttamento delle weakness</p></div></div>
+                <div class="ai-setting-row" aria-label="Strategy di Velvet"><span>Target Strong Enemies</span><span>Aim for Weaknesses</span><span>Be Aggressive</span><span>Change Out</span><span>You Decide</span></div>
+                <div class="ai-preset-columns">
+                    <div>
+                        <h3>Artes da mettere OFF</h3>
+                        <ul class="ai-skill-list off"><li>Harsh Rebuttal</li><li>Avalanche Fang</li><li>Moonlight Cyclone</li><li>Rising Moon</li><li>Rising Falcon</li><li>Soaring Dragon</li><li>Slag Assault</li><li>Grounding Strike</li><li>Banishing Thunder</li><li>Binding Frost</li></ul>
+                        <p class="muted">Lascia ON le altre Artes, incluso <strong>Scale Crusher</strong>.</p>
+                    </div>
+                    <div>
+                        <h3>Perché questa forma</h3>
+                        <p><code>Target Strong Enemies</code> dà a Velvet bersagli con abbastanza HP da completare una catena e arrivare più facilmente a Therion form. L’obiettivo è mantenere pressione, status e Souls senza farla inseguire un bersaglio già quasi sconfitto.</p>
+                        <p><strong>Scale Crusher</strong> è la scelta preferita per Dragon: è più costante di <strong>Soaring Dragon</strong>, ha Stun elevato e giustifica il costo in SG. <strong>Slag Assault</strong> resta OFF perché l’AI tende a farlo mancare e ripeterlo; per Apodous resta disponibile <strong>Water Snake’s Wake</strong>.</p>
+                    </div>
+                </div>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>La lista finale privilegia affidabilità dell’AI. Una versione precedente aveva riattivato <strong>Harsh Rebuttal</strong> per la coverage Demihuman, ma il preset finale lo spegne: qui prevale l’ultima lista completa. Se controlli Velvet manualmente, alcune Artes OFF possono diventare situazionali; non riattivarle solo perché sono utili al giocatore.</p></details>
+            </section>
+
+            <section id="ai-rokurou" class="ai-character-preset tone-rokurou" data-member-id="rokurou" data-spoiler-stage="1" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="rokurou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Rokurou</h2><p class="character-role">Weakness coverage con priorità alla sopravvivenza</p></div></div>
+                <div class="ai-setting-row" aria-label="Strategy di Rokurou"><span>Target Enemy with Most Souls</span><span>Aim for Weaknesses</span><span>Defense Only</span><span>Change Out</span><span>You Decide</span></div>
+                <div class="ai-preset-columns">
+                    <div>
+                        <h3>Artes da mettere OFF</h3>
+                        <ul class="ai-skill-list off"><li>Crimson Flash</li><li>Jade Wave</li><li>Armor Crusher</li><li>Double Haze</li><li>Orochi’s Fury</li><li>Form 1: Fire Burst</li><li>Form 2: Imbue Earth</li><li>Form 5: Scatterburst</li><li>Form 6: Dark Vortex</li><li>Form 7: Rapid Bolt</li></ul>
+                        <p class="muted">Lascia ON tutte le altre Artes non elencate.</p>
+                    </div>
+                    <div>
+                        <h3>Perché questa forma</h3>
+                        <p>Rokurou deve usare le weakness senza inseguire continuamente posizioni sfavorevoli. La lista riduce le Forms e le Artes che fanno perdere tempo, spezzano la distanza o producono sequel poco affidabili per l’AI.</p>
+                        <p>Il punto non è eliminare ogni opzione elementale: è conservare quelle che l’AI concatena con maggior costanza. Contro un singolo boss puoi sperimentare più coverage, ma nei gruppi il preset difensivo è la scelta più stabile.</p>
+                    </div>
+                </div>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>Questa è una delle aree più discusse: più Artes possono aumentare la coverage, ma la discussione riconosce che l’AI può usarle in ordine sbagliato. Il preset sceglie consistenza nei gruppi; per un boss singolo il giocatore può riaprire una weakness utile e verificare il risultato.</p></details>
+            </section>
+
+            <section id="ai-magilou" class="ai-character-preset tone-magilou" data-member-id="magilou" data-spoiler-stage="4" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="magilou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Magilou</h2><p class="character-role">Caster a distanza con set ridotto</p></div></div>
+                <div class="ai-setting-row" aria-label="Strategy di Magilou"><span>Target Multiple Enemies</span><span>Engage at Range</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
+                <div class="ai-preset-columns">
+                    <div>
+                        <h3>Malak Artes da lasciare ON</h3>
+                        <ul class="ai-skill-list on"><li>Aqua Split</li><li>Blood Moon</li><li><span>Opzionale:</span> Crown Fire</li></ul>
+                        <p class="muted">Metti OFF tutte le altre <strong>Malak Artes</strong>. Il preset finale non impone una nuova blacklist generale per le Hidden Artes.</p>
+                    </div>
+                    <div>
+                        <h3>Perché questa forma</h3>
+                        <p>L’AI dei caster è meno affidabile con i cast lunghi in combattimenti caotici. Ridurre il set evita che Magilou resti bloccata su una magia interrotta o scelga una risposta lenta quando serve spostarsi.</p>
+                        <p><strong>Crown Fire</strong> è una scelta facoltativa: testala nel tuo set invece di considerarla parte obbligatoria del preset.</p>
+                    </div>
+                </div>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>Il principio più condiviso è mantenere poche magie che l’AI può lanciare con affidabilità. Il valore di <strong>Aqua Split</strong> e <strong>Blood Moon</strong> dipende comunque dalla situazione: qui restano ON perché fanno parte del preset aggiornato, non perché siano universalmente le migliori magie manuali.</p></details>
+            </section>
+
+            <section id="ai-laphicet" class="ai-character-preset tone-laphicet" data-member-id="laphicet" data-spoiler-stage="2" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="laphicet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Laphicet</h2><p class="character-role">Supporto a distanza con magie selezionate</p></div></div>
+                <div class="ai-setting-row" aria-label="Strategy di Laphicet"><span>Target Multiple Enemies</span><span>Engage at Range</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
+                <div class="ai-preset-columns">
+                    <div>
+                        <h3>Malak Artes da lasciare ON</h3>
+                        <ul class="ai-skill-list on"><li>Kaleidos Ray</li><li>Blessed Drops</li><li>Void Mire</li><li>Dark Fangs</li></ul>
+                        <p class="muted">Metti OFF tutte le altre <strong>Malak Artes</strong>. Non inventare una blacklist per Hidden Artes: l’aggiornamento finale non ne aggiunge una.</p>
+                    </div>
+                    <div>
+                        <h3>Perché questa forma</h3>
+                        <p>Il set limita la scelta dell’AI a poche magie già considerate affidabili nel suo ruolo. In gruppi con molti bersagli l’obiettivo è farlo restare a distanza e lanciare, non farlo alternare continuamente magie lunghe e posizionamento.</p>
+                        <p><strong>Blessed Drops</strong> è incluso nella lista finale: non spegnerlo soltanto perché le cure possono essere deboli alle difficoltà più alte.</p>
+                    </div>
+                </div>
+                <details><summary>Titolo: Incapacitator o Sorcerer?</summary><p><strong>Incapacitator</strong> è la scelta del preset finché i Rings sono <code>+8</code> o inferiori. Esiste una valida obiezione: <strong>Sorcerer</strong> può migliorare molto i Void cast e farlo dominare un incontro. Il compromesso è semplice: Incapacitator per equilibrio e sicurezza del gruppo; Sorcerer se cerchi deliberatamente più pressione da Laphicet e accetti il rischio.</p></details>
+            </section>
+
+            <section id="ai-eizen" class="ai-character-preset tone-eizen" data-member-id="eizen" data-spoiler-stage="3" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="eizen"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eizen</h2><p class="character-role">Due build: prima ravvicinata, poi distanza</p></div></div>
+                <div class="ai-build-switcher" aria-label="Build di Eizen"><a href="#eizen-fist">Build 1 · Fist Bruiser</a><a href="#eizen-wind">Build 2 · Wind Master</a></div>
+                <div id="eizen-fist" class="ai-build-block">
+                    <h3>Build 1: Fist Bruiser</h3>
+                    <div class="ai-setting-row"><span>Target Nearby Enemies</span><span>Balanced</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
+                    <div class="ai-preset-columns">
+                        <div><h4>Artes da mettere OFF</h4><p><strong>Martial Artes:</strong> Verdict, Tempo, Eleventh Hour, Clear Path, Lighthouse, Deceiving Pummel.</p><p><strong>Malak Artes:</strong> tutte tranne <strong>Flash Step</strong> e <strong>Stone Lance</strong>.</p></div>
+                        <div><h4>Quando usarla</h4><p>Usala finché non hai tutte le Artes della Build 2. È la scelta ravvicinata: più semplice da applicare durante la storia e più pronta prima del set completo.</p></div>
+                    </div>
+                </div>
+                <div id="eizen-wind" class="ai-build-block">
+                    <h3>Build 2: Wind Master</h3>
+                    <div class="ai-setting-row"><span>Target Multiple Enemies</span><span>Fast Attacks</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
+                    <div class="ai-preset-columns">
+                        <div><h4>Artes da lasciare ON</h4><p><strong>Martial Artes:</strong> solo <strong>Coercion</strong> e <strong>Last Throes</strong>.</p><p><strong>Malak Artes:</strong> solo <strong>Stone Lance</strong> e <strong>Hell Gate</strong>.</p></div>
+                        <div><h4>Quando usarla</h4><p>Passa qui dopo aver sbloccato <strong>Coercion</strong>, <strong>Last Throes</strong>, <strong>Stone Lance</strong> e <strong>Hell Gate</strong>. Questa è la build preferita nel late game: combatte da media/lunga distanza e sfrutta <strong>Hell Gate</strong> a fine combo con cast molto rapido.</p></div>
+                    </div>
+                </div>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>Le due build sono entrambe considerate valide, ma la preferenza finale è Wind Master quando il set è disponibile. Non mescolare a metà le due blacklist: scegli una build intera, applicala e poi valuta il risultato.</p></details>
+            </section>
+
+            <section id="ai-eleanor" class="ai-character-preset tone-eleanor" data-member-id="eleanor" data-spoiler-stage="5" data-ai-searchable>
+                <div class="ai-character-identity" data-member-id="eleanor"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eleanor</h2><p class="character-role">Combattimento ravvicinato con selezione severa</p></div></div>
+                <div class="ai-setting-row" aria-label="Strategy di Eleanor"><span>Target Nearby Enemies</span><span>Close Combat</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
+                <div class="ai-preset-columns">
+                    <div>
+                        <h3>Artes da mettere OFF</h3>
+                        <p><strong>Martial Artes:</strong> Vanguard, Double Rush, Skewering Spear, Cleansing Lance.</p>
+                        <p><strong>Malak Artes:</strong> tutte tranne <strong>Flame Beast</strong> e <strong>Maelstrom</strong>.</p>
+                    </div>
+                    <div>
+                        <h3>Perché questa forma</h3>
+                        <p><code>Target Nearby Enemies</code> limita la corsa e i continui cambi di bersaglio. Questo è importante per un personaggio melee: inseguire gruppi diversi fa perdere tempo prima ancora di iniziare la combo.</p>
+                        <p><strong>Skewering Spear</strong> è un esempio classico di Arte che può lasciare il bersaglio nella distanza sbagliata per l’azione dopo; per l’AI il rischio supera il vantaggio.</p>
+                    </div>
+                </div>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>La discussione riconosce che alcune delle Artes escluse possono avere valore manuale o in un matchup preciso. Il preset conserva però una rotazione corta perché l’AI non programma bene i follow-up dopo spinte e riposizionamenti.</p></details>
+            </section>
+
+            <section id="titles" data-ai-searchable>
+                <p class="kicker">Sopravvivenza prima del danno</p>
+                <h2>Title consigliati</h2>
+                <div class="callout warning">
+                    <p><strong>Regola del preset:</strong> usa <strong>Incapacitator</strong> su tutti i personaggi mentre i tuoi <strong>Rings</strong> sono a <code>+8</code> o meno. Quando i Rings sono più potenziati, scegli il Title in base al tuo obiettivo.</p>
+                </div>
+                <table class="wide-table">
+                    <thead><tr><th>Scelta</th><th>Quando</th><th>Motivo</th><th>Eccezione legittima</th></tr></thead>
+                    <tbody>
+                        <tr><td><strong>Incapacitator</strong></td><td>Rings fino a <code>+8</code>.</td><td>Riduce il rischio che uno Stun trasformi rapidamente un alleato in una morte; migliora anche la durata degli Stun inflitti.</td><td>Con Rings molto potenziati puoi preferire un Title mirato al danno o ai cast.</td></tr>
+                        <tr data-spoiler-stage="2"><td><strong>Sorcerer</strong></td><td>Quando vuoi privilegiare cast Void più rapidi.</td><td>Può aumentare molto il contributo offensivo del caster.</td><td>Può concentrare troppo controllo e Souls su un solo alleato; non è il preset prudente del gruppo.</td></tr>
+                    </tbody>
+                </table>
+            </section>
+
+            <section id="adattamenti" data-ai-searchable>
+                <p class="kicker">Il preset non è una prigione</p>
+                <h2>Quando cambiare impostazioni</h2>
+                <table class="wide-table">
+                    <thead><tr><th>Situazione</th><th>Impostazione di partenza</th><th>Adattamento sensato</th></tr></thead>
+                    <tbody>
+                        <tr><td>Gruppo normale o Dire Encounter gestibile</td><td>Copia il preset e ordina <code>Go All Out</code>.</td><td>Non toccare nulla finché non osservi un problema ripetibile.</td></tr>
+                        <tr><td>Boss singolo</td><td>Il preset resta sicuro.</td><td>Puoi provare più aggressione o una weakness extra, ma controlla se l’AI perde posizione o muore più spesso.</td></tr>
+                        <tr><td>Dangerous Encounter o nemici che eliminano in pochi colpi</td><td>Priorità alla sopravvivenza.</td><td>Intervieni con Switch Blast, Item e ordini manuali; evitare morti vale più di un’ultima Arte in lista.</td></tr>
+                        <tr><td>Chaos / cure molto ridotte</td><td>Non contare sulle cure a cast lungo come piano principale.</td><td>Gestisci manualmente bottiglie, revival e rimozione status quando è davvero necessario.</td></tr>
+                        <tr><td>Vuoi una Mystic Arte al momento giusto</td><td>Non lasciarla alla casualità dell’AI.</td><td>Passa tu al personaggio e attivala manualmente quando il bersaglio e il BG sono corretti.</td></tr>
+                    </tbody>
+                </table>
+                <div class="callout info"><p><strong>Risultato atteso:</strong> questi preset rendono gli alleati più coerenti, non perfetti. La tua parte resta gestire l’emergenza, la cura decisiva, il cambio e la Mystic Arte.</p></div>
+            </section>
+
+            <section id="consenso" data-ai-searchable>
+                <p class="kicker">Lettura onesta della discussione</p>
+                <h2>Che cosa è davvero condiviso e che cosa resta contestuale</h2>
+                <div class="ai-consensus-grid">
+                    <article class="ai-consensus strong"><h3>Molto solido</h3><ul><li>Ordina <code>Go All Out</code> a inizio battaglia.</li><li>Per l’AI, evita Artes con recovery lunga, miss frequenti o follow-up difficili.</li><li>Per i caster, una lista corta di Malak Artes affidabili è più stabile nei gruppi.</li><li>Gestisci manualmente gli strumenti importanti quando il contesto lo richiede.</li></ul></article>
+                    <article class="ai-consensus situational"><h3>Dipende dal combattimento</h3><ul><li>Quanta aggressione usare contro un boss singolo.</li><li>Se riattivare una weakness specifica.</li><li>Quanto affidarsi a cure a cast lungo alle difficoltà alte.</li><li>Quale Title preferire dopo Rings molto potenziati.</li></ul></article>
+                    <article class="ai-consensus disputed"><h3>Non esiste un verdetto unico</h3><ul><li>AI Switch Blast contro gestione manuale.</li><li>Incapacitator contro Sorcerer per il caster.</li><li>Coverage massima contro rotazione più corta per i melee.</li><li>Preset generale contro setup costruito per un singolo boss.</li></ul></article>
+                </div>
+                <p class="muted">Questa pagina distingue il preset aggiornato dalle opinioni che nel confronto restano in disaccordo. Per un novizio, la scelta sicura è seguire il preset prima di sperimentare.</p>
+            </section>
+
+            <section id="checklist-ai" data-ai-searchable>
+                <h2>Checklist AI per novizi</h2>
+                <ul class="checklist">
+                    <li>Ho impostato tutte e cinque le voci della Strategy nell’ordine indicato.</li>
+                    <li>Ho spento solo le Artes elencate per l’alleato e la build scelta.</li>
+                    <li>All’inizio di ogni battaglia ordino <code>Go All Out</code>.</li>
+                    <li>Non interpreto una mossa OFF come “mossa inutile quando gioco manualmente”.</li>
+                    <li>Per Eizen uso una build completa, non una combinazione casuale delle due.</li>
+                    <li>Uso Incapacitator con Rings fino a <code>+8</code>, poi rivaluto.</li>
+                    <li>Per un boss difficile cambio un solo elemento alla volta e osservo il risultato.</li>
+                </ul>
+                <p><a href="./">Torna alla guida Equipment</a> per collegare Rings, Enhancement e set di ogni alleato.</p>
+            </section>
+        </article>
+    </main>
+
+    <footer class="site-footer">
+        <p>Guida statica in italiano. I nomi di Monster, Item, Skill, Arte, Acerite e località rimangono in inglese per coincidere con quelli mostrati dal gioco.</p>
+        <p><em>Tales of Berseria</em> e i relativi contenuti appartengono ai rispettivi titolari dei diritti.</p>
+    </footer>
+
+    <script src="./assets/ai.js" defer></script>
+</body>
+</html>
