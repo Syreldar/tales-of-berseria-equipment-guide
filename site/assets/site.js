@@ -147,6 +147,8 @@
     let cataloguePendingCharacter = "";
     let cataloguePendingCategory = "";
     let catalogueHashHandlerBound = false;
+    const originalCharacterReferenceText = new WeakMap();
+    const originalCharacterReferenceAttributes = new WeakMap();
 
     function slugify(value) {
         return String(value || "")
@@ -296,7 +298,80 @@
             return "Tutti";
         }
 
-        return users.filter(isNamedCharacterVisible).join(" · ");
+        return users.map(function(user) {
+            return isNamedCharacterVisible(user) ? user : "????";
+        }).join(" · ");
+    }
+
+    function escapeRegex(value) {
+        return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function lockedMemberNamePattern() {
+        if (!spoilerFilterEnabled) {
+            return null;
+        }
+
+        const names = partyMembers
+            .filter(function(member) {
+                return !memberIsVisible(member);
+            })
+            .map(function(member) {
+                return escapeRegex(member.name);
+            });
+
+        if (!names.length) {
+            return null;
+        }
+
+        return new RegExp(`\\b(?:${names.join("|")})\\b`, "gi");
+    }
+
+    function maskLockedCharacterName(value, pattern) {
+        return pattern ? String(value || "").replace(pattern, "????") : String(value || "");
+    }
+
+    function originalAttributeValue(element, attribute) {
+        let attributes = originalCharacterReferenceAttributes.get(element);
+
+        if (!attributes) {
+            attributes = new Map();
+            originalCharacterReferenceAttributes.set(element, attributes);
+        }
+        if (!attributes.has(attribute)) {
+            attributes.set(attribute, element.getAttribute(attribute) || "");
+        }
+
+        return attributes.get(attribute);
+    }
+
+    function maskLockedCharacterReferences(root) {
+        const pattern = lockedMemberNamePattern();
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+
+        while (node) {
+            const parent = node.parentElement;
+            const skip = parent && (parent.tagName === "SCRIPT" || parent.tagName === "STYLE");
+
+            if (!skip) {
+                if (!originalCharacterReferenceText.has(node)) {
+                    originalCharacterReferenceText.set(node, node.nodeValue || "");
+                }
+                node.nodeValue = maskLockedCharacterName(originalCharacterReferenceText.get(node), pattern);
+            }
+
+            node = walker.nextNode();
+        }
+
+        [root].concat(Array.from(root.querySelectorAll("[alt], [aria-label], [title]"))).forEach(function(element) {
+            ["alt", "aria-label", "title"].forEach(function(attribute) {
+                if (!element.hasAttribute(attribute)) {
+                    return;
+                }
+                element.setAttribute(attribute, maskLockedCharacterName(originalAttributeValue(element, attribute), pattern));
+            });
+        });
     }
 
     function visibleText(node) {
@@ -342,6 +417,7 @@
 
             node.hidden = !stageIsVisible || !membersAreVisible;
         });
+        maskLockedCharacterReferences(guide);
     }
 
     function wrapTables(root) {
@@ -529,7 +605,7 @@
                     <div class="locked-character-content">
                         <div class="locked-silhouette" aria-hidden="true"><span>🔒</span></div>
                         <p class="character-kicker">Filtro anti-spoiler attivo</p>
-                        <h3>???</h3>
+                        <h3>????</h3>
                         <p>Questa scheda non mostra nome, avatar, ruolo né categorie finché non scegli di aggiornare il tuo progresso.</p>
                         <button class="character-card-action" type="button" data-advance-party>Ho sbloccato un nuovo alleato <span aria-hidden="true">→</span></button>
                     </div>
@@ -606,6 +682,7 @@
             renderCatalogue(catalogueData);
             renderReferenceCards(catalogueData);
         }
+        maskLockedCharacterReferences(guide);
     }
 
     function resolveItemLinks(data) {
@@ -937,6 +1014,7 @@
                 catalogueData = data;
                 renderCatalogue(data);
                 renderReferenceCards(data);
+                maskLockedCharacterReferences(guide);
                 scrollToGuideAnchor();
             })
             .catch(showError);

@@ -23,6 +23,8 @@
 
     let spoilerFilterEnabled = true;
     let unlockedStage = 0;
+    const originalCharacterReferenceText = new WeakMap();
+    const originalCharacterReferenceAttributes = new WeakMap();
 
     function slugify(value) {
         return String(value || "")
@@ -69,6 +71,81 @@
         }) || null;
     }
 
+    function memberIsVisible(member) {
+        return !spoilerFilterEnabled || member.stage <= unlockedStage;
+    }
+
+    function escapeRegex(value) {
+        return String(value || "").replace(/[.*+?^${}()|[\]\\]/g, "\\$&");
+    }
+
+    function lockedMemberNamePattern() {
+        if (!spoilerFilterEnabled) {
+            return null;
+        }
+
+        const names = partyMembers
+            .filter(function(member) {
+                return !memberIsVisible(member);
+            })
+            .map(function(member) {
+                return escapeRegex(member.name);
+            });
+
+        if (!names.length) {
+            return null;
+        }
+
+        return new RegExp(`\\b(?:${names.join("|")})\\b`, "gi");
+    }
+
+    function maskLockedCharacterName(value, pattern) {
+        return pattern ? String(value || "").replace(pattern, "????") : String(value || "");
+    }
+
+    function originalAttributeValue(element, attribute) {
+        let attributes = originalCharacterReferenceAttributes.get(element);
+
+        if (!attributes) {
+            attributes = new Map();
+            originalCharacterReferenceAttributes.set(element, attributes);
+        }
+        if (!attributes.has(attribute)) {
+            attributes.set(attribute, element.getAttribute(attribute) || "");
+        }
+
+        return attributes.get(attribute);
+    }
+
+    function maskLockedCharacterReferences(root) {
+        const pattern = lockedMemberNamePattern();
+        const walker = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
+        let node = walker.nextNode();
+
+        while (node) {
+            const parent = node.parentElement;
+            const skip = parent && (parent.tagName === "SCRIPT" || parent.tagName === "STYLE");
+
+            if (!skip) {
+                if (!originalCharacterReferenceText.has(node)) {
+                    originalCharacterReferenceText.set(node, node.nodeValue || "");
+                }
+                node.nodeValue = maskLockedCharacterName(originalCharacterReferenceText.get(node), pattern);
+            }
+
+            node = walker.nextNode();
+        }
+
+        [root].concat(Array.from(root.querySelectorAll("[alt], [aria-label], [title]"))).forEach(function(element) {
+            ["alt", "aria-label", "title"].forEach(function(attribute) {
+                if (!element.hasAttribute(attribute)) {
+                    return;
+                }
+                element.setAttribute(attribute, maskLockedCharacterName(originalAttributeValue(element, attribute), pattern));
+            });
+        });
+    }
+
     function nodeIsVisible(node) {
         return !node.hidden && !node.classList.contains("ai-search-hidden");
     }
@@ -110,6 +187,7 @@
             const stage = Number(node.dataset.spoilerStage);
             node.hidden = spoilerFilterEnabled && Number.isFinite(stage) && stage > unlockedStage;
         });
+        maskLockedCharacterReferences(guide);
         spoilerToggle.checked = spoilerFilterEnabled;
         injectVisiblePortraits();
     }
