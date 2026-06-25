@@ -55,9 +55,23 @@ La snapshot conserva sempre il Monster quando la tabella strutturata registra un
 - Usa le stesse chiavi `localStorage` della guida Equipment. Con filtro anti-spoiler attivo, rimuove dal DOM visuale i preset degli alleati non ancora segnati come sbloccati, il loro avatar, nome, Artes e voci dell’indice/ricerca.
 - Le immagini dei preset AI usano gli stessi sei URL cut-in approvati e documentati in `ASSET_SOURCES.md`; nessuna immagine generata è inclusa o caricata.
 
-## Character-card revision
+## Revisione delle schede personaggi
 
-- Each of the six visible-card definitions has a role-specific battle explanation, Equipment priority and AI note.
-- Category chips are direct links with `character` and `category` URL parameters; the catalogue consumes both parameters after loading.
-- Each card has direct links to the full character catalogue and its matching `ai.html` anchor.
-- Anti-spoiler masking still happens before cards, catalogue filters and AI sections are rendered.
+- Ognuna delle sei schede visibili ha una spiegazione del ruolo in battaglia, una priorità Equipment e una nota sul comportamento automatico.
+- I chip categoria sono link diretti con parametri URL `character` e `category`; il catalogo usa entrambi dopo il caricamento.
+- Ogni scheda ha link diretti al catalogo completo dell’alleato e al relativo anchor in `ai.html`.
+- Il filtro anti-spoiler viene applicato prima di mostrare schede, filtri del catalogo e sezioni AI.
+## Correzione schede personaggi e navigazione
+
+- Ogni scheda ora elenca tutte le categorie utilizzabili: Weapon, Accessory, Armor, Rings, `Shoes` universali e la variante maschile o femminile quando pertinente.
+- Velvet visualizza `Blades`, `Belts`, `Women’s Armor`, `Rings`, `Shoes` e `Women’s Shoes`.
+- Laphicet usa `Paper`; Magilou usa `Guardians`.
+- I chip e i pulsanti usano una rotta esplicita a `index.html` con query string e `#catalogo`; il client applica i filtri e poi porta il lettore alla sezione richiesta.
+- La spiegazione di Velvet chiarisce che `Target Strong Enemies` non elimina gli spostamenti dell’AI: dà priorità a bersagli con abbastanza HP, ma un bersaglio lontano va comunque raggiunto.
+
+## Verifica finale dei link e delle schede
+
+- Il validatore analizza ogni `href` in `index.html`, `content/guide.html` e `ai.html`: controlla file locali, anchor, destinazione guida/AI e parametri supportati.
+- I collegamenti generati dalle schede usano sempre `./index.html?character=…&category=…#catalogo`; il client applica il filtro e richiama lo scroll dopo che il contenuto dinamico è stato inserito nel DOM.
+- Il validatore controlla anche l’elenco esatto delle categorie per ogni alleato, compresi `Shoes` universali e la variante Footwear corretta. Un errore come `Laphicet → Guardians`, `Magilou → Paper` o una Velvet priva di `Blades` blocca la build.
+- La validazione è stata eseguita sia con il segnaposto locale sia con una snapshot completa simulata da 350 Item, 18 categorie e 36 coppie categoria/fase.

@@ -29,7 +29,7 @@
             <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Attiva il tema chiaro">Tema chiaro</button>
         </div>
         <div class="quick-start" aria-label="Percorsi rapidi">
-            <a href="./">Guida Equipment</a>
+            <a href="./index.html">Guida Equipment</a>
             <a href="#partenza">Imposta subito</a>
             <a href="#preset">Preset per alleato</a>
             <a href="#decisioni">Perché alcune Artes sono OFF</a>
@@ -55,9 +55,9 @@
                 <div class="callout success ai-go-all-out">
                     <p class="ai-callout-label">A ogni battaglia</p>
                     <h3>Ordina <code>Go All Out</code> appena inizia lo scontro.</h3>
-                    <p>Questa è una parte necessaria del preset: impostare solo le cinque voci della Strategy non basta. Usa l’ordine all’inizio di <strong>ogni</strong> combattimento, poi lascia lavorare gli alleati.</p>
+                    <p>Questa è una parte necessaria della configurazione: impostare solo le cinque voci della Strategy non basta. Usa l’ordine all’inizio di <strong>ogni</strong> combattimento, poi lascia lavorare gli alleati.</p>
                 </div>
-                <p>I cinque valori elencati per ogni alleato sono nell’ordine mostrato dal gioco, da sinistra a destra. Copiali esattamente. Le liste <strong>OFF</strong> non dicono che un’Arte è inutile per un giocatore manuale: indicano soltanto che l’AI la usa male o la usa in situazioni dove un’alternativa è più stabile.</p>
+                <p>In questa pagina, <strong>AI</strong> significa un alleato gestito automaticamente dal gioco; <strong>preset</strong> significa una configurazione pronta da copiare. I cinque valori elencati per ogni alleato sono nell’ordine mostrato dal gioco, da sinistra a destra. Copiali esattamente. Le liste <strong>OFF</strong> non dicono che un’Arte è inutile per un giocatore manuale: indicano soltanto che il controllo automatico la usa male o in situazioni dove un’alternativa è più stabile.</p>
 
                 <div class="ai-spoiler-toolbar" role="group" aria-label="Filtro anti-spoiler">
                     <label class="spoiler-toggle" for="ai-spoiler-filter">
@@ -102,10 +102,10 @@
                 <h2>Perché alcune Artes sono disattivate</h2>
                 <p>Il criterio non è “questa Arte fa poco danno”. L’AI soffre soprattutto quando una mossa la lascia esposta, la porta nel punto sbagliato, fa mancare il colpo o spezza la sequenza successiva. Una mossa può restare ottima nelle mani del giocatore e restare pessima per l’AI.</p>
                 <div class="cards ai-reason-cards">
-                    <article class="card"><h3>Recovery lunga</h3><p>Dopo alcune animazioni l’AI resta ferma troppo a lungo e viene colpita prima di continuare la combo.</p></article>
-                    <article class="card"><h3>Posizione sfavorevole</h3><p>L’AI non pianifica bene il colpo successivo: un’Arte che allontana il bersaglio o l’utilizzatore può far mancare la mossa dopo.</p></article>
-                    <article class="card"><h3>Copertura ridondante</h3><p>Se un’altra Arte mantiene lo stesso ruolo con meno rischio, il preset preferisce la scelta più coerente.</p></article>
-                    <article class="card"><h3>Cast lunghi</h3><p>I caster AI non gestiscono bene i cast prolungati in mezzo a più nemici; per questo i preset mantengono poche Malak Artes selezionate.</p></article>
+                    <article class="card"><h3>Tempo di recupero lungo</h3><p>Dopo alcune animazioni il personaggio resta fermo troppo a lungo e può essere colpito prima di continuare la combo.</p></article>
+                    <article class="card"><h3>Posizione sfavorevole</h3><p>Il controllo automatico non pianifica bene il colpo successivo: un’Arte che allontana il bersaglio o il personaggio può far mancare la mossa dopo.</p></article>
+                    <article class="card"><h3>Effetto già coperto</h3><p>Se un’altra Arte svolge lo stesso compito con meno rischio, la configurazione preferisce la scelta più coerente.</p></article>
+                    <article class="card"><h3>Cast lunghi</h3><p>Gli alleati che lanciano magie non gestiscono bene i cast prolungati in mezzo a più nemici; per questo le configurazioni mantengono poche Malak Artes selezionate.</p></article>
                 </div>
                 <div class="callout info">
                     <p><strong>Regola pratica:</strong> quando una voce dice “tutto tranne…”, spegni davvero tutte le Artes di quella famiglia e riaccendi solo quelle nominate. Non interpretare la frase come “usa soprattutto queste”.</p>
@@ -129,9 +129,9 @@
             </section>
 
             <section id="ai-velvet" class="ai-character-preset tone-velvet" data-member-id="velvet" data-spoiler-stage="0" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="velvet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Velvet</h2><p class="character-role">DPS fisico · Therion Form, Stun e pressione costante</p></div></div>
+                <div class="ai-character-identity" data-member-id="velvet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Velvet</h2><p class="character-role">Attaccante fisica · Therion Form, Stun e pressione costante</p></div></div>
                 <div class="ai-setting-row" aria-label="Strategy di Velvet"><span>Target Strong Enemies</span><span>Aim for Weaknesses</span><span>Be Aggressive</span><span>Change Out</span><span>You Decide</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Velvet#catalogo">tutti gli Item di Velvet</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Velvet#catalogo">tutti gli Item di Velvet</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                 <div class="ai-preset-columns">
                     <div>
                         <h3>Artes da mettere OFF</h3>
@@ -140,17 +140,17 @@
                     </div>
                     <div>
                         <h3>Perché questa forma</h3>
-                        <p><code>Target Strong Enemies</code> dà a Velvet bersagli con abbastanza HP da completare una catena e arrivare più facilmente a Therion form. L’obiettivo è mantenere pressione, status e Souls senza farla inseguire un bersaglio già quasi sconfitto.</p>
+                        <p><code>Target Strong Enemies</code> fa scegliere a Velvet un nemico con abbastanza HP da sostenere una catena completa e facilitare l’ingresso in Therion Form. Non impedisce ogni spostamento: se il nemico scelto è lontano, Velvet dovrà comunque avvicinarsi. Il vantaggio è evitare, quando possibile, di iniziare una combo su un bersaglio già vicino alla sconfitta.</p>
                         <p><strong>Scale Crusher</strong> è la scelta preferita per Dragon: è più costante di <strong>Soaring Dragon</strong>, ha Stun elevato e giustifica il costo in SG. <strong>Slag Assault</strong> resta OFF perché l’AI tende a farlo mancare e ripeterlo; per Apodous resta disponibile <strong>Water Snake’s Wake</strong>.</p>
                     </div>
                 </div>
-                <details><summary>Consenso e eccezioni pratiche</summary><p>La lista finale privilegia affidabilità dell’AI. Una versione precedente aveva riattivato <strong>Harsh Rebuttal</strong> per la coverage Demihuman, ma il preset finale lo spegne: qui prevale l’ultima lista completa. Se controlli Velvet manualmente, alcune Artes OFF possono diventare situazionali; non riattivarle solo perché sono utili al giocatore.</p></details>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>La lista finale privilegia affidabilità dell’AI. Una versione precedente aveva riattivato <strong>Harsh Rebuttal</strong> per coprire i nemici Demihuman, ma il preset finale lo spegne: qui prevale l’ultima lista completa. Se controlli Velvet manualmente, alcune Artes OFF possono diventare situazionali; non riattivarle solo perché sono utili al giocatore.</p></details>
             </section>
 
             <section id="ai-rokurou" class="ai-character-preset tone-rokurou" data-member-id="rokurou" data-spoiler-stage="1" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="rokurou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Rokurou</h2><p class="character-role">Duelist fisico · Souls, counter e weakness coverage</p></div></div>
+                <div class="ai-character-identity" data-member-id="rokurou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Rokurou</h2><p class="character-role">Duellante fisico · Souls, counter e uso delle debolezze</p></div></div>
                 <div class="ai-setting-row" aria-label="Strategy di Rokurou"><span>Target Enemy with Most Souls</span><span>Aim for Weaknesses</span><span>Defense Only</span><span>Change Out</span><span>You Decide</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Rokurou#catalogo">tutti gli Item di Rokurou</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Rokurou#catalogo">tutti gli Item di Rokurou</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                 <div class="ai-preset-columns">
                     <div>
                         <h3>Artes da mettere OFF</h3>
@@ -160,16 +160,16 @@
                     <div>
                         <h3>Perché questa forma</h3>
                         <p>Rokurou deve usare le weakness senza inseguire continuamente posizioni sfavorevoli. La lista riduce le Forms e le Artes che fanno perdere tempo, spezzano la distanza o producono sequel poco affidabili per l’AI.</p>
-                        <p>Il punto non è eliminare ogni opzione elementale: è conservare quelle che l’AI concatena con maggior costanza. Contro un singolo boss puoi sperimentare più coverage, ma nei gruppi il preset difensivo è la scelta più stabile.</p>
+                        <p>Il punto non è eliminare ogni opzione elementale: è conservare quelle che l’AI concatena con maggior costanza. Contro un singolo boss puoi sperimentare più opzioni per colpire le debolezze, ma nei gruppi il preset difensivo è la scelta più stabile.</p>
                     </div>
                 </div>
-                <details><summary>Consenso e eccezioni pratiche</summary><p>Questa è una delle aree più discusse: più Artes possono aumentare la coverage, ma la discussione riconosce che l’AI può usarle in ordine sbagliato. Il preset sceglie consistenza nei gruppi; per un boss singolo il giocatore può riaprire una weakness utile e verificare il risultato.</p></details>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>Questa è una delle aree più discusse: più Artes possono aumentare le opzioni contro le debolezze, ma la discussione riconosce che l’AI può usarle in ordine sbagliato. Il preset sceglie consistenza nei gruppi; per un boss singolo il giocatore può riaprire un’Arte utile contro una debolezza e verificare il risultato.</p></details>
             </section>
 
             <section id="ai-magilou" class="ai-character-preset tone-magilou" data-member-id="magilou" data-spoiler-stage="4" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="magilou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Magilou</h2><p class="character-role">Caster a distanza · rotazione corta e cast affidabili</p></div></div>
+                <div class="ai-character-identity" data-member-id="magilou"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Magilou</h2><p class="character-role">Maga a distanza · rotazione corta e cast affidabili</p></div></div>
                 <div class="ai-setting-row" aria-label="Strategy di Magilou"><span>Target Multiple Enemies</span><span>Engage at Range</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Magilou#catalogo">tutti gli Item di Magilou</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Magilou#catalogo">tutti gli Item di Magilou</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                 <div class="ai-preset-columns">
                     <div>
                         <h3>Malak Artes da lasciare ON</h3>
@@ -178,7 +178,7 @@
                     </div>
                     <div>
                         <h3>Perché questa forma</h3>
-                        <p>L’AI dei caster è meno affidabile con i cast lunghi in combattimenti caotici. Ridurre il set evita che Magilou resti bloccata su una magia interrotta o scelga una risposta lenta quando serve spostarsi.</p>
+                        <p>Il controllo automatico di chi lancia magie è meno affidabile con i cast lunghi in combattimenti caotici. Ridurre il set evita che Magilou resti bloccata su una magia interrotta o scelga una risposta lenta quando serve spostarsi.</p>
                         <p><strong>Crown Fire</strong> è una scelta facoltativa: testala nel tuo set invece di considerarla parte obbligatoria del preset.</p>
                     </div>
                 </div>
@@ -186,9 +186,9 @@
             </section>
 
             <section id="ai-laphicet" class="ai-character-preset tone-laphicet" data-member-id="laphicet" data-spoiler-stage="2" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="laphicet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Laphicet</h2><p class="character-role">Caster di supporto · Divide Pain e magie selezionate</p></div></div>
+                <div class="ai-character-identity" data-member-id="laphicet"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Laphicet</h2><p class="character-role">Mago di supporto · Divide Pain e magie selezionate</p></div></div>
                 <div class="ai-setting-row" aria-label="Strategy di Laphicet"><span>Target Multiple Enemies</span><span>Engage at Range</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Laphicet#catalogo">tutti gli Item di Laphicet</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Laphicet#catalogo">tutti gli Item di Laphicet</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                 <div class="ai-preset-columns">
                     <div>
                         <h3>Malak Artes da lasciare ON</h3>
@@ -205,12 +205,12 @@
             </section>
 
             <section id="ai-eizen" class="ai-character-preset tone-eizen" data-member-id="eizen" data-spoiler-stage="3" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="eizen"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eizen</h2><p class="character-role">Bruiser flessibile · Fist Bruiser prima, Wind Master dopo</p></div></div>
+                <div class="ai-character-identity" data-member-id="eizen"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eizen</h2><p class="character-role">Combattente flessibile · Fist Bruiser prima, Wind Master dopo</p></div></div>
                 <div class="ai-build-switcher" aria-label="Build di Eizen"><a href="#eizen-fist">Build 1 · Fist Bruiser</a><a href="#eizen-wind">Build 2 · Wind Master</a></div>
                 <div id="eizen-fist" class="ai-build-block">
                     <h3>Build 1: Fist Bruiser</h3>
                     <div class="ai-setting-row"><span>Target Nearby Enemies</span><span>Balanced</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Eizen#catalogo">tutti gli Item di Eizen</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Eizen#catalogo">tutti gli Item di Eizen</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                     <div class="ai-preset-columns">
                         <div><h4>Artes da mettere OFF</h4><p><strong>Martial Artes:</strong> Verdict, Tempo, Eleventh Hour, Clear Path, Lighthouse, Deceiving Pummel.</p><p><strong>Malak Artes:</strong> tutte tranne <strong>Flash Step</strong> e <strong>Stone Lance</strong>.</p></div>
                         <div><h4>Quando usarla</h4><p>Usala finché non hai tutte le Artes della Build 2. È la scelta ravvicinata: più semplice da applicare durante la storia e più pronta prima del set completo.</p></div>
@@ -221,16 +221,16 @@
                     <div class="ai-setting-row"><span>Target Multiple Enemies</span><span>Fast Attacks</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
                     <div class="ai-preset-columns">
                         <div><h4>Artes da lasciare ON</h4><p><strong>Martial Artes:</strong> solo <strong>Coercion</strong> e <strong>Last Throes</strong>.</p><p><strong>Malak Artes:</strong> solo <strong>Stone Lance</strong> e <strong>Hell Gate</strong>.</p></div>
-                        <div><h4>Quando usarla</h4><p>Passa qui dopo aver sbloccato <strong>Coercion</strong>, <strong>Last Throes</strong>, <strong>Stone Lance</strong> e <strong>Hell Gate</strong>. Questa è la build preferita nel late game: combatte da media/lunga distanza e sfrutta <strong>Hell Gate</strong> a fine combo con cast molto rapido.</p></div>
+                        <div><h4>Quando usarla</h4><p>Passa qui dopo aver sbloccato <strong>Coercion</strong>, <strong>Last Throes</strong>, <strong>Stone Lance</strong> e <strong>Hell Gate</strong>. Questa è la build preferita nella fase finale: combatte da media/lunga distanza e sfrutta <strong>Hell Gate</strong> a fine combo con cast molto rapido.</p></div>
                     </div>
                 </div>
                 <details><summary>Consenso e eccezioni pratiche</summary><p>Le due build sono entrambe considerate valide, ma la preferenza finale è Wind Master quando il set è disponibile. Non mescolare a metà le due blacklist: scegli una build intera, applicala e poi valuta il risultato.</p></details>
             </section>
 
             <section id="ai-eleanor" class="ai-character-preset tone-eleanor" data-member-id="eleanor" data-spoiler-stage="5" data-ai-searchable>
-                <div class="ai-character-identity" data-member-id="eleanor"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eleanor</h2><p class="character-role">Ibrida Spear/Arte · pressione ravvicinata controllata</p></div></div>
+                <div class="ai-character-identity" data-member-id="eleanor"><div class="ai-character-portrait" aria-hidden="true"></div><div><p class="character-kicker">Preset AI</p><h2>Eleanor</h2><p class="character-role">Combattente ibrida · lancia e magie a distanza ravvicinata</p></div></div>
                 <div class="ai-setting-row" aria-label="Strategy di Eleanor"><span>Target Nearby Enemies</span><span>Close Combat</span><span>Defense Only</span><span>Change Out</span><span>For Attacking</span></div>
-                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./?character=Eleanor#catalogo">tutti gli Item di Eleanor</a> · <a href="./#master-skill">prima impara le Master Skills</a></p>
+                <p class="ai-equipment-link"><strong>Collegamenti diretti:</strong> <a href="./index.html?character=Eleanor#catalogo">tutti gli Item di Eleanor</a> · <a href="./index.html#master-skill">prima impara le Master Skills</a></p>
                 <div class="ai-preset-columns">
                     <div>
                         <h3>Artes da mettere OFF</h3>
@@ -239,11 +239,11 @@
                     </div>
                     <div>
                         <h3>Perché questa forma</h3>
-                        <p><code>Target Nearby Enemies</code> limita la corsa e i continui cambi di bersaglio. Questo è importante per un personaggio melee: inseguire gruppi diversi fa perdere tempo prima ancora di iniziare la combo.</p>
+                        <p><code>Target Nearby Enemies</code> limita la corsa e i continui cambi di bersaglio. Questo è importante per un combattente ravvicinato: inseguire gruppi diversi fa perdere tempo prima ancora di iniziare la combo.</p>
                         <p><strong>Skewering Spear</strong> è un esempio classico di Arte che può lasciare il bersaglio nella distanza sbagliata per l’azione dopo; per l’AI il rischio supera il vantaggio.</p>
                     </div>
                 </div>
-                <details><summary>Consenso e eccezioni pratiche</summary><p>La discussione riconosce che alcune delle Artes escluse possono avere valore manuale o in un matchup preciso. Il preset conserva però una rotazione corta perché l’AI non programma bene i follow-up dopo spinte e riposizionamenti.</p></details>
+                <details><summary>Consenso e eccezioni pratiche</summary><p>La discussione riconosce che alcune delle Artes escluse possono avere valore manuale o contro un nemico preciso. Il preset conserva però una rotazione corta perché l’AI non programma bene i mossa successiva dopo spinte e riposizionamenti.</p></details>
             </section>
 
             <section id="titles" data-ai-searchable>
@@ -256,7 +256,7 @@
                     <thead><tr><th>Scelta</th><th>Quando</th><th>Motivo</th><th>Eccezione legittima</th></tr></thead>
                     <tbody>
                         <tr><td><strong>Incapacitator</strong></td><td>Rings fino a <code>+8</code>.</td><td>Riduce il rischio che uno Stun trasformi rapidamente un alleato in una morte; migliora anche la durata degli Stun inflitti.</td><td>Con Rings molto potenziati puoi preferire un Title mirato al danno o ai cast.</td></tr>
-                        <tr data-spoiler-stage="2"><td><strong>Sorcerer</strong></td><td>Quando vuoi privilegiare cast Void più rapidi.</td><td>Può aumentare molto il contributo offensivo del caster.</td><td>Può concentrare troppo controllo e Souls su un solo alleato; non è il preset prudente del gruppo.</td></tr>
+                        <tr data-spoiler-stage="2"><td><strong>Sorcerer</strong></td><td>Quando vuoi privilegiare cast Void più rapidi.</td><td>Può aumentare molto il contributo offensivo di chi lancia magie.</td><td>Può concentrare troppo controllo e Souls su un solo alleato; non è il preset prudente del gruppo.</td></tr>
                     </tbody>
                 </table>
             </section>
@@ -281,9 +281,9 @@
                 <p class="kicker">Lettura onesta della discussione</p>
                 <h2>Che cosa è davvero condiviso e che cosa resta contestuale</h2>
                 <div class="ai-consensus-grid">
-                    <article class="ai-consensus strong"><h3>Molto solido</h3><ul><li>Ordina <code>Go All Out</code> a inizio battaglia.</li><li>Per l’AI, evita Artes con recovery lunga, miss frequenti o follow-up difficili.</li><li>Per i caster, una lista corta di Malak Artes affidabili è più stabile nei gruppi.</li><li>Gestisci manualmente gli strumenti importanti quando il contesto lo richiede.</li></ul></article>
+                    <article class="ai-consensus strong"><h3>Molto solido</h3><ul><li>Ordina <code>Go All Out</code> a inizio battaglia.</li><li>Per l’AI, evita Artes con tempo di recupero lungo, colpi che mancano spesso o mosse successive difficili.</li><li>Per chi lancia magie, una lista corta di Malak Artes affidabili è più stabile nei gruppi.</li><li>Gestisci manualmente gli strumenti importanti quando il contesto lo richiede.</li></ul></article>
                     <article class="ai-consensus situational"><h3>Dipende dal combattimento</h3><ul><li>Quanta aggressione usare contro un boss singolo.</li><li>Se riattivare una weakness specifica.</li><li>Quanto affidarsi a cure a cast lungo alle difficoltà alte.</li><li>Quale Title preferire dopo Rings molto potenziati.</li></ul></article>
-                    <article class="ai-consensus disputed"><h3>Non esiste un verdetto unico</h3><ul><li>AI Switch Blast contro gestione manuale.</li><li>Incapacitator contro Sorcerer per il caster.</li><li>Coverage massima contro rotazione più corta per i melee.</li><li>Preset generale contro setup costruito per un singolo boss.</li></ul></article>
+                    <article class="ai-consensus disputed"><h3>Non esiste un verdetto unico</h3><ul><li>Switch Blast gestito automaticamente contro gestione manuale.</li><li>Incapacitator contro Sorcerer per chi lancia magie.</li><li>Più opzioni elementali contro una rotazione più corta per i combattenti ravvicinati.</li><li>Configurazione generale contro impostazioni costruite per un singolo boss.</li></ul></article>
                 </div>
                 <p class="muted">Questa pagina distingue il preset aggiornato dalle opinioni che nel confronto restano in disaccordo. Per un novizio, la scelta sicura è seguire il preset prima di sperimentare.</p>
             </section>
@@ -299,7 +299,7 @@
                     <li>Uso Incapacitator con Rings fino a <code>+8</code>, poi rivaluto.</li>
                     <li>Per un boss difficile cambio un solo elemento alla volta e osservo il risultato.</li>
                 </ul>
-                <p><a href="./">Torna alla guida Equipment</a> per collegare Rings, Enhancement e set di ogni alleato.</p>
+                <p><a href="./index.html">Torna alla guida Equipment</a> per collegare Rings, Enhancement e set di ogni alleato.</p>
             </section>
         </article>
     </main>

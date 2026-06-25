@@ -9,6 +9,7 @@ import json
 import re
 import sys
 import unicodedata
+from urllib.parse import parse_qs, urlsplit
 from pathlib import Path
 from typing import Any
 
@@ -31,6 +32,15 @@ REQUIRED_IDS = {
 PUBLIC_URL = re.compile(r"https?://[^\s\"'<>]+", re.IGNORECASE)
 ALLOWED_REMOTE_IMAGE_PREFIX = "https://aselia.fandom.com/wiki/Special:Redirect/file/"
 FORBIDDEN_PUBLIC_REFERENCE = re.compile("game" + "faqs|game" + "spot", re.IGNORECASE)
+EXPECTED_CHARACTER_CATEGORIES = {
+    "Velvet": ("Blades", "Belts", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"),
+    "Rokurou": ("Short Swords", "Talismans", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"),
+    "Laphicet": ("Paper", "Bags", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"),
+    "Eizen": ("Bracelets", "Pendants", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"),
+    "Magilou": ("Guardians", "Earrings", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"),
+    "Eleanor": ("Spears", "Ribbons", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"),
+}
+
 
 
 def normalized(value: str) -> str:
@@ -91,6 +101,98 @@ def validate_public_tree(site: Path) -> None:
             fail(f"Forbidden source reference found in published file: {path.relative_to(site)}")
 
 
+def html_ids(path: Path) -> set[str]:
+    return set(re.findall(r'\bid=["\']([^"\']+)["\']', path.read_text(encoding="utf-8")))
+
+
+def href_values(path: Path) -> list[str]:
+    return re.findall(r'<a\s+[^>]*\bhref=["\']([^"\']+)["\']', path.read_text(encoding="utf-8"), flags=re.IGNORECASE)
+
+
+def validate_local_href(href: str, source: Path, site: Path, guide_ids: set[str], ai_ids: set[str]) -> None:
+    if href.startswith(("mailto:", "tel:")):
+        return
+    if href.startswith(("http://", "https://", "//")):
+        fail(f"Published navigation must not use a remote page: {source.relative_to(site)} -> {href}")
+    if href.startswith("./?"):
+        fail(f"Ambiguous root link found; use ./index.html explicitly: {source.relative_to(site)} -> {href}")
+
+    parsed = urlsplit(href)
+    path = parsed.path
+    fragment = parsed.fragment
+
+    if not path:
+        targets = guide_ids if source.name in {"index.html", "guide.html"} else ai_ids
+        if fragment and fragment not in targets:
+            fail(f"Broken in-page anchor: {source.relative_to(site)} -> #{fragment}")
+        return
+
+    if path in {"./", "index.html", "./index.html"}:
+        if set(parse_qs(parsed.query)) - {"character", "category"}:
+            fail(f"Unsupported guide query parameter: {source.relative_to(site)} -> {href}")
+        if fragment and fragment not in guide_ids:
+            fail(f"Broken guide anchor: {source.relative_to(site)} -> {href}")
+        return
+
+    if path in {"ai.html", "./ai.html"}:
+        if parsed.query:
+            fail(f"Unexpected query on AI page link: {source.relative_to(site)} -> {href}")
+        if fragment and fragment not in ai_ids:
+            fail(f"Broken AI-page anchor: {source.relative_to(site)} -> {href}")
+        return
+
+    target = (source.parent / path).resolve()
+    if not target.is_file() or site.resolve() not in target.parents:
+        fail(f"Broken local file link: {source.relative_to(site)} -> {href}")
+    if fragment:
+        target_ids = html_ids(target) if target.suffix.lower() == ".html" else set()
+        if fragment not in target_ids:
+            fail(f"Broken local-file anchor: {source.relative_to(site)} -> {href}")
+
+
+def validate_navigation(site: Path) -> None:
+    guide = site / "content" / "guide.html"
+    ai = site / "ai.html"
+    index = site / "index.html"
+    guide_ids = html_ids(guide) | html_ids(index)
+    ai_ids = html_ids(ai)
+
+    for source in (index, guide, ai):
+        for href in href_values(source):
+            validate_local_href(href, source, site, guide_ids, ai_ids)
+
+
+def validate_character_configuration(script: Path) -> None:
+    text = script.read_text(encoding="utf-8")
+    required_navigation_tokens = (
+        'return `./index.html${query ? `?${query}` : ""}#catalogo`;', 
+        "const aiHref = `./ai.html#ai-",
+        "data-catalogue-link",
+        "function scrollToGuideAnchor()",
+    )
+    for token in required_navigation_tokens:
+        if token not in text:
+            fail("Character navigation no longer has an explicit, auditable route: " + token)
+    if text.count("scrollToGuideAnchor();") < 2:
+        fail("Dynamic guide anchors must be handled after both initial rendering and hash changes")
+
+    found: dict[str, tuple[str, ...]] = {}
+    for match in re.finditer(r'name:\s*"([^"\\]+)".*?categories:\s*\[([^\]]*)\]', text, flags=re.DOTALL):
+        name = match.group(1)
+        categories = tuple(re.findall(r'"([^"]+)"', match.group(2)))
+        if name in EXPECTED_CHARACTER_CATEGORIES:
+            found[name] = categories
+
+    if found != EXPECTED_CHARACTER_CATEGORIES:
+        missing = sorted(set(EXPECTED_CHARACTER_CATEGORIES) - set(found))
+        wrong = {
+            name: {"expected": EXPECTED_CHARACTER_CATEGORIES[name], "found": found.get(name)}
+            for name in EXPECTED_CHARACTER_CATEGORIES
+            if found.get(name) != EXPECTED_CHARACTER_CATEGORIES[name]
+        }
+        fail(f"Character Equipment categories are incomplete or incorrect. Missing: {missing}; differences: {wrong}")
+
+
 def validate_guide(guide: Path) -> list[str]:
     text = guide.read_text(encoding="utf-8")
     ids = set(re.findall(r'\bid=["\']([^"\']+)["\']', text))
@@ -104,7 +206,9 @@ def validate_guide(guide: Path) -> list[str]:
     if "filtro anti-spoiler" not in text.lower() or "data-spoiler-stage" not in text:
         fail("Guide is missing the spoiler-safe character flow")
 
-    script = (guide.parent.parent / "assets" / "site.js").read_text(encoding="utf-8")
+    script_path = guide.parent.parent / "assets" / "site.js"
+    validate_character_configuration(script_path)
+    script = script_path.read_text(encoding="utf-8")
     for token in (
         "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
         "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast",
@@ -137,7 +241,7 @@ def validate_ai_page(page: Path, script: Path) -> None:
         fail("AI page must load its dedicated behavior script")
     if "Go All Out" not in text:
         fail("AI page is missing the mandatory battle-start command")
-    for token in ("DPS fisico", "Duelist fisico", "Caster di supporto", "Fist Bruiser", "Ibrida Spear/Arte", "./?character="):
+    for token in ("Attaccante fisica", "Duellante fisico", "Mago di supporto", "Fist Bruiser", "Combattente ibrida", "./index.html?character="):
         if token not in text:
             fail(f"AI page is missing role-specific character guidance or equipment back-links: {token}")
     if "data-ai-advance-party" not in text or "ai-spoiler-filter" not in text:
@@ -186,6 +290,17 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     category_ids = {entry.get("id") for entry in categories}
     if len(category_ids) != EXPECTED_CATEGORY_COUNT or None in category_ids:
         fail("Catalogue category IDs are invalid")
+
+    category_by_label = {normalized(str(entry.get("label", ""))): entry for entry in categories}
+    for member, required_categories in EXPECTED_CHARACTER_CATEGORIES.items():
+        for label in required_categories:
+            category = category_by_label.get(normalized(label))
+            if category is None:
+                fail(f"Character-card category is absent from the catalogue: {member} -> {label}")
+            users = {normalized(value) for value in re.split(r"[·,;/]", str(category.get("character", ""))) if value.strip()}
+            if normalized(member) not in users and "all" not in users:
+                fail(f"Character-card category has the wrong catalogue user: {member} -> {label}")
+
     found_ids = {entry.get("category_id") for entry in items}
     if category_ids != found_ids:
         fail("Catalogue category coverage is incomplete")
@@ -258,6 +373,7 @@ def main() -> int:
     if not site.is_dir():
         fail(f"Site directory not found: {site}")
     validate_public_tree(site)
+    validate_navigation(site)
     item_refs = validate_guide(site / "content" / "guide.html")
     validate_ai_page(site / "ai.html", site / "assets" / "ai.js")
     validate_catalogue(site / "content" / "catalogo.json", item_refs, args.allow_unbuilt)

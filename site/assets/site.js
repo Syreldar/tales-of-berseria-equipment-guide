@@ -17,10 +17,10 @@
             name: "Velvet",
             stage: 0,
             tone: "velvet",
-            role: "DPS fisico · Therion Form e Stun",
-            battleAdvice: "Come AI punta il nemico più resistente: ha il tempo di completare la catena, entrare in Therion Form e recuperare Souls invece di inseguire un bersaglio già quasi sconfitto.",
-            equipmentAdvice: "Cerca prima Atk. Aggiungi Focus quando vuoi più Stun; non sacrificare una Master Skill non ancora appresa per pochi punti in più.",
-            categories: ["Belts", "Rings", "Shoes"],
+            role: "Attaccante in prima linea · combo, Stun e Therion Form",
+            battleAdvice: "Se la affidi al controllo automatico, falla puntare un nemico resistente: la sua combo ha il tempo di finire e può entrare in Therion Form. Questa scelta non elimina gli spostamenti: se il bersaglio è lontano, Velvet dovrà comunque raggiungerlo.",
+            equipmentAdvice: "Blades privilegiano Atk; Belts, il suo Accessory, possono aggiungere Focus per lo Stun. Su Armor, Rings e Footwear conserva prima le Master Skills che non hai ancora appreso.",
+            categories: ["Blades", "Belts", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Target Strong Enemies · Be Aggressive",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
         },
@@ -29,10 +29,10 @@
             name: "Rokurou",
             stage: 1,
             tone: "rokurou",
-            role: "Duelist fisico · Souls e counter",
-            battleAdvice: "Con Target Enemy with Most Souls evita di contendersi lo stesso bersaglio con Velvet e cerca un flusso più regolare di Souls. Defense Only privilegia la sopravvivenza quando la mischia è caotica.",
-            equipmentAdvice: "Atk è la priorità; Def evita che cada mentre resta in prima linea. Prima di sostituire un pezzo, impara la Master Skill che ti manca.",
-            categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Men’s Shoes"],
+            role: "Duellante in prima linea · Souls, counter e colpi mirati",
+            battleAdvice: "Target Enemy with Most Souls fa scegliere all’AI il bersaglio con più Souls. Non garantisce che resti sempre lontano da Velvet, ma evita una priorità casuale. Defense Only privilegia schivate e sicurezza quando il gruppo è sotto pressione.",
+            equipmentAdvice: "Cerca Atk su Short Swords e Talismans; Armor e Footwear servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
+            categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Most Souls · Defense Only",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
         },
@@ -41,11 +41,11 @@
             name: "Laphicet",
             stage: 2,
             tone: "laphicet",
-            role: "Caster di supporto · cast brevi e controllo",
-            battleAdvice: "Lascialo a distanza con poche Malak Artes affidabili: Kaleidos Ray, Blessed Drops, Void Mire e Dark Fangs. Così l’AI non spreca turni su cast lunghi o interrotti.",
-            equipmentAdvice: "Punta A.Atk per far pesare le magie. A.Def e Focus sono la seconda scelta quando viene preso di mira; conserva sempre le Master Skills nuove.",
-            categories: ["Guardians", "Bags", "Men’s Armor", "Rings", "Men’s Shoes"],
-            tip: "AI: Range · Divide Pain stabile",
+            role: "Caster di supporto · magie rapide, cure e controllo",
+            battleAdvice: "Lascialo a distanza con poche Malak Artes affidabili: Kaleidos Ray, Blessed Drops, Void Mire e Dark Fangs. Una lista corta riduce i cast lunghi e le occasioni in cui l’AI viene interrotta.",
+            equipmentAdvice: "Paper e Bags favoriscono A.Atk. A.Def e Focus sono utili quando viene preso di mira; prima di sostituire un pezzo, impara la sua Master Skill.",
+            categories: ["Paper", "Bags", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
+            tip: "AI: Range · 4 Malak Artes",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Laphicet_Cut-in_%28ToB%29.png"
         },
         {
@@ -53,10 +53,10 @@
             name: "Eizen",
             stage: 3,
             tone: "eizen",
-            role: "Bruiser flessibile · Fist o Wind Master",
-            battleAdvice: "Usa Fist Bruiser durante la storia. Passa a Wind Master solo dopo Coercion, Last Throes, Stone Lance e Hell Gate: è il set a distanza più fluido nel late game.",
-            equipmentAdvice: "Per Fist Bruiser: Atk e Focus. Per Wind Master: A.Atk resta importante, ma non togliere Def e A.Def a un personaggio che può ricevere pressione.",
-            categories: ["Bracelets", "Pendants", "Men’s Armor", "Rings", "Men’s Shoes"],
+            role: "Combattente flessibile · pugni durante la storia, magia del vento più tardi",
+            battleAdvice: "Usa Fist Bruiser durante la storia. Passa a Wind Master solo dopo avere Coercion, Last Throes, Stone Lance e Hell Gate: prima di allora la rotazione a distanza non è ancora completa.",
+            equipmentAdvice: "Nel set Fist Bruiser cerca Atk e Focus. Nel set Wind Master conta di più A.Atk, ma mantieni Def e A.Def: Eizen può comunque ricevere pressione.",
+            categories: ["Bracelets", "Pendants", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Fist prima · Wind Master dopo",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eizen_Cut-in_%28ToB%29.png"
         },
@@ -65,10 +65,10 @@
             name: "Magilou",
             stage: 4,
             tone: "magilou",
-            role: "Caster a distanza · rotazione corta",
-            battleAdvice: "L’AI è più affidabile con Aqua Split e Blood Moon; Crown Fire è opzionale. Tenere poche Malak Artes riduce i cast lunghi e le aperture in cui può essere interrotta.",
-            equipmentAdvice: "A.Atk è la priorità offensiva. A.Def è utile perché un caster colpito durante il cast perde più valore di pochi punti aggiuntivi di danno.",
-            categories: ["Paper", "Earrings", "Women’s Armor", "Rings", "Women’s Shoes"],
+            role: "Caster offensiva · magie rapide da lontano",
+            battleAdvice: "L’AI è più affidabile con Aqua Split e Blood Moon; Crown Fire è opzionale. Tenere poche Malak Artes abbrevia i cast e riduce le aperture in cui può essere interrotta.",
+            equipmentAdvice: "Guardians ed Earrings favoriscono A.Atk. A.Def è utile perché un personaggio che lancia magie colpito durante un cast perde più valore di pochi punti aggiuntivi di danno.",
+            categories: ["Guardians", "Earrings", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Range · Aqua Split / Blood Moon",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Magilou_Cut-in_%28ToB%29.png"
         },
@@ -77,14 +77,35 @@
             name: "Eleanor",
             stage: 5,
             tone: "eleanor",
-            role: "Ibrida Spear/Arte · pressione ravvicinata",
-            battleAdvice: "L’AI lavora meglio in close combat con una rotazione corta: Flame Beast e Maelstrom restano le Malak Artes principali, mentre spinte e recovery scomode restano fuori.",
-            equipmentAdvice: "Scegli una priorità per volta: Atk se vuoi valorizzare le Martial Artes, A.Atk se vuoi rafforzare Flame Beast e Maelstrom. Non distribuire tutto in modo casuale.",
-            categories: ["Spears", "Ribbons", "Women’s Armor", "Rings", "Women’s Shoes"],
+            role: "Combattente ibrida · lancia a distanza ravvicinata e Malak Artes",
+            battleAdvice: "L’AI lavora meglio vicino al bersaglio con una rotazione corta. Flame Beast e Maelstrom restano le Malak Artes principali; le Artes che spingono troppo lontano il nemico restano fuori.",
+            equipmentAdvice: "Scegli una priorità per volta: Atk per le Martial Artes, A.Atk per Flame Beast e Maelstrom. Non distribuire le statistiche senza uno scopo.",
+            categories: ["Spears", "Ribbons", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Close Combat · Flame Beast",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eleanor_Cut-in_%28ToB%29.png"
         }
     ]);
+
+    const categorySlots = Object.freeze({
+        "Blades": "Weapon",
+        "Short Swords": "Weapon",
+        "Paper": "Weapon",
+        "Bracelets": "Weapon",
+        "Guardians": "Weapon",
+        "Spears": "Weapon",
+        "Belts": "Accessory",
+        "Talismans": "Accessory",
+        "Bags": "Accessory",
+        "Pendants": "Accessory",
+        "Earrings": "Accessory",
+        "Ribbons": "Accessory",
+        "Men’s Armor": "Armor",
+        "Women’s Armor": "Armor",
+        "Rings": "Ring",
+        "Shoes": "Footwear universale",
+        "Men’s Shoes": "Footwear",
+        "Women’s Shoes": "Footwear"
+    });
 
     let spoilerFilterEnabled = true;
     let unlockedStage = 0;
@@ -160,7 +181,25 @@
             params.set("category", slugify(category));
         }
         const query = params.toString();
-        return `${query ? `?${query}` : ""}#catalogo`;
+        return `./index.html${query ? `?${query}` : ""}#catalogo`;
+    }
+
+    function scrollToGuideAnchor() {
+        const rawHash = window.location.hash.slice(1);
+        const id = rawHash ? decodeURIComponent(rawHash) : "";
+
+        if (!id || id.startsWith("item-")) {
+            return;
+        }
+
+        const target = document.getElementById(id);
+        if (!target) {
+            return;
+        }
+
+        window.requestAnimationFrame(function() {
+            target.scrollIntoView({ block: "start", behavior: "auto" });
+        });
     }
 
     function saveSpoilerState() {
@@ -357,7 +396,8 @@
         function renderMember(member) {
             const chips = member.categories.map(function(category) {
                 const href = catalogueLink(member, category);
-                return `<a href="${escapeHtml(href)}" title="Apri ${escapeHtml(category)} nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(category)}</a>`;
+                const slot = categorySlots[category] || "Categoria Equipment";
+                return `<a href="${escapeHtml(href)}" data-catalogue-link title="Apri ${escapeHtml(category)} (${escapeHtml(slot)}) nel catalogo filtrato per ${escapeHtml(member.name)}" aria-label="Apri ${escapeHtml(category)}, ${escapeHtml(slot)}, nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(category)}</a>`;
             }).join("");
             const catalogHref = catalogueLink(member, "");
             const aiHref = `./ai.html#ai-${escapeHtml(member.id)}`;
@@ -371,7 +411,7 @@
                                 <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
                             </div>
                             <div>
-                                <p class="character-kicker">Scheda Equipment e AI</p>
+                                <p class="character-kicker">Equipment e comportamento automatico</p>
                                 <h3>${escapeHtml(member.name)}</h3>
                                 <p class="character-role">${escapeHtml(member.role)}</p>
                             </div>
@@ -421,9 +461,9 @@
             </div>
             <div class="character-grid">${cards.join("")}</div>
             <div class="character-help">
-                <div><strong>Consigli concreti</strong>Ogni scheda spiega il ruolo in battaglia, la priorità di Equipment e il motivo pratico del preset AI.</div>
-                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata per quel personaggio; i due pulsanti portano al set completo e al preset AI.</div>
-                <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset AI e Item futuri restano esclusi da schede, ricerca e catalogo.</div>
+                <div><strong>Ruolo spiegato</strong>Ogni scheda dice che cosa fa l’alleato, perché il preset automatico usa quelle scelte e quali statistiche cercare per prime.</div>
+                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli Item</strong> mostra tutte le categorie utilizzabili; Shoes e la variante maschile o femminile sono alternative dello stesso slot Footwear.</div>
+                <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset automatici e Item futuri restano esclusi da schede, ricerca e catalogo.</div>
             </div>
         `;
 
@@ -729,6 +769,7 @@
                 if (catalogueData) {
                     renderCatalogue(catalogueData);
                 }
+                scrollToGuideAnchor();
             });
         }
     }
@@ -795,6 +836,7 @@
                 catalogueData = data;
                 renderCatalogue(data);
                 renderReferenceCards(data);
+                scrollToGuideAnchor();
             })
             .catch(showError);
     }

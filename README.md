@@ -50,7 +50,7 @@ Il deploy non parte se il catalogo locale non contiene:
 
 ## Preset AI
 
-La pagina `ai.html` aggiunge un percorso AI separato dall’Equipment. Riporta le cinque voci della Strategy nell’ordine del gioco, le Artes da spegnere o lasciare attive e le motivazioni pratiche: recovery lunga, posizionamento sfavorevole, miss, follow-up incoerenti o cast troppo lunghi per l’AI. Include i due set completi di Eizen e distingue tra configurazione generale e modifiche sensate per boss, Dangerous Encounters e Chaos.
+La pagina `ai.html` aggiunge un percorso per gli alleati controllati automaticamente, separato dall’Equipment. Riporta le cinque voci della Strategy nell’ordine del gioco, le Artes da spegnere o lasciare attive e le motivazioni pratiche: tempo di recupero lungo, posizione sfavorevole, colpi che mancano spesso, mossa successiva incoerente o cast troppo lunghi. Include i due set completi di Eizen e distingue tra configurazione generale e modifiche sensate per boss, Dangerous Encounters e Chaos.
 
 Il preset indica di ordinare `Go All Out` a inizio di ogni combattimento. La pagina non espone fonti esterne nel sito pubblicato; il contenuto è riformulato come istruzioni locali.
 
@@ -74,9 +74,9 @@ python -m http.server 8000 --directory site
 
 Apri `http://localhost:8000/`. Prima del primo deploy, il catalogo mostra un messaggio esplicito. Il primo deploy materializza e committa automaticamente il file locale completo.
 
-### Cross-reference validation
+### Validazione dei riferimenti Equipment
 
-The validation step intentionally fails if an Equipment link in the written guide does not match an Item name in the local catalogue. This protects in-page navigation from silently pointing to a missing row. The current guide uses the canonical Item name `Amphibole Belt`.
+La validazione fallisce intenzionalmente quando un riferimento Equipment scritto nella guida non coincide con un nome Item del catalogo locale. In questo modo un link interno non può puntare silenziosamente a una riga inesistente. La guida usa il nome canonico `Amphibole Belt`.
 
 ## Schede personaggi e filtro anti-spoiler
 
@@ -84,7 +84,13 @@ Le schede personaggi usano **illustrazioni online** caricate dal browser tramite
 
 Il filtro anti-spoiler è attivo per impostazione predefinita. Nasconde nome, immagine, ruolo, categorie, righe della guida e Item del catalogo relativi agli alleati non ancora indicati come sbloccati. Il pulsante `Ho sbloccato un alleato` avanza di una sola scheda senza mostrare in anticipo chi arriverà dopo. La preferenza e il progresso restano solo nel browser dell’utente tramite `localStorage`.
 
-## Character cards and direct navigation
+## Schede personaggi e navigazione diretta
 
-Each visible character card now includes a concrete battle role, a concise Equipment priority and an AI behavior summary. Every Equipment-category chip is a real link to the catalogue already filtered for that character and category. `Vedi tutti gli Item` filters the entire character set; `Preset AI` opens the matching spoiler-safe AI section.
+Ogni scheda visibile include un ruolo concreto in battaglia, una priorità Equipment breve e una spiegazione del comportamento automatico adatta a chi inizia. Ogni chip categoria usa un link reale a `index.html?character=…&category=…#catalogo`: applica i filtri corretti e poi porta il lettore al catalogo. `Vedi tutti gli Item` filtra l’intero set utilizzabile; `Preset AI` apre la sezione anti-spoiler dell’alleato corrispondente.
 
+Ogni scheda elenca tutte le categorie applicabili. Sono incluse `Shoes` universali e la categoria Footwear specifica del personaggio; Velvet mostra quindi `Blades`, `Belts`, `Women’s Armor`, `Rings`, `Shoes` e `Women’s Shoes`. Laphicet usa `Paper`; Magilou usa `Guardians`.
+
+
+### Controllo dei link e delle categorie
+
+Il validatore controlla tutti i link locali e tutti gli anchor delle pagine pubblicate. Controlla inoltre l’elenco esatto delle categorie su ogni scheda personaggio: Velvet include anche `Blades`, `Women’s Armor` e `Women’s Shoes`; Laphicet usa `Paper`; Magilou usa `Guardians`. Se una categoria viene rimossa, assegnata al personaggio sbagliato oppure un chip non usa la rotta filtrata del catalogo, il deploy si ferma.
