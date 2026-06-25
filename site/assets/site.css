@@ -1165,11 +1165,22 @@ summary:focus-visible {
 }
 
 .character-summary {
-    min-height: 3.3rem;
     margin-top: 0.75rem;
     color: var(--muted);
     font-size: 0.92rem;
     line-height: 1.45;
+}
+
+.character-summary strong,
+.character-equipment-focus strong {
+    color: var(--text);
+}
+
+.character-equipment-focus {
+    margin: 0.55rem 0 0;
+    color: var(--muted);
+    font-size: 0.88rem;
+    line-height: 1.42;
 }
 
 .character-category-list {
@@ -1179,7 +1190,7 @@ summary:focus-visible {
     margin: 0.9rem 0;
 }
 
-.character-category-list span {
+.character-category-list a {
     padding: 0.24rem 0.48rem;
     border: 1px solid color-mix(in srgb, var(--card-accent) 64%, var(--line));
     border-radius: 999px;
@@ -1187,16 +1198,32 @@ summary:focus-visible {
     font-size: 0.78rem;
     font-weight: 800;
     line-height: 1.1;
+    text-decoration: none;
+}
+
+.character-category-list a:hover,
+.character-category-list a:focus-visible {
+    border-color: var(--card-accent);
+    background: color-mix(in srgb, var(--card-accent) 18%, var(--surface));
+    color: var(--text);
 }
 
 .character-card-footer {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    flex-wrap: wrap;
     gap: 0.65rem;
     margin-top: 0.85rem;
     padding-top: 0.75rem;
     border-top: 1px solid color-mix(in srgb, var(--card-accent) 30%, var(--line));
+}
+
+.character-card-actions {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: flex-end;
+    gap: 0.42rem;
 }
 
 .character-card-tip {
@@ -1206,9 +1233,18 @@ summary:focus-visible {
 }
 
 .character-card-action {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.25rem;
     padding: 0.48rem 0.6rem;
     border-color: color-mix(in srgb, var(--card-accent) 56%, var(--line));
     background: color-mix(in srgb, var(--surface) 90%, transparent);
+    text-decoration: none;
+}
+
+.character-card-action:visited {
+    color: var(--text);
 }
 
 .locked-character-card {
@@ -1409,6 +1445,17 @@ summary:focus-visible {
     font-weight: 800;
     letter-spacing: 0.11em;
     text-transform: uppercase;
+}
+
+.ai-equipment-link {
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.ai-equipment-link a {
+    color: var(--ai-accent, var(--accent));
+    font-weight: 800;
 }
 
 .ai-spoiler-toolbar {
@@ -1648,7 +1695,18 @@ html:not([data-ai-spoiler="off"]) [data-spoiler-stage]:not([data-spoiler-stage="
         grid-template-columns: 1fr;
     }
 
-    .ai-spoiler-toolbar {
+    .ai-equipment-link {
+    margin: 0.8rem 0 0;
+    color: var(--muted);
+    font-size: 0.9rem;
+}
+
+.ai-equipment-link a {
+    color: var(--ai-accent, var(--accent));
+    font-weight: 800;
+}
+
+.ai-spoiler-toolbar {
         align-items: stretch;
         flex-direction: column;
     }

@@ -54,3 +54,10 @@ La snapshot conserva sempre il Monster quando la tabella strutturata registra un
 - La pagina distingue esplicitamente tra impostazioni forti, scelte contestuali e punti controversi; non presenta una discussione come consenso universale.
 - Usa le stesse chiavi `localStorage` della guida Equipment. Con filtro anti-spoiler attivo, rimuove dal DOM visuale i preset degli alleati non ancora segnati come sbloccati, il loro avatar, nome, Artes e voci dell’indice/ricerca.
 - Le immagini dei preset AI usano gli stessi sei URL cut-in approvati e documentati in `ASSET_SOURCES.md`; nessuna immagine generata è inclusa o caricata.
+
+## Character-card revision
+
+- Each of the six visible-card definitions has a role-specific battle explanation, Equipment priority and AI note.
+- Category chips are direct links with `character` and `category` URL parameters; the catalogue consumes both parameters after loading.
+- Each card has direct links to the full character catalogue and its matching `ai.html` anchor.
+- Anti-spoiler masking still happens before cards, catalogue filters and AI sections are rendered.

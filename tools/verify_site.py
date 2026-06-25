@@ -104,6 +104,16 @@ def validate_guide(guide: Path) -> list[str]:
     if "filtro anti-spoiler" not in text.lower() or "data-spoiler-stage" not in text:
         fail("Guide is missing the spoiler-safe character flow")
 
+    script = (guide.parent.parent / "assets" / "site.js").read_text(encoding="utf-8")
+    for token in (
+        "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
+        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast",
+    ):
+        if token not in script:
+            fail(f"Character cards are missing role-specific guidance or direct navigation: {token}")
+    if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
+        fail("Character-category chips must remain direct links")
+
     anchors = re.findall(r'<a\s+[^>]*href=["\']#([^"\']+)["\']', text)
     if len(anchors) < 40:
         fail("Guide has too few internal cross-links for a novice-oriented navigation flow")
@@ -127,6 +137,9 @@ def validate_ai_page(page: Path, script: Path) -> None:
         fail("AI page must load its dedicated behavior script")
     if "Go All Out" not in text:
         fail("AI page is missing the mandatory battle-start command")
+    for token in ("DPS fisico", "Duelist fisico", "Caster di supporto", "Fist Bruiser", "Ibrida Spear/Arte", "./?character="):
+        if token not in text:
+            fail(f"AI page is missing role-specific character guidance or equipment back-links: {token}")
     if "data-ai-advance-party" not in text or "ai-spoiler-filter" not in text:
         fail("AI page is missing spoiler-safe progress controls")
     if text.count("data-spoiler-stage") < 7:

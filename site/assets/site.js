@@ -17,10 +17,11 @@
             name: "Velvet",
             stage: 0,
             tone: "velvet",
-            role: "Attaccante fisica",
-            summary: "Per iniziare, privilegia Atk e una Master Skill che non hai ancora imparato.",
+            role: "DPS fisico · Therion Form e Stun",
+            battleAdvice: "Come AI punta il nemico più resistente: ha il tempo di completare la catena, entrare in Therion Form e recuperare Souls invece di inseguire un bersaglio già quasi sconfitto.",
+            equipmentAdvice: "Cerca prima Atk. Aggiungi Focus quando vuoi più Stun; non sacrificare una Master Skill non ancora appresa per pochi punti in più.",
             categories: ["Belts", "Rings", "Shoes"],
-            tip: "Disponibile dall’inizio",
+            tip: "AI: Target Strong Enemies · Be Aggressive",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
         },
         {
@@ -28,10 +29,11 @@
             name: "Rokurou",
             stage: 1,
             tone: "rokurou",
-            role: "Combattente fisico",
-            summary: "Cerca un miglioramento immediato per Atk senza trascurare Def e le Master Skills nuove.",
+            role: "Duelist fisico · Souls e counter",
+            battleAdvice: "Con Target Enemy with Most Souls evita di contendersi lo stesso bersaglio con Velvet e cerca un flusso più regolare di Souls. Defense Only privilegia la sopravvivenza quando la mischia è caotica.",
+            equipmentAdvice: "Atk è la priorità; Def evita che cada mentre resta in prima linea. Prima di sostituire un pezzo, impara la Master Skill che ti manca.",
             categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Men’s Shoes"],
-            tip: "Consiglio: confronta Atk",
+            tip: "AI: Most Souls · Defense Only",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
         },
         {
@@ -39,10 +41,11 @@
             name: "Laphicet",
             stage: 2,
             tone: "laphicet",
-            role: "Supporto Arte",
-            summary: "A.Atk e A.Def sono ottimi punti di partenza; guarda sempre le Master Skills prima di smantellare.",
+            role: "Caster di supporto · cast brevi e controllo",
+            battleAdvice: "Lascialo a distanza con poche Malak Artes affidabili: Kaleidos Ray, Blessed Drops, Void Mire e Dark Fangs. Così l’AI non spreca turni su cast lunghi o interrotti.",
+            equipmentAdvice: "Punta A.Atk per far pesare le magie. A.Def e Focus sono la seconda scelta quando viene preso di mira; conserva sempre le Master Skills nuove.",
             categories: ["Guardians", "Bags", "Men’s Armor", "Rings", "Men’s Shoes"],
-            tip: "Consiglio: confronta A.Atk",
+            tip: "AI: Range · Divide Pain stabile",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Laphicet_Cut-in_%28ToB%29.png"
         },
         {
@@ -50,10 +53,11 @@
             name: "Eizen",
             stage: 3,
             tone: "eizen",
-            role: "Combattente bilanciato",
-            summary: "Cerca un set equilibrato: Atk per il danno, Focus per Stun e difese per restare in prima linea.",
+            role: "Bruiser flessibile · Fist o Wind Master",
+            battleAdvice: "Usa Fist Bruiser durante la storia. Passa a Wind Master solo dopo Coercion, Last Throes, Stone Lance e Hell Gate: è il set a distanza più fluido nel late game.",
+            equipmentAdvice: "Per Fist Bruiser: Atk e Focus. Per Wind Master: A.Atk resta importante, ma non togliere Def e A.Def a un personaggio che può ricevere pressione.",
             categories: ["Bracelets", "Pendants", "Men’s Armor", "Rings", "Men’s Shoes"],
-            tip: "Consiglio: non ignorare Focus",
+            tip: "AI: Fist prima · Wind Master dopo",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eizen_Cut-in_%28ToB%29.png"
         },
         {
@@ -61,10 +65,11 @@
             name: "Magilou",
             stage: 4,
             tone: "magilou",
-            role: "Caster di controllo",
-            summary: "A.Atk è la priorità più semplice; una Master Skill utile vale spesso più di pochi punti statistica.",
+            role: "Caster a distanza · rotazione corta",
+            battleAdvice: "L’AI è più affidabile con Aqua Split e Blood Moon; Crown Fire è opzionale. Tenere poche Malak Artes riduce i cast lunghi e le aperture in cui può essere interrotta.",
+            equipmentAdvice: "A.Atk è la priorità offensiva. A.Def è utile perché un caster colpito durante il cast perde più valore di pochi punti aggiuntivi di danno.",
             categories: ["Paper", "Earrings", "Women’s Armor", "Rings", "Women’s Shoes"],
-            tip: "Consiglio: confronta A.Atk",
+            tip: "AI: Range · Aqua Split / Blood Moon",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Magilou_Cut-in_%28ToB%29.png"
         },
         {
@@ -72,10 +77,11 @@
             name: "Eleanor",
             stage: 5,
             tone: "eleanor",
-            role: "Lancia e Arte",
-            summary: "Valuta sia Atk sia A.Atk: il catalogo permette di scegliere l’Item in base alla tua priorità del momento.",
+            role: "Ibrida Spear/Arte · pressione ravvicinata",
+            battleAdvice: "L’AI lavora meglio in close combat con una rotazione corta: Flame Beast e Maelstrom restano le Malak Artes principali, mentre spinte e recovery scomode restano fuori.",
+            equipmentAdvice: "Scegli una priorità per volta: Atk se vuoi valorizzare le Martial Artes, A.Atk se vuoi rafforzare Flame Beast e Maelstrom. Non distribuire tutto in modo casuale.",
             categories: ["Spears", "Ribbons", "Women’s Armor", "Rings", "Women’s Shoes"],
-            tip: "Consiglio: scegli una priorità",
+            tip: "AI: Close Combat · Flame Beast",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eleanor_Cut-in_%28ToB%29.png"
         }
     ]);
@@ -84,6 +90,7 @@
     let unlockedStage = 0;
     let catalogueData = null;
     let cataloguePendingCharacter = "";
+    let cataloguePendingCategory = "";
     let catalogueHashHandlerBound = false;
 
     function slugify(value) {
@@ -136,6 +143,24 @@
         const savedProgress = Number(window.localStorage.getItem(spoilerProgressKey));
         spoilerFilterEnabled = savedMode !== "off";
         unlockedStage = Number.isInteger(savedProgress) ? Math.max(0, Math.min(partyMembers.length - 1, savedProgress)) : 0;
+    }
+
+    function initializeCatalogueDeepLink() {
+        const params = new URLSearchParams(window.location.search);
+        cataloguePendingCharacter = params.get("character") || "";
+        cataloguePendingCategory = params.get("category") || "";
+    }
+
+    function catalogueLink(member, category) {
+        const params = new URLSearchParams();
+        if (member && member.name) {
+            params.set("character", member.name);
+        }
+        if (category) {
+            params.set("category", slugify(category));
+        }
+        const query = params.toString();
+        return `${query ? `?${query}` : ""}#catalogo`;
     }
 
     function saveSpoilerState() {
@@ -331,8 +356,12 @@
 
         function renderMember(member) {
             const chips = member.categories.map(function(category) {
-                return `<span>${escapeHtml(category)}</span>`;
+                const href = catalogueLink(member, category);
+                return `<a href="${escapeHtml(href)}" title="Apri ${escapeHtml(category)} nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(category)}</a>`;
             }).join("");
+            const catalogHref = catalogueLink(member, "");
+            const aiHref = `./ai.html#ai-${escapeHtml(member.id)}`;
+
             return `
                 <article class="character-card tone-${escapeHtml(member.tone)}">
                     <img class="character-art" src="${escapeHtml(member.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true">
@@ -342,16 +371,20 @@
                                 <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
                             </div>
                             <div>
-                                <p class="character-kicker">Scheda Equipment</p>
+                                <p class="character-kicker">Scheda Equipment e AI</p>
                                 <h3>${escapeHtml(member.name)}</h3>
                                 <p class="character-role">${escapeHtml(member.role)}</p>
                             </div>
                         </div>
-                        <p class="character-summary">${escapeHtml(member.summary)}</p>
+                        <p class="character-summary"><strong>In battaglia:</strong> ${escapeHtml(member.battleAdvice)}</p>
+                        <p class="character-equipment-focus"><strong>Equipment:</strong> ${escapeHtml(member.equipmentAdvice)}</p>
                         <div class="character-category-list" aria-label="Categorie utilizzabili da ${escapeHtml(member.name)}">${chips}</div>
                         <div class="character-card-footer">
                             <span class="character-card-tip">★ ${escapeHtml(member.tip)}</span>
-                            <button class="character-card-action" type="button" data-open-character-catalog="${escapeHtml(member.name)}">Apri equipaggiamento <span aria-hidden="true">→</span></button>
+                            <div class="character-card-actions">
+                                <a class="character-card-action" href="${escapeHtml(catalogHref)}">Vedi tutti gli Item <span aria-hidden="true">→</span></a>
+                                <a class="character-card-action" href="${aiHref}">Preset AI <span aria-hidden="true">→</span></a>
+                            </div>
                         </div>
                     </div>
                 </article>
@@ -388,9 +421,9 @@
             </div>
             <div class="character-grid">${cards.join("")}</div>
             <div class="character-help">
-                <div><strong>Protezione predefinita</strong>Il filtro è attivo al primo accesso e conserva la tua scelta soltanto in questo browser.</div>
-                <div><strong>Nessuna anticipazione visiva</strong>Finché è attivo, non compaiono nome, avatar, ruolo, categorie o numero degli alleati che arriveranno più avanti.</div>
-                <div><strong>Catalogo coerente</strong>Con il filtro attivo, categorie e Item degli alleati non ancora sbloccati non compaiono nei filtri né nei risultati.</div>
+                <div><strong>Consigli concreti</strong>Ogni scheda spiega il ruolo in battaglia, la priorità di Equipment e il motivo pratico del preset AI.</div>
+                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata per quel personaggio; i due pulsanti portano al set completo e al preset AI.</div>
+                <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset AI e Item futuri restano esclusi da schede, ricerca e catalogo.</div>
             </div>
         `;
 
@@ -417,7 +450,6 @@
         target.addEventListener("click", function(event) {
             const advance = event.target.closest("[data-advance-party]");
             const reset = event.target.closest("[data-reset-party]");
-            const openCatalog = event.target.closest("[data-open-character-catalog]");
 
             if (advance) {
                 unlockedStage = Math.min(partyMembers.length - 1, unlockedStage + 1);
@@ -431,18 +463,6 @@
                 spoilerFilterEnabled = true;
                 saveSpoilerState();
                 refreshSpoilerSensitiveViews();
-                return;
-            }
-
-            if (openCatalog) {
-                cataloguePendingCharacter = openCatalog.dataset.openCharacterCatalog || "";
-                if (catalogueData) {
-                    renderCatalogue(catalogueData);
-                }
-                const catalog = guide.querySelector("#catalogo");
-                if (catalog) {
-                    catalog.scrollIntoView({ behavior: "smooth", block: "start" });
-                }
             }
         });
     }
@@ -577,7 +597,11 @@
         if (cataloguePendingCharacter && characters.includes(cataloguePendingCharacter)) {
             character.value = cataloguePendingCharacter;
         }
+        if (cataloguePendingCategory && categories.some(function(entry) { return entry.id === cataloguePendingCategory; })) {
+            category.value = cataloguePendingCategory;
+        }
         cataloguePendingCharacter = "";
+        cataloguePendingCategory = "";
 
         function renderRows() {
             const queryText = normalizeText(query.value);
@@ -777,5 +801,6 @@
 
     initializeTheme();
     initializeSpoilerState();
+    initializeCatalogueDeepLink();
     loadGuide();
 }());

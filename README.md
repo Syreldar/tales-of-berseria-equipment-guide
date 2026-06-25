@@ -83,3 +83,8 @@ The validation step intentionally fails if an Equipment link in the written guid
 Le schede personaggi usano **illustrazioni online** caricate dal browser tramite URL esterni e non includono immagini generate con IA. Le fonti delle immagini sono documentate in `ASSET_SOURCES.md`.
 
 Il filtro anti-spoiler è attivo per impostazione predefinita. Nasconde nome, immagine, ruolo, categorie, righe della guida e Item del catalogo relativi agli alleati non ancora indicati come sbloccati. Il pulsante `Ho sbloccato un alleato` avanza di una sola scheda senza mostrare in anticipo chi arriverà dopo. La preferenza e il progresso restano solo nel browser dell’utente tramite `localStorage`.
+
+## Character cards and direct navigation
+
+Each visible character card now includes a concrete battle role, a concise Equipment priority and an AI behavior summary. Every Equipment-category chip is a real link to the catalogue already filtered for that character and category. `Vedi tutti gli Item` filters the entire character set; `Preset AI` opens the matching spoiler-safe AI section.
+
