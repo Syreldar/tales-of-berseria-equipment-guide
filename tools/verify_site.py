@@ -306,13 +306,22 @@ def validate_guide(guide: Path) -> list[str]:
         fail("Runtime UI must use the canonical Shoes, Men’s Shoes, and Women’s Shoes category labels")
     for token in (
         "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
-        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "recommendation-slot", "slotOrder", "source_note_group", "sourceNote", "renderGrowthTable", "Arte Attack",
+        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "character.html", "renderGrowthTable", "Arte Attack",
     ):
         if token not in script:
             fail(f"Character cards are missing role-specific guidance or direct navigation: {token}")
+
+    dossier_page = guide.parent.parent / "character.html"
+    dossier_script = guide.parent.parent / "assets" / "character.js"
+    if not dossier_page.exists() or not dossier_script.exists():
+        fail("Dedicated character dossier page or its runtime script is missing")
+    dossier = dossier_script.read_text(encoding="utf-8")
+    for token in ("source_note_group", "Best in slot", "Really recommended", "Suggested", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json"):
+        if token not in dossier:
+            fail(f"Character dossier is missing required guide content: {token}")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
-    if "Nota della guida" not in script or "Guide recommendation" in script:
+    if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:
         fail("Recommendation source-note label must be localized in Italian")
 
     anchors = re.findall(r'<a\s+[^>]*href=["\']#([^"\']+)["\']', text)

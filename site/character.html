@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="it">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Scheda personaggio per Tales of Berseria: preset AI, Title, priorità statistiche e raccomandazioni sull'equipaggiamento.">
+    <title>Tales of Berseria — Scheda personaggio</title>
+    <script>
+        document.documentElement.dataset.spoiler = "on";
+        document.documentElement.dataset.spoilerStage = "0";
+
+        try {
+            const savedMode = window.localStorage.getItem("tob-equipment-guide-spoiler-mode");
+            const savedProgress = Number(window.localStorage.getItem("tob-equipment-guide-spoiler-progress"));
+
+            if (savedMode === "off") {
+                document.documentElement.dataset.spoiler = "off";
+            } else if (Number.isInteger(savedProgress)) {
+                document.documentElement.dataset.spoilerStage = String(Math.max(0, Math.min(5, savedProgress)));
+            }
+        } catch (error) {
+            /* Default: spoiler filter enabled at the first party stage. */
+        }
+    </script>
+    <link rel="stylesheet" href="./assets/site.css">
+</head>
+<body class="character-dossier-body">
+    <a class="skip-link" href="#character-dossier">Vai alla scheda personaggio</a>
+
+    <header class="character-dossier-site-header">
+        <div class="character-dossier-header-content">
+            <div>
+                <p class="eyebrow">Tales of Berseria · Character dossier</p>
+                <h1>Scheda personaggio</h1>
+                <p class="subtitle">AI, Title, priorità statistiche e raccomandazioni in una pagina leggibile.</p>
+            </div>
+            <div class="character-dossier-header-actions">
+                <a href="./index.html" class="character-dossier-header-link">← Guida principale</a>
+                <a href="./ai.html" class="character-dossier-header-link">Preset AI completi</a>
+                <button id="theme-toggle" class="theme-toggle" type="button" aria-label="Attiva il tema chiaro">Tema chiaro</button>
+            </div>
+        </div>
+    </header>
+
+    <main id="character-dossier" class="character-dossier-main" aria-live="polite">
+        <p class="loading">Caricamento della scheda personaggio…</p>
+    </main>
+
+    <footer class="character-dossier-footer">
+        <p>Le note della guida vengono mantenute sotto agli oggetti pertinenti. Il filtro anti-spoiler usa lo stesso progresso salvato della guida principale.</p>
+    </footer>
+
+    <script src="./assets/character.js"></script>
+</body>
+</html>

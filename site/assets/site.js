@@ -858,6 +858,7 @@
             }).join("");
             const catalogHref = catalogueLink(member, "");
             const aiHref = `./ai.html#ai-${escapeHtml(member.id)}`;
+            const dossierHref = `./character.html?character=${encodeURIComponent(member.name)}`;
 
             return `
                 <article class="character-card tone-${escapeHtml(member.tone)}">
@@ -879,7 +880,7 @@
                         <div class="character-card-footer">
                             <span class="character-card-tip">★ ${escapeHtml(member.tip)}</span>
                             <div class="character-card-actions">
-                                <a class="character-card-action" href="#character-page-${escapeHtml(member.id)}">Pagina personaggio <span aria-hidden="true">→</span></a>
+                                <a class="character-card-action" href="${escapeHtml(dossierHref)}">Pagina personaggio <span aria-hidden="true">→</span></a>
                                 <a class="character-card-action" href="${escapeHtml(catalogHref)}">Vedi tutti gli oggetti <span aria-hidden="true">→</span></a>
                                 <a class="character-card-action" href="${aiHref}">Preset AI <span aria-hidden="true">→</span></a>
                             </div>
@@ -1077,271 +1078,49 @@
             return;
         }
 
-        if (!data || data.complete !== true || !Array.isArray(data.items) || !data.items.length) {
-            target.innerHTML = '<p class="muted">Le pagine personaggio saranno disponibili appena il catalogo locale completo viene caricato.</p>';
+        if (!data || data.complete !== true || !Array.isArray(data.recommended_equipment)) {
+            target.innerHTML = '<p class="muted">Le schede personaggio saranno disponibili dopo il caricamento del catalogo locale.</p>';
             return;
         }
 
-        const entries = Array.isArray(data.recommended_equipment) ? data.recommended_equipment.filter(function(entry) {
-            return !spoilerFilterEnabled || isNamedCharacterVisible(entry.character);
-        }) : [];
-        const itemByName = new Map(data.items.map(function(item) {
-            return [normalizeText(item.name), item];
-        }));
-        const growthByName = new Map((Array.isArray(data.character_growth) ? data.character_growth : []).map(function(entry) {
-            return [String(entry.name || ""), entry];
-        }));
-
-        function growthMarkup(member) {
-            const growth = growthByName.get(member.name);
-            if (!growth || !Array.isArray(growth.level_200) || growth.level_200.length < 6) {
-                return '<p class="muted">Curva statistiche non disponibile in questa copia locale.</p>';
-            }
-
-            const labels = ["Atk", "Arte Attack", "Def", "Arte Defense", "Focus"];
-            const values = growth.level_200.slice(1, 6).map(function(value) { return Number(value) || 0; });
-            const ranking = labels.map(function(label, index) {
-                return { label: label, value: values[index] };
-            }).sort(function(a, b) {
-                return b.value - a.value;
-            });
-            const strongest = ranking.slice(0, 3).map(function(entry) {
-                return `<span class="guide-stat-pill"><strong>${escapeHtml(entry.label)}</strong><small>${escapeHtml(entry.value.toFixed(1))} a Lv 200</small></span>`;
-            }).join("");
-            const weakest = ranking[ranking.length - 1];
-
-            return `
-                <div class="guide-stat-pill-row">${strongest}</div>
-                <p class="guide-mini-note">Statistica da coprire con l'equip: <strong>${escapeHtml(weakest.label)}</strong> (${escapeHtml(weakest.value.toFixed(1))} a Lv 200).</p>
-            `;
-        }
-
-        function recommendationTier(sourceGroup, slotGroups, index) {
-            const rarities = sourceGroup.entries.map(function(entry) { return Number(entry.rarity) || 0; });
-            const maxRarity = Math.max.apply(null, rarities);
-            const hasPostgame = sourceGroup.entries.some(function(entry) {
-                return phaseFromRarity(entry.rarity) === "Post-game";
-            });
-
-            if (slotGroups.length === 1) {
-                if (hasPostgame || maxRarity >= 19) {
-                    return { className: "bis", label: "Best in slot", icon: "👑" };
-                }
-                return { className: "strong", label: "Really recommended", icon: "✨" };
-            }
-            if (hasPostgame || maxRarity >= 19 || (index === slotGroups.length - 1 && maxRarity >= 17)) {
-                return { className: "bis", label: "Best in slot", icon: "👑" };
-            }
-            if (maxRarity >= 15 || index > 0) {
-                return { className: "strong", label: "Really recommended", icon: "✨" };
-            }
-            return { className: "suggested", label: "Suggested", icon: "📍" };
-        }
-
-        function renderAiDigest(member) {
-            const details = characterGuideDetails[member.id];
-            if (!details || !details.ai) {
-                return '<p class="muted">Riepilogo AI non disponibile.</p>';
-            }
-            const ai = details.ai;
-            const aiHref = `./ai.html#ai-${member.id}`;
-
-            if (Array.isArray(ai.variants) && ai.variants.length) {
-                return `
-                    <div class="character-guide-ai-copy">
-                        <p>${escapeHtml(ai.summary)}</p>
-                    </div>
-                    <div class="character-guide-ai-variants">${ai.variants.map(function(variant) {
-                        return `
-                            <article class="character-guide-ai-variant">
-                                <div class="character-guide-ai-variant-head">
-                                    <h6>${escapeHtml(variant.name)}</h6>
-                                    <span>${escapeHtml(variant.availability)}</span>
-                                </div>
-                                <p class="character-guide-ai-strategy">${variant.strategy.map(function(step) {
-                                    return `<span>${escapeHtml(step)}</span>`;
-                                }).join("")}</p>
-                                <p><strong>${escapeHtml(variant.mode)}:</strong> ${escapeHtml(variant.skills.join(" · "))}</p>
-                                <p class="guide-mini-note">${escapeHtml(variant.footnote)}</p>
-                            </article>
-                        `;
-                    }).join("")}</div>
-                    <a class="character-guide-inline-link" href="${escapeHtml(aiHref)}">Apri il preset AI completo →</a>
-                `;
-            }
-
-            return `
-                <div class="character-guide-ai-copy">
-                    <p>${escapeHtml(ai.summary)}</p>
-                    <p class="character-guide-ai-strategy">${ai.strategy.map(function(step) {
-                        return `<span>${escapeHtml(step)}</span>`;
-                    }).join("")}</p>
-                    <p><strong>${escapeHtml(ai.mode)}:</strong> ${escapeHtml(ai.skills.join(" · "))}</p>
-                    <p class="guide-mini-note">${escapeHtml(ai.footnote)}</p>
-                    <a class="character-guide-inline-link" href="${escapeHtml(aiHref)}">Apri il preset AI completo →</a>
-                </div>
-            `;
-        }
-
-        function renderCharacterSlot(member, slotName, slotEntries) {
-            const sourceGroups = [];
-            const groupByKey = new Map();
-            slotEntries.forEach(function(entry) {
-                const key = String(entry.source_note_group || normalizeText(entry.item));
-                let sourceGroup = groupByKey.get(key);
-                if (!sourceGroup) {
-                    sourceGroup = { key: key, entries: [], sourceNote: "" };
-                    groupByKey.set(key, sourceGroup);
-                    sourceGroups.push(sourceGroup);
-                }
-                sourceGroup.entries.push(entry);
-                if (!sourceGroup.sourceNote && String(entry.source_note || "").trim()) {
-                    sourceGroup.sourceNote = String(entry.source_note).trim();
-                }
-            });
-
-            const cards = sourceGroups.map(function(sourceGroup, index) {
-                const tier = recommendationTier(sourceGroup, sourceGroups, index);
-                const itemsMarkup = sourceGroup.entries.map(function(entry) {
-                    const item = itemByName.get(normalizeText(entry.item));
-                    const href = item ? `#${itemId(item)}` : "#catalogo";
-                    const category = displayCategory(entry.category || (item && item.category) || "Category");
-                    const rarity = entry.rarity || (item && item.rarity) || "—";
-                    const phase = phaseFromRarity(rarity);
-                    return `
-                        <li class="character-guide-pick-item">
-                            <p class="character-guide-pick-checkpoint">${escapeHtml(entry.checkpoint)}</p>
-                            <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
-                            <p class="character-guide-pick-meta"><span><span aria-hidden="true">${escapeHtml(categoryIcon(category))}</span> ${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span><span>${escapeHtml(phaseIcon(phase))} ${escapeHtml(displayPhase(phase))}</span></p>
-                        </li>
-                    `;
-                }).join("");
-                const sourceNoteMarkup = sourceGroup.sourceNote ? `
-                    <div class="character-guide-pick-note">
-                        <p class="character-guide-pick-note-label">Nota della guida</p>
-                        <h6>${escapeHtml(recommendationGroupTitle(sourceGroup, slotName))}</h6>
-                        <p>${escapeHtml(sourceGroup.sourceNote)}</p>
-                    </div>
-                ` : "";
-
-                return `
-                    <article class="character-guide-pick character-guide-pick-${escapeHtml(tier.className)}">
-                        <div class="character-guide-pick-badge">${escapeHtml(tier.icon)} ${escapeHtml(tier.label)}</div>
-                        <ol class="character-guide-pick-list">${itemsMarkup}</ol>
-                        ${sourceNoteMarkup}
-                    </article>
-                `;
-            }).join("");
-
-            return `
-                <section class="character-guide-slot-panel" data-recommendation-slot="${escapeHtml(slotName)}">
-                    <div class="character-guide-slot-heading">
-                        <h5><span class="recommendation-slot-icon" aria-hidden="true">${escapeHtml(slotIcon(slotName))}</span>${escapeHtml(recommendationSlotLabel(slotName))}</h5>
-                        <p>${escapeHtml(recommendationSlotCopy(slotName))}</p>
-                    </div>
-                    <div class="character-guide-pick-grid">${cards}</div>
-                </section>
-            `;
-        }
-
-        const visible = visibleMembers().map(function(member) {
-            const memberEntries = entries.filter(function(entry) {
+        const cards = visibleMembers().map(function(member) {
+            const entries = data.recommended_equipment.filter(function(entry) {
                 return entry.character === member.name;
-            }).sort(function(a, b) {
-                return (Number(a.order) || 0) - (Number(b.order) || 0);
             });
-
-            if (!memberEntries.length) {
-                return "";
-            }
-
-            const bySlot = new Map();
-            memberEntries.forEach(function(entry) {
-                const slotName = String(entry.slot || "Other");
-                if (!bySlot.has(slotName)) {
-                    bySlot.set(slotName, []);
-                }
-                bySlot.get(slotName).push(entry);
-            });
-
-            const slotOrder = ["Weapon", "Accessory", "Armor", "Rings", "Shoes"];
-            const slotSections = slotOrder.filter(function(slotName) {
-                return bySlot.has(slotName);
-            }).map(function(slotName) {
-                return renderCharacterSlot(member, slotName, bySlot.get(slotName));
-            }).join("");
-
-            const categoryChips = member.categories.map(function(category) {
-                const href = catalogueLink(member, category);
-                return `<a href="${escapeHtml(href)}" data-catalogue-link>${escapeHtml(categoryIcon(category))} ${escapeHtml(displayCategory(category))}</a>`;
-            }).join("");
-            const details = characterGuideDetails[member.id] || {};
-            const catalogHref = catalogueLink(member, "");
-            const aiHref = `./ai.html#ai-${member.id}`;
+            const categories = Array.from(new Set(entries.map(function(entry) {
+                return displayCategory(entry.category || "");
+            }).filter(Boolean))).slice(0, 6);
+            const sourceNotes = new Set(entries.map(function(entry) {
+                return String(entry.source_note_group || "");
+            }).filter(Boolean)).size;
+            const href = `./character.html?character=${encodeURIComponent(member.name)}`;
 
             return `
-                <section id="character-page-${escapeHtml(member.id)}" class="character-guide-section tone-${escapeHtml(member.tone)}" data-spoiler-stage="${escapeHtml(member.stage)}">
-                    <header class="character-guide-header">
-                        <div class="character-guide-header-main">
-                            <div class="recommendation-card-portrait character-guide-portrait">
-                                <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
-                            </div>
-                            <div>
-                                <p class="character-guide-kicker">Character page · guida pratica</p>
-                                <h4>${escapeHtml(member.name)}</h4>
-                                <p class="recommendation-role">${escapeHtml(member.role)}</p>
-                                <p class="character-guide-summary">${escapeHtml(member.battleAdvice)}</p>
-                            </div>
+                <article class="dossier-directory-card tone-${escapeHtml(member.tone)}">
+                    <div class="dossier-directory-card-head">
+                        <img src="${escapeHtml(member.image)}" alt="" loading="lazy" referrerpolicy="no-referrer" aria-hidden="true">
+                        <div>
+                            <p class="dossier-directory-kicker">Character dossier</p>
+                            <h4>${escapeHtml(member.name)}</h4>
+                            <p>${escapeHtml(member.role)}</p>
                         </div>
-                        <div class="character-guide-actions">
-                            <a class="character-guide-action" href="${escapeHtml(catalogHref)}">Tutti gli oggetti</a>
-                            <a class="character-guide-action" href="${escapeHtml(aiHref)}">Preset AI completo</a>
-                        </div>
-                    </header>
-                    <div class="character-guide-overview-grid">
-                        <article class="character-guide-overview-card">
-                            <p class="character-guide-overview-kicker">Focus equip</p>
-                            <h5>Che cosa cercare</h5>
-                            <p>${escapeHtml(member.equipmentAdvice)}</p>
-                            <div class="character-guide-chip-row">${categoryChips}</div>
-                        </article>
-                        <article class="character-guide-overview-card">
-                            <p class="character-guide-overview-kicker">Preset AI</p>
-                            <h5>Riepilogo rapido</h5>
-                            ${renderAiDigest(member)}
-                        </article>
-                        <article class="character-guide-overview-card">
-                            <p class="character-guide-overview-kicker">Title consigliato</p>
-                            <h5>Scelta sicura</h5>
-                            <p>${escapeHtml(details.titleAdvice || "Incapacitator fino a Rings +8; poi scegli in base all'obiettivo del personaggio.")}</p>
-                            <p class="guide-mini-note"><strong>Promemoria:</strong> il valore reale dei Rings è anche il loro Enhancement Bonus contro lo Stun.</p>
-                        </article>
-                        <article class="character-guide-overview-card">
-                            <p class="character-guide-overview-kicker">Curva statistiche</p>
-                            <h5>Talento naturale</h5>
-                            ${growthMarkup(member)}
-                        </article>
                     </div>
-                    <div class="character-guide-slot-grid">${slotSections}</div>
-                </section>
+                    <p class="dossier-directory-copy">AI, Title, curva statistiche, suggerimenti per ogni slot e ${escapeHtml(sourceNotes)} note della guida tradotte.</p>
+                    <div class="dossier-directory-chips">${categories.map(function(category) {
+                        return `<span>${escapeHtml(categoryIcon(category))} ${escapeHtml(category)}</span>`;
+                    }).join("")}</div>
+                    <a class="dossier-directory-action" href="${escapeHtml(href)}">Apri la scheda di ${escapeHtml(member.name)} <span aria-hidden="true">→</span></a>
+                </article>
             `;
-        }).filter(Boolean);
-
-        if (!visible.length) {
-            target.innerHTML = '<p class="muted">Le pagine personaggio restano nascoste finché il filtro anti-spoiler non rende visibili gli alleati interessati.</p>';
-            return;
-        }
-
-        const jumpLinks = visibleMembers().map(function(member) {
-            return `<a href="#character-page-${escapeHtml(member.id)}">${escapeHtml(member.name)}</a>`;
-        }).join("");
+        });
 
         target.innerHTML = `
-            <div class="character-guide-jumpbar">
-                <p><strong>Vai al personaggio:</strong></p>
-                <div class="character-guide-jump-links">${jumpLinks}</div>
+            <div class="dossier-directory-intro">
+                <p class="dossier-directory-kicker">Una pagina per alleato</p>
+                <h4>Apri una scheda dedicata invece di leggere tutte le raccomandazioni insieme.</h4>
+                <p>La scheda conserva i commenti importanti, ma li organizza per personaggio e per slot. Le note restano disponibili accanto agli oggetti a cui si riferiscono.</p>
             </div>
-            <div class="character-guide-pages">${visible.join("")}</div>
+            <div class="dossier-directory-grid">${cards.join("")}</div>
         `;
     }
 
