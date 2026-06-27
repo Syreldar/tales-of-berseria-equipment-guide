@@ -426,14 +426,15 @@
     });
 
     /*
-     * Exactly one general Best in slot is selected for every character/category.
-     * These choices are resolved from the source comments, not from rarity alone:
-     * strongest/preferred/ideal wording wins; alternatives remain roadmap steps for
-     * specialized builds, mastery, farming, or raw-stat variants.
+     * Every character/category route has one source-led primary recommendation.
+     * A primary recommendation is not automatically Best in slot: the latter is
+     * reserved only for comments that make an unambiguous overall claim. Where
+     * the source presents competing build paths, the page marks one general
+     * recommendation and keeps the alternatives visible with their own roles.
      */
-    const bestInSlotByCharacterCategory = Object.freeze({
+    const recommendedByCharacterCategory = Object.freeze({
         "velvet::Blades": "Unnamed Blade",
-        "velvet::Belts": "Gloire des Mousseux Sash",
+        "velvet::Belts": "Helmut Schmidt Sash",
         "velvet::Women’s Armor": "Uprising Veil",
         "velvet::Rings": "Unnamed Ring",
         "velvet::Shoes": "Fluoric Boots",
@@ -475,6 +476,79 @@
         "eleanor::Women’s Shoes": "Queen Ellis Heels"
     });
 
+    const recommendedReasonByCharacterCategory = Object.freeze({
+        "velvet::Blades": "La lama più forte dell'intero gioco per potenza pura e abilità.",
+        "velvet::Belts": "Focus, statistiche e Master Skill eccezionali specificamente per Velvet.",
+        "velvet::Women’s Armor": "Su Velvet combina in modo straordinario attacco, difesa e abilità; Empress Shield resta una valida alternativa difensiva.",
+        "velvet::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "velvet::Shoes": "Primo investimento universale affidabile: statistiche corrette e BG più facile da mantenere.",
+        "velvet::Women’s Shoes": "Focus, Attack e Enhancement Bonus la rendono la scelta conclusiva per Velvet.",
+
+        "rokurou::Short Swords": "È tra le armi più forti del suo arsenale per le abilità; Ephemeral Wings resta l'alternativa da danno puro.",
+        "rokurou::Talismans": "L'autore la preferisce esplicitamente a tutte le opzioni post-game.",
+        "rokurou::Men’s Armor": "Statistiche e abilità eccellenti la rendono la scelta prioritaria per Rokurou nel late game.",
+        "rokurou::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "rokurou::Shoes": "Attack, Focus e status: un pacchetto pratico che vale sempre la pena tenere di scorta.",
+        "rokurou::Men’s Shoes": "La guida invita esplicitamente a saltare Gigant Shoes e abusare di queste.",
+
+        "laphicet::Paper": "È chiaramente definita l'arma più utile: massimizza Arte Attack e accelera cast e cure.",
+        "laphicet::Bags": "È la scelta generalista per Malak Artes con statistiche e abilità ben assortite.",
+        "laphicet::Men’s Armor": "Le statistiche sono molto migliori su Laphicet e il recupero dei danni riflessi è eccellente.",
+        "laphicet::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "laphicet::Shoes": "Attack, Focus e status: il miglior percorso pratico da tenere pronto.",
+        "laphicet::Men’s Shoes": "La guida invita esplicitamente a saltare Gigant Shoes e abusare di queste.",
+
+        "eizen::Bracelets": "La scelta post-game più completa: il commento indica che una sola ha skill davvero potenti, oltre a un ottimo rendimento generale.",
+        "eizen::Pendants": "Accessorio definito perfetto: copre la debolezza chiave di Eizen e potenzia Arte Attack e arti offensive.",
+        "eizen::Men’s Armor": "Statistiche e abilità eccellenti la rendono una scelta di primo livello per Eizen.",
+        "eizen::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "eizen::Shoes": "Attack, Focus e status: percorso universale efficiente prima delle opzioni specifiche.",
+        "eizen::Men’s Shoes": "Su Eizen è descritta come una bomba subatomica: una seconda arma in termini di statistiche.",
+
+        "magilou::Guardians": "È il guardian definitivo per le Malak Artes, cioè il nucleo del danno di Magilou.",
+        "magilou::Earrings": "Il commento la identifica come l'opzione più forte del gruppo post-game.",
+        "magilou::Women’s Armor": "Uprising Veil fa poco per Magilou; questa offre la distribuzione difensiva e le abilità più adatte al suo ruolo.",
+        "magilou::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "magilou::Shoes": "Investimento iniziale affidabile per BG e Master Skills, prima delle opzioni più situazionali.",
+        "magilou::Women’s Shoes": "La scelta specifica per Magilou: rende LOOK A SHOOTING STAR! eccezionale con Guardbreaker.",
+
+        "eleanor::Spears": "Attack molto alto, Focus, recupero HP e resa comparabile alle Spears post-game.",
+        "eleanor::Ribbons": "Il commento la definisce la più forte tra le opzioni post-game.",
+        "eleanor::Women’s Armor": "È il miglior upgrade naturale della Garish Pink Shirt nel post-game; Empress Shield resta una concorrenza difensiva molto forte.",
+        "eleanor::Rings": "La coppia di abilità è descritta come disgustosamente potente.",
+        "eleanor::Shoes": "Investimento iniziale affidabile per BG e Master Skills, prima delle opzioni più situazionali.",
+        "eleanor::Women’s Shoes": "Focus, Attack e Enhancement Bonus la rendono la scelta conclusiva per Eleanor."
+    });
+
+    /*
+     * Only entries supported by unequivocal wording keep the crown.  Everything
+     * else above remains Recommended, so competing builds are not mislabeled.
+     */
+    const bestInSlotByCharacterCategory = Object.freeze({
+        "velvet::Blades": "Unnamed Blade",
+        "velvet::Rings": "Unnamed Ring",
+        "velvet::Women’s Shoes": "Queen Ellis Heels",
+
+        "rokurou::Talismans": "Stoic Idol",
+        "rokurou::Rings": "Unnamed Ring",
+        "rokurou::Men’s Shoes": "Turbulent Shoes",
+
+        "laphicet::Paper": "Lost Parlance",
+        "laphicet::Rings": "Unnamed Ring",
+        "laphicet::Men’s Shoes": "Turbulent Shoes",
+
+        "eizen::Bracelets": "Unnamed Bracelet",
+        "eizen::Rings": "Unnamed Ring",
+
+        "magilou::Guardians": "Doppelganger",
+        "magilou::Earrings": "Lucifer's Pride Earrings",
+        "magilou::Rings": "Unnamed Ring",
+
+        "eleanor::Ribbons": "Unnamed Ribbon",
+        "eleanor::Rings": "Unnamed Ring",
+        "eleanor::Women’s Shoes": "Queen Ellis Heels"
+    });
+
     /* Character-specific source judgements override the shared baseline when needed. */
     const sourceCalloutByCharacterItem = Object.freeze({
         "velvet::Uprising Veil": { key: "build", label: "Velvet post-game carry", icon: "✦" },
@@ -499,16 +573,43 @@
 
     function sourceCallout(member, entry) {
         const categoryKey = `${member.id}::${String(entry.category || "")}`;
-        if (bestInSlotByCharacterCategory[categoryKey] === String(entry.item || "")) {
-            return { key: "bis", label: "Best in slot", icon: "👑" };
-        }
-
-        const memberKey = `${member.id}::${String(entry.item || "")}`;
-        return sourceCalloutByCharacterItem[memberKey] || sourceCalloutByItem[entry.item] || {
+        const itemName = String(entry.item || "");
+        const memberKey = `${member.id}::${itemName}`;
+        const routeCallout = sourceCalloutByCharacterItem[memberKey] || sourceCalloutByItem[itemName] || {
             key: "story",
             label: "Story progression step",
             icon: "◆"
         };
+        const recommendedItem = recommendedByCharacterCategory[categoryKey];
+        const bestItem = bestInSlotByCharacterCategory[categoryKey];
+
+        if (recommendedItem === itemName) {
+            const badges = [{ key: "recommended", label: "Recommended", icon: "✓" }];
+            if (bestItem === itemName) {
+                badges.push({ key: "bis", label: "Best in slot", icon: "👑" });
+            }
+            return {
+                key: bestItem === itemName ? "bis" : "recommended",
+                label: bestItem === itemName ? "Recommended · Best in slot" : "Recommended",
+                icon: bestItem === itemName ? "👑" : "✓",
+                badges: badges,
+                detail: `${routeCallout.label} — ${recommendedReasonByCharacterCategory[categoryKey] || "Scelta principale della roadmap."}`
+            };
+        }
+
+        return {
+            key: routeCallout.key,
+            label: routeCallout.label,
+            icon: routeCallout.icon,
+            badges: [routeCallout],
+            detail: ""
+        };
+    }
+
+    function hasCalloutBadge(callout, key) {
+        return Boolean(callout && Array.isArray(callout.badges) && callout.badges.some(function(badge) {
+            return badge.key === key;
+        }));
     }
 
     function progressionPhase(entry) {
@@ -625,8 +726,7 @@
         }));
         const cards = groups.map(function(group) {
             const groupHasBest = group.entries.some(function(entry) {
-                const callout = sourceCallout(member, entry);
-                return callout && callout.key === "bis";
+                return hasCalloutBadge(sourceCallout(member, entry), "bis");
             });
             const groupHasCallout = group.entries.some(function(entry) {
                 return Boolean(sourceCallout(member, entry));
@@ -638,12 +738,19 @@
                 const href = itemHref(member, item, entry);
                 const progression = progressionLabel(entry, progressionByEntry.get(entry) || 0, entries.length);
                 const callout = sourceCallout(member, entry);
-                const calloutMarkup = callout ? `<p class="dossier-item-callout dossier-item-callout-${escapeHtml(callout.key)}">${escapeHtml(callout.icon)} ${escapeHtml(callout.label)}</p>` : "";
-                const calloutClass = callout ? ` dossier-pick-item-${escapeHtml(callout.key)}` : "";
+                const calloutBadges = callout && Array.isArray(callout.badges) ? callout.badges : [];
+                const calloutMarkup = calloutBadges.length ? `<div class="dossier-item-callout-row">${calloutBadges.map(function(badge) {
+                    return `<p class="dossier-item-callout dossier-item-callout-${escapeHtml(badge.key)}">${escapeHtml(badge.icon)} ${escapeHtml(badge.label)}</p>`;
+                }).join("")}</div>` : "";
+                const calloutDetailMarkup = callout && callout.detail ? `<p class="dossier-item-callout-detail">${escapeHtml(callout.detail)}</p>` : "";
+                const calloutClass = calloutBadges.map(function(badge) {
+                    return ` dossier-pick-item-${escapeHtml(badge.key)}`;
+                }).join("");
                 return `
                     <li class="dossier-pick-item dossier-pick-item-${escapeHtml(progression.key)}${calloutClass}">
                         <p class="dossier-progression-badge">${escapeHtml(progression.icon)} ${escapeHtml(progression.label)}</p>
                         ${calloutMarkup}
+                        ${calloutDetailMarkup}
                         <p class="dossier-pick-checkpoint">${escapeHtml(entry.checkpoint)}</p>
                         <h4><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h4>
                         <p class="dossier-pick-meta"><span>${escapeHtml(categoryIcons[category] || "✦")} ${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span><span>${escapeHtml(phaseLabel(rarity))}</span></p>
