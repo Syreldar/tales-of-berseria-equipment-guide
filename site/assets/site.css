@@ -3219,3 +3219,67 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     border-color: var(--dossier-directory-accent);
     color: var(--dossier-directory-accent);
 }
+
+/* Source-led recommendation tiers: badges belong to individual items, never to an entire post-game group. */
+.dossier-pick-group.has-strong {
+    border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+}
+
+.dossier-pick-group.has-best {
+    border-color: color-mix(in srgb, #d7b75e 58%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #d7b75e 6%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item {
+    display: grid;
+    gap: 0.35rem;
+    padding: 0.82rem;
+    border: 1px solid var(--line);
+    border-radius: 0.7rem;
+    background: var(--surface-muted);
+}
+
+.dossier-pick-group li + li {
+    padding-top: 0.82rem;
+    border-top: 1px solid var(--line);
+}
+
+.dossier-pick-group .dossier-pick-item-suggested {
+    border-color: color-mix(in srgb, var(--accent) 25%, var(--line));
+}
+
+.dossier-pick-group .dossier-pick-item-strong {
+    border-color: color-mix(in srgb, var(--accent) 62%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 34%, var(--surface)), var(--surface));
+    box-shadow: 0 6px 16px -18px color-mix(in srgb, var(--accent) 60%, transparent);
+}
+
+.dossier-pick-group .dossier-pick-item-bis {
+    border-color: color-mix(in srgb, #d7b75e 76%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #d7b75e 14%, var(--surface)), var(--surface));
+    box-shadow: 0 8px 20px -18px color-mix(in srgb, #d7b75e 80%, transparent);
+}
+
+.dossier-item-tier-badge {
+    display: inline-flex;
+    align-items: center;
+    width: fit-content;
+    margin: 0;
+    padding: 0.22rem 0.52rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.75rem;
+    font-weight: 850;
+}
+
+.dossier-pick-item-strong .dossier-item-tier-badge {
+    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
+    background: color-mix(in srgb, var(--accent-soft) 50%, var(--surface));
+}
+
+.dossier-pick-item-bis .dossier-item-tier-badge {
+    border-color: color-mix(in srgb, #d7b75e 70%, var(--line));
+    background: color-mix(in srgb, #d7b75e 20%, var(--surface));
+}

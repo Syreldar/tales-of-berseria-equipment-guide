@@ -316,9 +316,13 @@ def validate_guide(guide: Path) -> list[str]:
     if not dossier_page.exists() or not dossier_script.exists():
         fail("Dedicated character dossier page or its runtime script is missing")
     dossier = dossier_script.read_text(encoding="utf-8")
-    for token in ("source_note_group", "Best in slot", "Really recommended", "Suggested", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json"):
+    for token in ("source_note_group", "Best in slot", "Really recommended", "Suggested", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json", "sourceTierByItem", "dossier-item-tier-badge"):
         if token not in dossier:
             fail(f"Character dossier is missing required guide content: {token}")
+    if "recommendationTier(group, groups, index)" in dossier or "postgame || maxRarity" in dossier:
+        fail("Character dossier must not assign Best in slot automatically from post-game status or rarity")
+    if "\"Titan's Knuckles\": { key: \"bis\"" in dossier or "\"Broken Shackle\": { key: \"bis\"" in dossier or "\"Unnamed Bracelet\": { key: \"bis\"" in dossier:
+        fail("Character dossier incorrectly marks the entire Eizen post-game Bracelet set as Best in slot")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
     if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:

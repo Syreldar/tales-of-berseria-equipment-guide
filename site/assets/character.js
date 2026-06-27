@@ -273,18 +273,102 @@
         return `./index.html?${params.toString()}${hash}`;
     }
 
-    function recommendationTier(group, groups, index) {
-        const rarities = group.entries.map(function(entry) { return Number(entry.rarity) || 0; });
-        const maxRarity = Math.max.apply(null, rarities);
-        const postgame = group.entries.some(function(entry) { return phaseFromRarity(entry.rarity) === "Post-game"; });
+    const defaultRecommendationTier = Object.freeze({ key: "suggested", label: "Suggested", icon: "📍" });
 
-        if (groups.length === 1 || postgame || maxRarity >= 19 || (index === groups.length - 1 && maxRarity >= 17)) {
-            return { key: "bis", label: "Best in slot", icon: "👑" };
-        }
-        if (maxRarity >= 15 || index > 0) {
-            return { key: "strong", label: "Really recommended", icon: "✨" };
-        }
-        return { key: "suggested", label: "Suggested", icon: "📍" };
+    /*
+     * These ratings are intentionally source-led, not rarity-led.
+     * A post-game item is not automatically Best in slot: that badge appears only where the
+     * translated source note explicitly calls the item the best / strongest, or names it as the
+     * clear top option for a defined build.
+     */
+    const sourceTierByItem = Object.freeze({
+        "Fluoric Boots": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Quartz Boots": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Hyper Velocity Boots": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Kaiser Road": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Turbulent Shoes": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Cast Heels": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Shimmery Shoes": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Queen Ellis Heels": { key: "bis", label: "Best in slot · Focus", icon: "👑" },
+
+        "Force Ring": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Barrier Ring": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Anthro Ring": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Plated Ring": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Lindworm Ring": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Unnamed Ring": { key: "strong", label: "Really recommended", icon: "✨" },
+
+        "Garish Pink Shirt": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Pure White Veil": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Quartz Garment": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Survivor's Garb": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Jet Black Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Mythril Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Reflex Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
+
+        "Cassandra Sash": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Gloire des Mousseux Sash": { key: "bis", label: "Best in slot · Arte Attack", icon: "👑" },
+        "Helmut Schmidt Sash": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Exquisite Charm": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Stoic Idol": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Soothing Knife": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Mars Satchel": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Topaz Bag": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Feldspar Pendant": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Pumper-Upper": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Gnome's Force": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Mana Earrings": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Leviathan Earrings": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Adamantine Earrings": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Con Fuoco": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Spiritoso": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Brillante": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Unnamed Ribbon": { key: "bis", label: "Best in slot", icon: "👑" },
+
+        "Amphibole Blade": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Fonon Blade": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Adamantine Blade": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Demon's Bane": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
+        "Unnamed Blade": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Feldspar Daggers": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Stygian Daggers": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Ephemeral Wings": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Unnamed Daggers": { key: "bis", label: "Best in slot · Skills", icon: "👑" },
+        "Secret Histories": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Ember Paper": { key: "bis", label: "Best in slot · Malak Artes", icon: "👑" },
+        "Lost Parlance": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Unnamed Paper": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
+        "Armstrong": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Perpetuity": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Finger of God": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Secret Agent Doll": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Twoside Doll": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Doppelganger": { key: "bis", label: "Best in slot · Malak Artes", icon: "👑" },
+        "Unnamed Guardian": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
+        "Mana Lance": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Valkyrie": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Guandao": { key: "strong", label: "Really recommended", icon: "✨" }
+    });
+
+    const sourceTierByMember = Object.freeze({
+        velvet: Object.freeze({
+            "Uprising Veil": { key: "strong", label: "Really recommended", icon: "✨" }
+        }),
+        rokurou: Object.freeze({
+            "Summertime Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
+        }),
+        laphicet: Object.freeze({
+            "Topaz Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
+        }),
+        eizen: Object.freeze({
+            "Summertime Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
+            "Topaz Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
+        })
+    });
+
+    function recommendationTier(member, entry) {
+        const memberTiers = sourceTierByMember[member.id] || {};
+        return memberTiers[entry.item] || sourceTierByItem[entry.item] || defaultRecommendationTier;
     }
 
     function titleForGroup(group, slotName) {
@@ -363,15 +447,22 @@
             }
         });
 
-        const cards = groups.map(function(group, index) {
-            const tier = recommendationTier(group, groups, index);
+        const cards = groups.map(function(group) {
+            const groupHasBest = group.entries.some(function(entry) {
+                return recommendationTier(member, entry).key === "bis";
+            });
+            const groupHasStrong = group.entries.some(function(entry) {
+                return recommendationTier(member, entry).key === "strong";
+            });
             const items = group.entries.map(function(entry) {
                 const item = itemByName.get(normalize(entry.item));
                 const category = entry.category || (item && item.category) || "Categoria";
                 const rarity = entry.rarity || (item && item.rarity) || "—";
                 const href = itemHref(member, item, entry);
+                const tier = recommendationTier(member, entry);
                 return `
-                    <li>
+                    <li class="dossier-pick-item dossier-pick-item-${escapeHtml(tier.key)}">
+                        <p class="dossier-item-tier-badge">${escapeHtml(tier.icon)} ${escapeHtml(tier.label)}</p>
                         <p class="dossier-pick-checkpoint">${escapeHtml(entry.checkpoint)}</p>
                         <h4><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h4>
                         <p class="dossier-pick-meta"><span>${escapeHtml(categoryIcons[category] || "✦")} ${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span><span>${escapeHtml(phaseLabel(rarity))}</span></p>
@@ -379,7 +470,7 @@
                 `;
             }).join("");
             const note = group.note ? `
-                <details class="dossier-source-note" ${tier.key === "bis" ? "open" : ""}>
+                <details class="dossier-source-note" ${groupHasBest ? "open" : ""}>
                     <summary>Perché la guida lo consiglia</summary>
                     <div>
                         <p class="dossier-source-kicker">Nota della guida</p>
@@ -388,9 +479,9 @@
                     </div>
                 </details>
             ` : "";
+            const groupState = groupHasBest ? "has-best" : (groupHasStrong ? "has-strong" : "");
             return `
-                <article class="dossier-pick dossier-pick-${escapeHtml(tier.key)}">
-                    <p class="dossier-tier-badge">${escapeHtml(tier.icon)} ${escapeHtml(tier.label)}</p>
+                <article class="dossier-pick dossier-pick-group ${escapeHtml(groupState)}">
                     <ul>${items}</ul>
                     ${note}
                 </article>
@@ -495,8 +586,8 @@
             <section class="dossier-gear-section">
                 <div class="dossier-gear-heading">
                     <p class="dossier-section-kicker">Equipment roadmap</p>
-                    <h3>Suggested, really recommended e best in slot</h3>
-                    <p>Ogni gruppo mantiene la nota della guida. Le note sono espandibili per evitare un muro di testo, ma non vengono rimosse.</p>
+                    <h3>Pick consigliati, realmente raccomandati e best in slot</h3>
+                    <p>Le etichette sono assegnate <strong>per singolo oggetto</strong>, non per rarità o per intero blocco post-game. <strong>Best in slot</strong> compare soltanto quando il commento della guida identifica esplicitamente quell’oggetto come il migliore, il più forte o il top per una build precisa. Le note restano espandibili, ma non vengono rimosse.</p>
                 </div>
                 <div class="dossier-slot-list">${slots}</div>
             </section>
