@@ -97,7 +97,7 @@ Il validatore controlla tutti i link locali e tutti gli anchor delle pagine pubb
 
 ## Curated story progression
 
-The guide now includes a spoiler-aware, slot-by-slot recommended-equipment path for every party member. Each character is divided into Weapon, Accessory, Armor, Rings, and Shoes, with a story checkpoint, precise category, rarity, and a practical editorial note for every recommended item; its name opens the existing local catalogue record. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.
+The guide now includes a spoiler-aware, slot-by-slot recommended-equipment path for every party member. Each character is divided into Weapon, Accessory, Armor, Rings, and Shoes, with a story checkpoint, precise category, rarity, and a local catalogue link. Generic editorial commentary is not published: when an original recommendation note is available, it appears directly beneath that single item or source-defined item pair. Source-note coverage includes Rings as well as Shoes, Men’s Shoes, and Women’s Shoes. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.
 
 ## Node DEP0040 diagnostic
 

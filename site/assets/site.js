@@ -821,23 +821,47 @@
                     return "";
                 }
 
+                const sourceGroups = [];
+                const groupByKey = new Map();
+                slotEntries.forEach(function(entry) {
+                    const key = String(entry.source_note_group || normalizeText(entry.item));
+                    let sourceGroup = groupByKey.get(key);
+                    if (!sourceGroup) {
+                        sourceGroup = { entries: [], sourceNote: "" };
+                        groupByKey.set(key, sourceGroup);
+                        sourceGroups.push(sourceGroup);
+                    }
+                    sourceGroup.entries.push(entry);
+                    if (!sourceGroup.sourceNote && String(entry.source_note || "").trim()) {
+                        sourceGroup.sourceNote = String(entry.source_note).trim();
+                    }
+                });
+
                 return `
                     <section class="recommendation-slot" data-recommendation-slot="${escapeHtml(slot.name)}">
                         <h5 class="recommendation-slot-heading"><span class="recommendation-slot-icon" aria-hidden="true">${slot.icon}</span>${escapeHtml(slot.description)}</h5>
                         <ol class="recommendation-list">
-                            ${slotEntries.map(function(entry) {
-                                const item = itemByName.get(normalizeText(entry.item));
-                                const href = item ? `#${itemId(item)}` : "#catalogo";
-                                const category = displayCategory(entry.category || (item && item.category) || "Category");
-                                const rarity = entry.rarity || (item && item.rarity) || "—";
-                                return `
-                                    <li class="recommendation-item">
-                                        <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
-                                        <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
-                                        <p class="recommendation-meta"><span class="recommendation-category">${escapeHtml(category)}</span><span>Rarity ${escapeHtml(rarity)}</span></p>
-                                        <p class="recommendation-note">${escapeHtml(entry.reason)}</p>
+                            ${sourceGroups.map(function(sourceGroup) {
+                                const itemsMarkup = sourceGroup.entries.map(function(entry) {
+                                    const item = itemByName.get(normalizeText(entry.item));
+                                    const href = item ? `#${itemId(item)}` : "#catalogo";
+                                    const category = displayCategory(entry.category || (item && item.category) || "Category");
+                                    const rarity = entry.rarity || (item && item.rarity) || "—";
+                                    return `
+                                        <li class="recommendation-item">
+                                            <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
+                                            <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
+                                            <p class="recommendation-meta"><span class="recommendation-category">${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span></p>
+                                        </li>
+                                    `;
+                                }).join("");
+                                const sourceNoteMarkup = sourceGroup.sourceNote ? `
+                                    <li class="recommendation-source-note">
+                                        <p class="recommendation-source-label">Nota della guida</p>
+                                        <p>${escapeHtml(sourceGroup.sourceNote)}</p>
                                     </li>
-                                `;
+                                ` : "";
+                                return `${itemsMarkup}${sourceNoteMarkup}`;
                             }).join("")}
                         </ol>
                     </section>

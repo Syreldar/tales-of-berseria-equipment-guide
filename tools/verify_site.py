@@ -47,6 +47,91 @@ CANONICAL_SHOE_CATEGORIES = {
     "womens-shoes": ("Women’s Shoes", "Women’s Shoes", "Velvet · Magilou · Eleanor"),
 }
 
+SOURCE_NOTE_GROUPS = {
+    "fluoric-boots": ({"Fluoric Boots"}, 6, "rotelle"),
+    "quartz-boots": ({"Quartz Boots"}, 3, "carenti"),
+    "unnamed-boots": ({"Unnamed Boots"}, 6, "universali post-game"),
+    "protective-hops": ({"Protective Hops"}, 3, "fuori di testa"),
+    "hyper-velocity-boots": ({"Hyper Velocity Boots"}, 3, "Disgustose"),
+    "kaiser-road": ({"Kaiser Road"}, 1, "bomba subatomica"),
+    "mens-shoes-postgame": ({"Gigant Shoes", "Turbulent Shoes"}, 6, "Salta le prime"),
+    "cast-heels": ({"Cast Heels"}, 3, "Ridicole"),
+    "shimmery-shoes": ({"Shimmery Shoes"}, 3, "ancora più Focus"),
+    "pegasus-wings": ({"Pegasus Wings"}, 3, "disponibilità tremenda"),
+    "womens-shoes-postgame": ({"Grounded Shoes", "Queen Ellis Heels"}, 6, "assurdamente rotto"),
+    "force-barrier-rings": ({"Force Ring", "Barrier Ring"}, 12, "Consiglio vivamente"),
+    "offensive-rings": ({"Anthro Ring", "Plated Ring"}, 12, "quattro Rings"),
+    "postgame-rings": ({"Lindworm Ring", "Unnamed Ring"}, 12, "Demon Ring"),
+    "garish-pink-shirt": ({"Garish Pink Shirt"}, 3, "assenza di una statistica Defense"),
+    "pure-white-quartz-garment": ({"Pure White Veil", "Quartz Garment"}, 6, "generalista"),
+    "elder-garden-survivors-garb": ({"Elder Garden", "Survivor's Garb"}, 6, "non hanno molte armature"),
+    "womens-armor-postgame": ({"Uprising Veil", "Empress Shield", "Unnamed Garment"}, 9, "mitica"),
+    "jet-black-waistcoat": ({"Jet Black Waistcoat"}, 3, "armatura maschile universale"),
+    "summertime-topaz-waistcoat": ({"Summertime Waistcoat", "Topaz Waistcoat"}, 6, "endgame"),
+    "mythril-reflex-waistcoat": ({"Mythril Waistcoat", "Reflex Waistcoat"}, 6, "eccellenti per tutti e tre"),
+    "mens-armor-postgame": ({"Zero Impact Waistcoat", "Mumbane", "Unnamed Vestments"}, 9, "Nulla di particolarmente impressionante"),
+    "cassandra-sash": ({"Cassandra Sash"}, 1, "miglior Belt dell’inizio gioco"),
+    "gloire-des-mousseux-sash": ({"Gloire des Mousseux Sash"}, 1, "più forte dell’intero gioco"),
+    "helmut-schmidt-sash": ({"Helmut Schmidt Sash"}, 1, "Semplicemente stellare"),
+    "belts-postgame": ({"Intrigue Sash", "Jeanne d'Arc Sash", "Unnamed Belt"}, 3, "Bottino d’oro"),
+    "exquisite-charm": ({"Exquisite Charm"}, 1, "puro acciaio Rangetsu"),
+    "stoic-idol": ({"Stoic Idol"}, 1, "deliziosa torta di accessorio"),
+    "soothing-knife": ({"Soothing Knife"}, 1, "vero Talisman offensivo"),
+    "talismans-postgame": ({"Long Life Charm", "Perfect Bulwark", "Unnamed Talisman"}, 3, "Rokurou"),
+    "mars-satchel": ({"Mars Satchel"}, 1, "oggetti più frustranti"),
+    "topaz-bag": ({"Topaz Bag"}, 1, "È fantastico, usalo"),
+    "adamantine-bag": ({"Adamantine Bag"}, 1, "potenziamento difficile"),
+    "bags-postgame": ({"Solar Satchel", "Galactic Satchel", "Unnamed Bag"}, 3, "non tutti validi"),
+    "feldspar-pendant": ({"Feldspar Pendant"}, 1, "vento di distruzione"),
+    "pumper-upper": ({"Pumper-Upper"}, 1, "La comodità definisce"),
+    "gnomes-force": ({"Gnome's Force"}, 1, "accessorio perfetto"),
+    "pendants-postgame": ({"Sylph's Invitation", "Undine's Heart", "Unnamed Pendant"}, 3, "solido come una roccia"),
+    "mana-earrings": ({"Mana Earrings"}, 1, "Potere puro"),
+    "leviathan-satan-earrings": ({"Leviathan Earrings", "Satan's Wrath Earrings"}, 2, "predisposizione per l’elemento Water"),
+    "adamantine-earrings": ({"Adamantine Earrings"}, 1, "Le statistiche non mentono"),
+    "earrings-postgame": ({"Lucifer's Pride Earrings", "Lucky Rabbit Earrings", "Unnamed Earrings"}, 3, "Lucifer’s Pride è il più forte"),
+    "con-fuoco": ({"Con Fuoco"}, 1, "unico accessorio disponibile"),
+    "spiritoso": ({"Spiritoso"}, 1, "miglior Ribbon"),
+    "brillante": ({"Brillante"}, 1, "accessorio di utilità"),
+    "ribbons-postgame": ({"Perdendosi", "Grandioso", "Unnamed Ribbon"}, 3, "tutti piuttosto validi"),
+    "amphibole-blade": ({"Amphibole Blade"}, 1, "arma mono-stat"),
+    "fonon-blade": ({"Fonon Blade"}, 1, "arma anti-endgame ideale"),
+    "adamantine-blade": ({"Adamantine Blade"}, 1, "arma da main game più forte"),
+    "blades-postgame": ({"Demon's Bane", "Dragon Slayer", "Unnamed Blade"}, 3, "inchinati davanti all’Unnamed Blade"),
+    "feldspar-daggers": ({"Feldspar Daggers"}, 1, "pugnali più lineari"),
+    "kurogane-daggers": ({"Kurogane Daggers"}, 1, "sorprendentemente solidi"),
+    "stygian-daggers": ({"Stygian Daggers"}, 1, "arma da “pro”"),
+    "short-swords-postgame": ({"Ephemeral Wings", "Lunar Tempests", "Unnamed Daggers"}, 3, "Lunar Tempests è solo materiale da mastery fooder"),
+    "secret-histories": ({"Secret Histories"}, 1, "dovrebbe essere una priorità"),
+    "old-flyers": ({"Old Flyers"}, 1, "armi puramente difensive"),
+    "ember-paper": ({"Ember Paper"}, 1, "scelta di prim’ordine"),
+    "papers-postgame": ({"Ragnarok", "Lost Parlance", "Unnamed Paper"}, 3, "questi due colossi"),
+    "armstrong": ({"Armstrong"}, 1, "armi preferite"),
+    "perpetuity": ({"Perpetuity"}, 1, "opzione più desiderabile"),
+    "finger-of-god": ({"Finger of God"}, 1, "caster dedicato"),
+    "bracelets-postgame": ({"Titan's Knuckles", "Broken Shackle", "Unnamed Bracelet"}, 3, "non sono troppo esaltanti"),
+    "feldspar-doll": ({"Feldspar Doll"}, 1, "Magilou vuole davvero"),
+    "secret-agent-doll": ({"Secret Agent Doll"}, 1, "arma preferita del main game"),
+    "twoside-doll": ({"Twoside Doll"}, 1, "solida arma offensiva"),
+    "guardians-postgame": ({"Corpore Sano", "Doppelganger", "Unnamed Guardian"}, 3, "stelle d’oro"),
+    "mana-lance": ({"Mana Lance"}, 1, "arma iniziale più utile"),
+    "valkyrie": ({"Valkyrie"}, 1, "armi preferite"),
+    "guandao": ({"Guandao"}, 1, "paladina spear"),
+    "spears-postgame": ({"Final Scepter", "Gae Bolg", "Nameless Spear"}, 3, "grandi scelte"),
+}
+
+SOURCE_NOTE_PAIRS = {
+    "mens-shoes-postgame": {"Gigant Shoes", "Turbulent Shoes"},
+    "womens-shoes-postgame": {"Grounded Shoes", "Queen Ellis Heels"},
+    "force-barrier-rings": {"Force Ring", "Barrier Ring"},
+    "offensive-rings": {"Anthro Ring", "Plated Ring"},
+    "postgame-rings": {"Lindworm Ring", "Unnamed Ring"},
+    "pure-white-quartz-garment": {"Pure White Veil", "Quartz Garment"},
+    "elder-garden-survivors-garb": {"Elder Garden", "Survivor's Garb"},
+    "summertime-topaz-waistcoat": {"Summertime Waistcoat", "Topaz Waistcoat"},
+    "mythril-reflex-waistcoat": {"Mythril Waistcoat", "Reflex Waistcoat"},
+}
+
 
 
 def normalized(value: str) -> str:
@@ -221,12 +306,14 @@ def validate_guide(guide: Path) -> list[str]:
         fail("Runtime UI must use the canonical Shoes, Men’s Shoes, and Women’s Shoes category labels")
     for token in (
         "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
-        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "recommendation-slot", "slotOrder", "renderGrowthTable", "Arte Attack",
+        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "recommendation-slot", "slotOrder", "source_note_group", "sourceNote", "renderGrowthTable", "Arte Attack",
     ):
         if token not in script:
             fail(f"Character cards are missing role-specific guidance or direct navigation: {token}")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
+    if "Nota della guida" not in script or "Guide recommendation" in script:
+        fail("Recommendation source-note label must be localized in Italian")
 
     anchors = re.findall(r'<a\s+[^>]*href=["\']#([^"\']+)["\']', text)
     if len(anchors) < 40:
@@ -282,7 +369,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             return
         fail("Catalogue snapshot is not complete. The deployment workflow must materialize the initial local snapshot first.")
 
-    if payload.get("schema_version") != 5:
+    if payload.get("schema_version") != 6:
         fail("Catalogue schema version is not current")
     categories = payload.get("categories")
     items = payload.get("items")
@@ -394,13 +481,17 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             fail(f"Recommended equipment is absent from the catalogue: {entry.get('item')}")
         if entry.get("category") != catalogue_item.get("category") or entry.get("rarity") != catalogue_item.get("rarity"):
             fail(f"Recommended equipment metadata does not match the catalogue: {entry.get('item')}")
-        for field in ("slot", "checkpoint", "category", "reason"):
+        for field in ("slot", "checkpoint", "category", "source_note_group"):
             if not str(entry.get(field, "")).strip():
                 fail(f"Recommended equipment is missing {field}: {entry.get('item')}")
+        if "reason" in entry:
+            fail(f"Published recommendations must not contain generated commentary: {entry.get('item')}")
+        if "source_note" in entry and not str(entry.get("source_note", "")).strip():
+            fail(f"Source note cannot be empty: {entry.get('item')}")
         if entry.get("slot") not in {"Weapon", "Accessory", "Armor", "Rings", "Shoes"}:
             fail(f"Recommendation has an invalid logical slot: {entry.get('item')}")
-        if "Footwear" in str(entry.get("reason", "")):
-            fail(f"Recommendation uses a non-canonical shoe category label: {entry.get('item')}")
+        if "Footwear" in str(entry.get("source_note", "")):
+            fail(f"Recommendation source note uses a non-canonical shoe category label: {entry.get('item')}")
         if character in recommendation_counts:
             recommendation_counts[character] += 1
 
@@ -416,6 +507,44 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     missing_routes = [name for name, count in recommendation_counts.items() if count < 10]
     if missing_routes:
         fail(f"Recommended-equipment route is incomplete: {', '.join(missing_routes)}")
+
+    source_noted = {str(entry.get("item")) for entry in recommendations if str(entry.get("source_note", "")).strip()}
+    expected_source_notes = set().union(*(items for items, _, _ in SOURCE_NOTE_GROUPS.values()))
+    missing_source_notes = sorted(expected_source_notes - source_noted)
+    if missing_source_notes:
+        fail(f"Expected source-note recommendations are missing: {', '.join(missing_source_notes)}")
+
+    for group, (expected_items, expected_count, italian_marker) in SOURCE_NOTE_GROUPS.items():
+        grouped_entries = [entry for entry in recommendations if entry.get("source_note_group") == group]
+        if len(grouped_entries) != expected_count:
+            fail(f"Source-note group has the wrong entry count: {group}")
+        if {str(entry.get("item")) for entry in grouped_entries} != expected_items:
+            fail(f"Source-note group is incomplete: {group}")
+        notes = {str(entry.get("source_note", "")).strip() for entry in grouped_entries}
+        if len(notes) != 1 or not next(iter(notes), ""):
+            fail(f"Source-note group must publish one shared note: {group}")
+        note_text = next(iter(notes))
+        if italian_marker.lower() not in note_text.lower():
+            fail(f"Source-note group is not using the Italian translation: {group}")
+
+    for group, expected_items in SOURCE_NOTE_PAIRS.items():
+        for character in expected_growth:
+            pair_entries = [entry for entry in recommendations if entry.get("character") == character and entry.get("source_note_group") == group]
+            if group in {"mens-shoes-postgame", "jet-black-waistcoat", "summertime-topaz-waistcoat", "mythril-reflex-waistcoat", "mens-armor-postgame"} and character not in {"Rokurou", "Laphicet", "Eizen"}:
+                continue
+            if group in {"womens-shoes-postgame", "garish-pink-shirt", "pure-white-quartz-garment", "elder-garden-survivors-garb", "womens-armor-postgame"} and character not in {"Velvet", "Magilou", "Eleanor"}:
+                continue
+            if {entry.get("item") for entry in pair_entries} != expected_items:
+                fail(f"Source-note pair is incomplete for {character}: {group}")
+
+    for character in ("Velvet", "Magilou", "Eleanor"):
+        pair_entries = [entry for entry in recommendations if entry.get("character") == character and entry.get("source_note_group") == "womens-shoes-postgame"]
+        if {entry.get("item") for entry in pair_entries} != {"Grounded Shoes", "Queen Ellis Heels"}:
+            fail(f"Post-game Women’s Shoes pair is incomplete for {character}")
+    for character in ("Rokurou", "Laphicet", "Eizen"):
+        pair_entries = [entry for entry in recommendations if entry.get("character") == character and entry.get("source_note_group") == "mens-shoes-postgame"]
+        if {entry.get("item") for entry in pair_entries} != {"Gigant Shoes", "Turbulent Shoes"}:
+            fail(f"Post-game Men’s Shoes pair is incomplete for {character}")
 
     card_pairs = {(str(entry.get("category_id")), str(entry.get("phase"))) for entry in cards}
     if card_pairs != required_pairs:

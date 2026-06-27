@@ -1883,7 +1883,8 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
 
 .recommendation-checkpoint,
 .recommendation-meta,
-.recommendation-note {
+.recommendation-note,
+.recommendation-source-note p {
     margin: 0;
     line-height: 1.4;
 }
@@ -1923,4 +1924,22 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     margin-top: 0.36rem;
     color: var(--text);
     font-size: 0.86rem;
+}
+
+.recommendation-source-note {
+    margin: 0;
+    padding: 0.78rem 1rem 0.9rem 1.55rem;
+    border-bottom: 1px solid var(--line);
+    background: var(--surface-muted);
+    color: var(--text);
+    font-size: 0.86rem;
+}
+
+.recommendation-source-label {
+    margin-bottom: 0.28rem !important;
+    color: var(--accent);
+    font-size: 0.72rem;
+    font-weight: 850;
+    letter-spacing: 0.065em;
+    text-transform: uppercase;
 }
