@@ -86,6 +86,83 @@
         }
     ]);
 
+    const characterGuideDetails = Object.freeze({
+        velvet: {
+            titleAdvice: "Incapacitator finché i Rings sono a +8 o meno. Dopo quel punto puoi tornare a un Title offensivo se vuoi più danno o utilità, ma il preset prudente parte sempre dalla protezione contro Stun.",
+            ai: {
+                summary: "Preset aggressivo ma affidabile: scegli un nemico robusto, lascia che Velvet completi la catena ed entri in Therion Form senza sprecare mosse che l'AI tende a mancare.",
+                strategy: ["Target Strong Enemies", "Aim for Weaknesses", "Be Aggressive", "Change Out", "You Decide"],
+                mode: "Artes OFF",
+                skills: ["Harsh Rebuttal", "Avalanche Fang", "Moonlight Cyclone", "Rising Moon", "Rising Falcon", "Soaring Dragon", "Slag Assault", "Grounding Strike", "Banishing Thunder", "Binding Frost"],
+                footnote: "Lascia ON le altre Artes, incluso Scale Crusher."
+            }
+        },
+        rokurou: {
+            titleAdvice: "Incapacitator fino a Rings +8. Superata quella soglia puoi tornare su un Title più offensivo, ma per l'AI il guadagno maggiore resta evitare Stun letali mentre duella in prima linea.",
+            ai: {
+                summary: "Preset difensivo e lineare: Rokurou deve colpire le debolezze senza perdere tempo in riposizionamenti o in Forms che l'AI concatena male.",
+                strategy: ["Target Enemy with Most Souls", "Aim for Weaknesses", "Defense Only", "Change Out", "You Decide"],
+                mode: "Artes OFF",
+                skills: ["Crimson Flash", "Jade Wave", "Armor Crusher", "Double Haze", "Orochi’s Fury", "Form 1: Fire Burst", "Form 2: Imbue Earth", "Form 5: Scatterburst", "Form 6: Dark Vortex", "Form 7: Rapid Bolt"],
+                footnote: "Lascia ON tutte le altre Artes non elencate."
+            }
+        },
+        laphicet: {
+            titleAdvice: "Scelta sicura: Incapacitator finché i Rings sono a +8 o meno. Eccezione legittima: Sorcerer se vuoi aumentare la pressione offensiva e i Void cast, accettando un preset meno prudente.",
+            ai: {
+                summary: "Laphicet funziona meglio con poche Malak Artes affidabili. Ridurre la lista abbassa i cast lunghi, gli errori di priorità e le interruzioni mentre resta a distanza.",
+                strategy: ["Target Multiple Enemies", "Engage at Range", "Defense Only", "Change Out", "For Attacking"],
+                mode: "Malak Artes ON",
+                skills: ["Kaleidos Ray", "Blessed Drops", "Void Mire", "Dark Fangs"],
+                footnote: "Metti OFF tutte le altre Malak Artes."
+            }
+        },
+        eizen: {
+            titleAdvice: "Incapacitator resta il punto di partenza fino a Rings +8. In seguito scegli in base al ruolo: più sicurezza se lo usi in mischia, più danno/cast se lo usi come Wind Master.",
+            ai: {
+                summary: "Eizen ha due preset distinti. Non mescolare le due configurazioni: scegline una completa e usala finché non hai davvero sbloccato il set successivo.",
+                variants: [
+                    {
+                        name: "Fist Bruiser",
+                        availability: "Durante la storia",
+                        strategy: ["Target Nearby Enemies", "Balanced", "Defense Only", "Change Out", "For Attacking"],
+                        mode: "Artes OFF",
+                        skills: ["Verdict", "Tempo", "Eleventh Hour", "Clear Path", "Lighthouse", "Deceiving Pummel", "Tutte le Malak Artes tranne Flash Step e Stone Lance"],
+                        footnote: "È la configurazione più semplice e consistente finché non hai il set completo da Wind Master."
+                    },
+                    {
+                        name: "Wind Master",
+                        availability: "Endgame / set completo",
+                        strategy: ["Target Multiple Enemies", "Fast Attacks", "Defense Only", "Change Out", "For Attacking"],
+                        mode: "Lascia ON solo",
+                        skills: ["Martial Artes: Coercion, Last Throes", "Malak Artes: Stone Lance, Hell Gate"],
+                        footnote: "Passa qui solo dopo aver sbloccato tutte e quattro le mosse chiave."
+                    }
+                ]
+            }
+        },
+        magilou: {
+            titleAdvice: "Incapacitator resta la scelta standard fino a Rings +8. Se poi vuoi più pressione magica puoi rivalutare un Title da caster, ma il preset base premia prima la sopravvivenza.",
+            ai: {
+                summary: "Magilou rende meglio con una rotazione molto corta: poche magie, cast più sicuri e meno aperture in cui l'AI si fa interrompere.",
+                strategy: ["Target Multiple Enemies", "Engage at Range", "Defense Only", "Change Out", "For Attacking"],
+                mode: "Malak Artes ON",
+                skills: ["Aqua Split", "Blood Moon", "Opzionale: Crown Fire"],
+                footnote: "Metti OFF tutte le altre Malak Artes."
+            }
+        },
+        eleanor: {
+            titleAdvice: "Incapacitator fino a Rings +8. Dopo puoi cercare più danno, ma per un personaggio ibrido che combatte vicino al bersaglio il controllo dello Stun resta uno dei bonus difensivi più apprezzabili.",
+            ai: {
+                summary: "Eleanor vuole stare vicina al bersaglio e usare una rotazione corta. Le mosse che respingono troppo o rompono il seguito della combo rendono l'AI molto meno affidabile.",
+                strategy: ["Target Nearby Enemies", "Close Combat", "Defense Only", "Change Out", "For Attacking"],
+                mode: "Artes OFF",
+                skills: ["Martial Artes: Vanguard, Double Rush, Skewering Spear, Cleansing Lance", "Malak Artes: tutte tranne Flame Beast e Maelstrom"],
+                footnote: "Mantieni la rotazione corta: è qui che l'AI di Eleanor lavora meglio."
+            }
+        }
+    });
+
     const categorySlots = Object.freeze({
         "Blades": "Weapon",
         "Short Swords": "Weapon",
@@ -141,6 +218,119 @@
     const phaseLabels = Object.freeze({
         "Main game": "Storia principale",
         "Post-game": "Post-game"
+    });
+
+    const slotDisplayLabels = Object.freeze({
+        "Weapon": "Weapon · Arma",
+        "Accessory": "Accessory · Accessorio",
+        "Armor": "Armor · Armatura",
+        "Rings": "Rings · Anelli",
+        "Shoes": "Shoes · Calzature"
+    });
+
+    const slotGuideCopy = Object.freeze({
+        "Weapon": "Qui conta soprattutto la statistica offensiva principale del personaggio.",
+        "Accessory": "È lo slot in cui specializzi davvero Atk oppure Arte Attack.",
+        "Armor": "Serve a stabilizzare il personaggio: difese, Focus e sopravvivenza prima del nome.",
+        "Rings": "Sono soprattutto un contenitore di Arte Defense e Master Skills, più che di danno.",
+        "Shoes": "Focus e utilità: spesso sono gli oggetti con le abilità più immediate da sentire in battaglia."
+    });
+
+    const recommendationPhaseIcons = Object.freeze({
+        "Main game": "🧭",
+        "Post-game": "👑"
+    });
+
+    const slotIcons = Object.freeze({
+        "Weapon": "⚔",
+        "Accessory": "✦",
+        "Armor": "⛨",
+        "Rings": "◈",
+        "Shoes": "⌁"
+    });
+
+    const categoryIcons = Object.freeze({
+        "Blades": "🗡️",
+        "Short Swords": "🗡️",
+        "Paper": "📜",
+        "Bracelets": "🥊",
+        "Guardians": "🧸",
+        "Spears": "🔱",
+        "Belts": "🎗️",
+        "Talismans": "🪬",
+        "Bags": "👜",
+        "Pendants": "📿",
+        "Earrings": "💎",
+        "Ribbons": "🎀",
+        "Men’s Armor": "🛡️",
+        "Women’s Armor": "🛡️",
+        "Rings": "💍",
+        "Shoes": "👞",
+        "Men’s Shoes": "👞",
+        "Women’s Shoes": "👠"
+    });
+
+    const categorySourceGuide = Object.freeze({
+        families: [
+            {
+                id: "weapons",
+                title: "Weapons",
+                icon: "⚔",
+                lead: "Le Weapons sono la fonte principale di Attack. Martial Artes e Hidden Artes scalano entrambe con Attack, quindi per quasi tutti — soprattutto per Velvet e Rokurou — sono il primo slot da controllare. Fanno in parte eccezione Laphicet e, in misura minore, Magilou. Anche gli Enhancement Bonus aumentano il danno in percentuale su avversari storditi; per questo una Weapon ben potenziata può diventare una vera centrale offensiva.",
+                categories: [
+                    { name: "Blades", owners: "Velvet", note: "Le Blades puntano soprattutto su capability e bonus elementali: effetti che Velvet può reperire anche tramite Random Skills, quindi la priorità resta la statistica. Poiché Attack e Arte Attack crescono in modo simile, le Blades che spingono Attack restano in genere le più interessanti." },
+                    { name: "Short Swords", owners: "Rokurou", note: "Le Short Swords sono spesso costruite attorno ad ailment e elementi, quindi il loro valore dipende molto dal tuo stile di gioco. Rokurou apprezza sia Arte Attack sia Focus, ma usa molte Hidden Artes: conviene quindi cercare armi che alzino una di queste due statistiche oltre ad Attack, senza mai sacrificare troppo quest’ultimo." },
+                    { name: "Paper", owners: "Laphicet", note: "Laphicet è prima di tutto un caster. Gran parte del suo danno passa dalle Malak Artes, quindi le Paper migliori sono quelle che alzano Arte Attack oppure riducono i tempi di cast. Per fortuna è anche la direzione seguita da gran parte delle sue armi." },
+                    { name: "Bracelets", owners: "Eizen", note: "Eizen è estremamente flessibile: con Break Soul e set di Artes può sfruttare bene sia Attack sia Arte Attack. Poiché i suoi orientamenti cambiano molto, conviene cercare Bracelets che potenzino con decisione una sola statistica invece di disperdere il valore su troppe direzioni." },
+                    { name: "Guardians", owners: "Magilou", note: "Le Guardians sono un assortimento molto eterogeneo: alcune sono utili, molte meno. Magilou usa quasi solo Malak Artes, ha Attack basso e trae poco vantaggio dalle Hidden Artes offensive; di conseguenza conviene scegliere soprattutto in base alle statistiche, con un occhio di riguardo ad Arte Attack." },
+                    { name: "Spears", owners: "Eleanor", note: "Le Spears ricordano le Short Swords: tante capability da status e contro specifici mostri, con una distribuzione statisticamente però più coerente. Molte spingono Attack più di Arte Attack e questo si adatta bene a Eleanor, che tende naturalmente a valorizzare l’offensiva fisica pur avendo anche Malak Artes." }
+                ]
+            },
+            {
+                id: "accessories",
+                title: "Accessories",
+                icon: "✦",
+                lead: "Gli Accessories sono la fonte primaria di Arte Attack: utili per tutti, ma davvero cruciali per Magilou, Laphicet ed Eizen. Velvet e Rokurou trovano spesso ottime sinergie negli effetti, mentre Eleanor ottiene soprattutto un miglioramento prestazionale più lineare.",
+                categories: [
+                    { name: "Belts", owners: "Velvet", note: "Scegli le Belts in base alle Skills e alle statistiche secondarie. Velvet ha buone Hidden Artes, ma spesso le usa più per le proprietà di controllo che per il puro danno; per questo conviene guardare prima gli Accessory che le danno Arte Attack e utilità davvero impattanti." },
+                    { name: "Talismans", owners: "Rokurou", note: "Velvet può trascurare parte dell’Arte Attack, Rokurou no. Con soltanto otto Hidden Artes, peraltro, i Talismans sono spesso più utili quando offrono capacità da ailment o bonus elementali che interagiscono bene con il suo set difensivo." },
+                    { name: "Bags", owners: "Laphicet", note: "Laphicet è un caster difensivo e la sua Break Soul ne riflette il ruolo. Molte Bags migliorano la capacità di infliggere status o di restare stabile; con poche eccezioni, per lui conviene scegliere l’Accessory in base alle statistiche più che agli effetti di potenziamento situazionale." },
+                    { name: "Pendants", owners: "Eizen", note: "Qui si vede come dovrebbe funzionare il design: quasi ogni Pendant offre statistiche utili, bonus elementali o capability contro nemici “problematici”. Siccome tutti gli Accessories di Eizen alzano Arte Attack — cosa che lui vuole se lo usi da caster — è difficile sbagliare davvero scelta." },
+                    { name: "Earrings", owners: "Magilou", note: "Gli Earrings sono il cuore dell’equipaggiamento di Magilou. Aumentano Arte Attack e quasi sempre questo basta per renderli lo slot più importante; le capability contro specifici nemici contano poco, ma alcune gemme eccellono nettamente anche solo da un punto di vista statistico." },
+                    { name: "Ribbons", owners: "Eleanor", note: "Eleanor non ha Malak Artes come Eizen, ma quasi la stessa fame di statistiche, perché per lei sono basse sia Arte Attack sia capacità di teletrasportarsi in mezzo al caos. Una metà dei suoi Ribbons punta a capability contro mostri specifici, l’altra a status ailment: in genere conviene privilegiare i numeri e la praticità." }
+                ]
+            },
+            {
+                id: "armor",
+                title: "Armor",
+                icon: "🛡️",
+                lead: "L’Armor serve ad aumentare Defense. La maggior parte lo fa in modo diretto, alcuni pezzi lo fanno indirettamente, altri “sbagliano messaggio” e spingono Attack o Focus. Defense è la statistica meno importante del gioco finché non stai usando attacchi rapidi o guardia per mitigare un colpo, ma resta utile se temi molto una categoria di danno o hai problemi a negoziare il lieve ritardo introdotto dal movimento difensivo. Per questo è consigliabile cercare Armor che, oltre a Defense, alzi anche una statistica offensiva. Inoltre la categoria ha un Enhancement Bonus potentissimo — la riduzione della durata dello Stagger — ma si sente davvero solo da +5 in poi, quindi non serve inseguirlo subito.",
+                categories: [
+                    { name: "Men’s Armor", owners: "Rokurou; Laphicet; Eizen", note: "Le Men’s Armor offrono una distribuzione piuttosto ampia: alcune sono puramente difensive, altre molto più interessanti perché combinano tenuta e spinta offensiva. In pratica sono più utili quando non ti limiti a guardare la sola Defense." },
+                    { name: "Women’s Armor", owners: "Velvet; Magilou; Eleanor", note: "Le Women’s Armor seguono la stessa logica: statistiche difensive come base, ma alcuni pezzi emergono perché aiutano davvero l’output o la stabilità di Velvet, Magilou ed Eleanor. Le scelte migliori non sono quasi mai quelle da puro “muro”." }
+                ]
+            },
+            {
+                id: "shoes-family",
+                title: "Shoes, Men’s Shoes e Women’s Shoes",
+                icon: "👣",
+                lead: "Le categorie Shoes governano Focus, quindi hanno tutte un impatto di gameplay molto più grande di quanto sembri. La buona notizia è che, in tutte e tre le categorie, gran parte delle Shoes possiede abilità eccellenti che le rendono desiderabili quasi indipendentemente dai numeri. Inoltre, a differenza dell’Armor, uomini e donne hanno sia le Shoes universali sia i rispettivi modelli specifici, e di norma si trovano tutti nelle stesse aree: se hai poche risorse, potenzia le Shoes universali e falle girare nel party.",
+                categories: [
+                    { name: "Shoes", owners: "All", note: "Le Shoes universali funzionano da infrastruttura comune del gruppo. Spesso bastano loro per tenere alto Focus e raccogliere Master Skills eccellenti senza dover investire subito nei modelli specifici di genere." },
+                    { name: "Men’s Shoes", owners: "Rokurou; Laphicet; Eizen", note: "Le Men’s Shoes alternano opzioni molto difensive ad altre sorprendentemente aggressive. Proprio perché Focus resta centrale, quasi ogni buon paio può accompagnare a lungo il trio maschile se ne attiva bene le Skills." },
+                    { name: "Women’s Shoes", owners: "Velvet; Magilou; Eleanor", note: "Le Women’s Shoes sono una delle categorie con i picchi qualitativi più evidenti: Focus molto alto, Skills spesso fortissime e parecchi pezzi che restano utili fino a tardi. Vale quasi sempre la pena tenerle d’occhio." }
+                ]
+            },
+            {
+                id: "rings",
+                title: "Rings",
+                icon: "💍",
+                lead: "Detto brutalmente, i singoli Rings sono spesso poco importanti. Sono però la fonte principale di Arte Defense e questa statistica è davvero utile; il problema è che, fino agli ultimissimi, quasi tutti i Rings hanno coppie di Skills poco incisive e facilmente replicabili via Random Skills. L’Enhancement Bonus della categoria — ridurre lo Stun dal 9% fino al 90% — è invece assurdo e rende equipaggiare un Ring quasi obbligatorio alle difficoltà alte. Conviene raccoglierli tutti per le Master Skills e per completare il party, ricordando però che è più importante indossare un Ring che inseguirne uno specifico.",
+                categories: [
+                    { name: "Rings", owners: "All", note: "I Rings vanno letti più come slot funzionale che come caccia al pezzo perfetto: i migliori si distinguono soprattutto per quando diventano disponibili, per il picco di Arte Defense e per l’enorme valore del loro Enhancement Bonus." }
+                ]
+            }
+        ]
     });
 
     let spoilerFilterEnabled = true;
@@ -553,6 +743,103 @@
         return "Indicazione";
     }
 
+    function recommendationSlotLabel(slotName) {
+        return slotDisplayLabels[String(slotName || "")] || String(slotName || "Slot");
+    }
+
+    function recommendationSlotCopy(slotName) {
+        return slotGuideCopy[String(slotName || "")] || "";
+    }
+
+    function categoryIcon(categoryName) {
+        return categoryIcons[String(categoryName || "")] || "✦";
+    }
+
+    function slotIcon(slotName) {
+        return slotIcons[String(slotName || "")] || "✦";
+    }
+
+    function recommendationGroupTitle(sourceGroup, slotName) {
+        const entries = Array.isArray(sourceGroup && sourceGroup.entries) ? sourceGroup.entries : [];
+        const first = entries[0] || {};
+        const itemCount = entries.length;
+        const firstCategory = displayCategory(first.category || "");
+        const firstPhaseKey = phaseFromRarity(first.rarity);
+        const firstPhase = displayPhase(firstPhaseKey);
+        const hasOnlyPostgame = entries.length > 1 && entries.every(function(entry) {
+            return phaseFromRarity(entry.rarity) === "Post-game";
+        });
+
+        if (itemCount <= 1) {
+            return `Noteworthy ${firstCategory} · ${String(first.item || "Nota oggetto")}`;
+        }
+        if (hasOnlyPostgame) {
+            return `${firstCategory} (Post-Game)`;
+        }
+        if (slotName === "Shoes") {
+            return `Noteworthy ${firstCategory}`;
+        }
+        return `${firstCategory} · ${firstPhase}`;
+    }
+
+    function renderCategoryGuide() {
+        const target = guide.querySelector("#category-guide-dynamic");
+        if (!target) {
+            return;
+        }
+
+        const families = categorySourceGuide.families.map(function(family) {
+            const categories = family.categories.filter(function(category) {
+                return !spoilerFilterEnabled || splitCharacterList(category.owners).some(function(owner) {
+                    return owner === "All" || isNamedCharacterVisible(owner);
+                });
+            }).map(function(category) {
+                const owners = visibleCharacterNames(category.owners);
+                return `
+                    <article class="category-guide-card" data-spoiler-members="${escapeHtml(category.owners)}">
+                        <div class="category-guide-card-header">
+                            <p class="category-guide-card-icon" aria-hidden="true">${escapeHtml(categoryIcon(category.name))}</p>
+                            <div>
+                                <h5>${escapeHtml(category.name)}</h5>
+                                <p class="category-guide-card-meta">${owners ? `Utilizzatori · ${escapeHtml(owners)}` : "Utilizzatori · Tutti"}</p>
+                            </div>
+                        </div>
+                        <p>${escapeHtml(category.note)}</p>
+                    </article>
+                `;
+            });
+
+            if (!categories.length) {
+                return "";
+            }
+
+            return `
+                <section class="category-family-panel">
+                    <div class="category-family-header">
+                        <p class="category-family-kicker">${escapeHtml(family.icon)} Sezione base</p>
+                        <h4>${escapeHtml(family.title)}</h4>
+                        <p class="category-family-lead">${escapeHtml(family.lead)}</p>
+                    </div>
+                    <div class="category-guide-grid">${categories.join("")}</div>
+                </section>
+            `;
+        }).filter(Boolean);
+
+        target.innerHTML = families.join("");
+    }
+
+    function phaseFromRarity(rarity) {
+        return Number(rarity) >= 19 ? "Post-game" : "Main game";
+    }
+
+    function phaseIcon(phase) {
+        return recommendationPhaseIcons[String(phase || "")] || "✦";
+    }
+
+    function memberTone(member) {
+        return member && member.tone ? ` tone-${member.tone}` : "";
+    }
+
     function renderCharacterCards() {
         const target = guide.querySelector("#character-cards-dynamic");
         if (!target) {
@@ -592,6 +879,7 @@
                         <div class="character-card-footer">
                             <span class="character-card-tip">★ ${escapeHtml(member.tip)}</span>
                             <div class="character-card-actions">
+                                <a class="character-card-action" href="#character-page-${escapeHtml(member.id)}">Pagina personaggio <span aria-hidden="true">→</span></a>
                                 <a class="character-card-action" href="${escapeHtml(catalogHref)}">Vedi tutti gli oggetti <span aria-hidden="true">→</span></a>
                                 <a class="character-card-action" href="${aiHref}">Preset AI <span aria-hidden="true">→</span></a>
                             </div>
@@ -789,102 +1077,272 @@
             return;
         }
 
-        const entries = Array.isArray(data && data.recommended_equipment) ? data.recommended_equipment : [];
-        const itemByName = new Map((Array.isArray(data && data.items) ? data.items : []).map(function(item) {
-            return [normalizeText(item.name), item];
-        }));
-        const slotOrder = [
-            { name: "Weapon", icon: "⚔", description: "Weapon" },
-            { name: "Accessory", icon: "✦", description: "Accessory" },
-            { name: "Armor", icon: "⛨", description: "Armor" },
-            { name: "Rings", icon: "◈", description: "Rings" },
-            { name: "Shoes", icon: "⌁", description: "Shoes" },
-        ];
-        const cards = visibleMembers().map(function(group) {
-            const groupEntries = entries.filter(function(entry) {
-                const item = itemByName.get(normalizeText(entry.item));
-                return entry.character === group.name && item && itemIsVisible(item);
-            });
-
-            if (!groupEntries.length) {
-                return "";
-            }
-
-            const slotSections = slotOrder.map(function(slot) {
-                const slotEntries = groupEntries.filter(function(entry) {
-                    return entry.slot === slot.name;
-                }).sort(function(a, b) {
-                    return (Number(a.order) || 0) - (Number(b.order) || 0) || String(a.item).localeCompare(String(b.item));
-                });
-
-                if (!slotEntries.length) {
-                    return "";
-                }
-
-                const sourceGroups = [];
-                const groupByKey = new Map();
-                slotEntries.forEach(function(entry) {
-                    const key = String(entry.source_note_group || normalizeText(entry.item));
-                    let sourceGroup = groupByKey.get(key);
-                    if (!sourceGroup) {
-                        sourceGroup = { entries: [], sourceNote: "" };
-                        groupByKey.set(key, sourceGroup);
-                        sourceGroups.push(sourceGroup);
-                    }
-                    sourceGroup.entries.push(entry);
-                    if (!sourceGroup.sourceNote && String(entry.source_note || "").trim()) {
-                        sourceGroup.sourceNote = String(entry.source_note).trim();
-                    }
-                });
-
-                return `
-                    <section class="recommendation-slot" data-recommendation-slot="${escapeHtml(slot.name)}">
-                        <h5 class="recommendation-slot-heading"><span class="recommendation-slot-icon" aria-hidden="true">${slot.icon}</span>${escapeHtml(slot.description)}</h5>
-                        <ol class="recommendation-list">
-                            ${sourceGroups.map(function(sourceGroup) {
-                                const itemsMarkup = sourceGroup.entries.map(function(entry) {
-                                    const item = itemByName.get(normalizeText(entry.item));
-                                    const href = item ? `#${itemId(item)}` : "#catalogo";
-                                    const category = displayCategory(entry.category || (item && item.category) || "Category");
-                                    const rarity = entry.rarity || (item && item.rarity) || "—";
-                                    return `
-                                        <li class="recommendation-item">
-                                            <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
-                                            <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
-                                            <p class="recommendation-meta"><span class="recommendation-category">${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span></p>
-                                        </li>
-                                    `;
-                                }).join("");
-                                const sourceNoteMarkup = sourceGroup.sourceNote ? `
-                                    <li class="recommendation-source-note">
-                                        <p class="recommendation-source-label">Nota della guida</p>
-                                        <p>${escapeHtml(sourceGroup.sourceNote)}</p>
-                                    </li>
-                                ` : "";
-                                return `${itemsMarkup}${sourceNoteMarkup}`;
-                            }).join("")}
-                        </ol>
-                    </section>
-                `;
-            }).filter(Boolean);
-
-            return `
-                <article class="recommendation-card" data-spoiler-stage="${escapeHtml(group.stage)}">
-                    <header>
-                        <p class="recommendation-kicker">Character equipment path</p>
-                        <h4>${escapeHtml(group.name)}</h4>
-                    </header>
-                    <div class="recommendation-slot-list">${slotSections.join("")}</div>
-                </article>
-            `;
-        }).filter(Boolean);
-
-        if (!cards.length) {
-            target.innerHTML = '<p class="muted">Le raccomandazioni dei personaggi non ancora incontrati restano nascoste dal filtro anti-spoiler.</p>';
+        if (!data || data.complete !== true || !Array.isArray(data.items) || !data.items.length) {
+            target.innerHTML = '<p class="muted">Le pagine personaggio saranno disponibili appena il catalogo locale completo viene caricato.</p>';
             return;
         }
 
-        target.innerHTML = `<div class="recommendation-grid">${cards.join("")}</div>`;
+        const entries = Array.isArray(data.recommended_equipment) ? data.recommended_equipment.filter(function(entry) {
+            return !spoilerFilterEnabled || isNamedCharacterVisible(entry.character);
+        }) : [];
+        const itemByName = new Map(data.items.map(function(item) {
+            return [normalizeText(item.name), item];
+        }));
+        const growthByName = new Map((Array.isArray(data.character_growth) ? data.character_growth : []).map(function(entry) {
+            return [String(entry.name || ""), entry];
+        }));
+
+        function growthMarkup(member) {
+            const growth = growthByName.get(member.name);
+            if (!growth || !Array.isArray(growth.level_200) || growth.level_200.length < 6) {
+                return '<p class="muted">Curva statistiche non disponibile in questa copia locale.</p>';
+            }
+
+            const labels = ["Atk", "Arte Attack", "Def", "Arte Defense", "Focus"];
+            const values = growth.level_200.slice(1, 6).map(function(value) { return Number(value) || 0; });
+            const ranking = labels.map(function(label, index) {
+                return { label: label, value: values[index] };
+            }).sort(function(a, b) {
+                return b.value - a.value;
+            });
+            const strongest = ranking.slice(0, 3).map(function(entry) {
+                return `<span class="guide-stat-pill"><strong>${escapeHtml(entry.label)}</strong><small>${escapeHtml(entry.value.toFixed(1))} a Lv 200</small></span>`;
+            }).join("");
+            const weakest = ranking[ranking.length - 1];
+
+            return `
+                <div class="guide-stat-pill-row">${strongest}</div>
+                <p class="guide-mini-note">Statistica da coprire con l'equip: <strong>${escapeHtml(weakest.label)}</strong> (${escapeHtml(weakest.value.toFixed(1))} a Lv 200).</p>
+            `;
+        }
+
+        function recommendationTier(sourceGroup, slotGroups, index) {
+            const rarities = sourceGroup.entries.map(function(entry) { return Number(entry.rarity) || 0; });
+            const maxRarity = Math.max.apply(null, rarities);
+            const hasPostgame = sourceGroup.entries.some(function(entry) {
+                return phaseFromRarity(entry.rarity) === "Post-game";
+            });
+
+            if (slotGroups.length === 1) {
+                if (hasPostgame || maxRarity >= 19) {
+                    return { className: "bis", label: "Best in slot", icon: "👑" };
+                }
+                return { className: "strong", label: "Really recommended", icon: "✨" };
+            }
+            if (hasPostgame || maxRarity >= 19 || (index === slotGroups.length - 1 && maxRarity >= 17)) {
+                return { className: "bis", label: "Best in slot", icon: "👑" };
+            }
+            if (maxRarity >= 15 || index > 0) {
+                return { className: "strong", label: "Really recommended", icon: "✨" };
+            }
+            return { className: "suggested", label: "Suggested", icon: "📍" };
+        }
+
+        function renderAiDigest(member) {
+            const details = characterGuideDetails[member.id];
+            if (!details || !details.ai) {
+                return '<p class="muted">Riepilogo AI non disponibile.</p>';
+            }
+            const ai = details.ai;
+            const aiHref = `./ai.html#ai-${member.id}`;
+
+            if (Array.isArray(ai.variants) && ai.variants.length) {
+                return `
+                    <div class="character-guide-ai-copy">
+                        <p>${escapeHtml(ai.summary)}</p>
+                    </div>
+                    <div class="character-guide-ai-variants">${ai.variants.map(function(variant) {
+                        return `
+                            <article class="character-guide-ai-variant">
+                                <div class="character-guide-ai-variant-head">
+                                    <h6>${escapeHtml(variant.name)}</h6>
+                                    <span>${escapeHtml(variant.availability)}</span>
+                                </div>
+                                <p class="character-guide-ai-strategy">${variant.strategy.map(function(step) {
+                                    return `<span>${escapeHtml(step)}</span>`;
+                                }).join("")}</p>
+                                <p><strong>${escapeHtml(variant.mode)}:</strong> ${escapeHtml(variant.skills.join(" · "))}</p>
+                                <p class="guide-mini-note">${escapeHtml(variant.footnote)}</p>
+                            </article>
+                        `;
+                    }).join("")}</div>
+                    <a class="character-guide-inline-link" href="${escapeHtml(aiHref)}">Apri il preset AI completo →</a>
+                `;
+            }
+
+            return `
+                <div class="character-guide-ai-copy">
+                    <p>${escapeHtml(ai.summary)}</p>
+                    <p class="character-guide-ai-strategy">${ai.strategy.map(function(step) {
+                        return `<span>${escapeHtml(step)}</span>`;
+                    }).join("")}</p>
+                    <p><strong>${escapeHtml(ai.mode)}:</strong> ${escapeHtml(ai.skills.join(" · "))}</p>
+                    <p class="guide-mini-note">${escapeHtml(ai.footnote)}</p>
+                    <a class="character-guide-inline-link" href="${escapeHtml(aiHref)}">Apri il preset AI completo →</a>
+                </div>
+            `;
+        }
+
+        function renderCharacterSlot(member, slotName, slotEntries) {
+            const sourceGroups = [];
+            const groupByKey = new Map();
+            slotEntries.forEach(function(entry) {
+                const key = String(entry.source_note_group || normalizeText(entry.item));
+                let sourceGroup = groupByKey.get(key);
+                if (!sourceGroup) {
+                    sourceGroup = { key: key, entries: [], sourceNote: "" };
+                    groupByKey.set(key, sourceGroup);
+                    sourceGroups.push(sourceGroup);
+                }
+                sourceGroup.entries.push(entry);
+                if (!sourceGroup.sourceNote && String(entry.source_note || "").trim()) {
+                    sourceGroup.sourceNote = String(entry.source_note).trim();
+                }
+            });
+
+            const cards = sourceGroups.map(function(sourceGroup, index) {
+                const tier = recommendationTier(sourceGroup, sourceGroups, index);
+                const itemsMarkup = sourceGroup.entries.map(function(entry) {
+                    const item = itemByName.get(normalizeText(entry.item));
+                    const href = item ? `#${itemId(item)}` : "#catalogo";
+                    const category = displayCategory(entry.category || (item && item.category) || "Category");
+                    const rarity = entry.rarity || (item && item.rarity) || "—";
+                    const phase = phaseFromRarity(rarity);
+                    return `
+                        <li class="character-guide-pick-item">
+                            <p class="character-guide-pick-checkpoint">${escapeHtml(entry.checkpoint)}</p>
+                            <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
+                            <p class="character-guide-pick-meta"><span><span aria-hidden="true">${escapeHtml(categoryIcon(category))}</span> ${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span><span>${escapeHtml(phaseIcon(phase))} ${escapeHtml(displayPhase(phase))}</span></p>
+                        </li>
+                    `;
+                }).join("");
+                const sourceNoteMarkup = sourceGroup.sourceNote ? `
+                    <div class="character-guide-pick-note">
+                        <p class="character-guide-pick-note-label">Nota della guida</p>
+                        <h6>${escapeHtml(recommendationGroupTitle(sourceGroup, slotName))}</h6>
+                        <p>${escapeHtml(sourceGroup.sourceNote)}</p>
+                    </div>
+                ` : "";
+
+                return `
+                    <article class="character-guide-pick character-guide-pick-${escapeHtml(tier.className)}">
+                        <div class="character-guide-pick-badge">${escapeHtml(tier.icon)} ${escapeHtml(tier.label)}</div>
+                        <ol class="character-guide-pick-list">${itemsMarkup}</ol>
+                        ${sourceNoteMarkup}
+                    </article>
+                `;
+            }).join("");
+
+            return `
+                <section class="character-guide-slot-panel" data-recommendation-slot="${escapeHtml(slotName)}">
+                    <div class="character-guide-slot-heading">
+                        <h5><span class="recommendation-slot-icon" aria-hidden="true">${escapeHtml(slotIcon(slotName))}</span>${escapeHtml(recommendationSlotLabel(slotName))}</h5>
+                        <p>${escapeHtml(recommendationSlotCopy(slotName))}</p>
+                    </div>
+                    <div class="character-guide-pick-grid">${cards}</div>
+                </section>
+            `;
+        }
+
+        const visible = visibleMembers().map(function(member) {
+            const memberEntries = entries.filter(function(entry) {
+                return entry.character === member.name;
+            }).sort(function(a, b) {
+                return (Number(a.order) || 0) - (Number(b.order) || 0);
+            });
+
+            if (!memberEntries.length) {
+                return "";
+            }
+
+            const bySlot = new Map();
+            memberEntries.forEach(function(entry) {
+                const slotName = String(entry.slot || "Other");
+                if (!bySlot.has(slotName)) {
+                    bySlot.set(slotName, []);
+                }
+                bySlot.get(slotName).push(entry);
+            });
+
+            const slotOrder = ["Weapon", "Accessory", "Armor", "Rings", "Shoes"];
+            const slotSections = slotOrder.filter(function(slotName) {
+                return bySlot.has(slotName);
+            }).map(function(slotName) {
+                return renderCharacterSlot(member, slotName, bySlot.get(slotName));
+            }).join("");
+
+            const categoryChips = member.categories.map(function(category) {
+                const href = catalogueLink(member, category);
+                return `<a href="${escapeHtml(href)}" data-catalogue-link>${escapeHtml(categoryIcon(category))} ${escapeHtml(displayCategory(category))}</a>`;
+            }).join("");
+            const details = characterGuideDetails[member.id] || {};
+            const catalogHref = catalogueLink(member, "");
+            const aiHref = `./ai.html#ai-${member.id}`;
+
+            return `
+                <section id="character-page-${escapeHtml(member.id)}" class="character-guide-section tone-${escapeHtml(member.tone)}" data-spoiler-stage="${escapeHtml(member.stage)}">
+                    <header class="character-guide-header">
+                        <div class="character-guide-header-main">
+                            <div class="recommendation-card-portrait character-guide-portrait">
+                                <img src="${escapeHtml(member.image)}" alt="Ritratto di ${escapeHtml(member.name)}" loading="lazy" referrerpolicy="no-referrer">
+                            </div>
+                            <div>
+                                <p class="character-guide-kicker">Character page · guida pratica</p>
+                                <h4>${escapeHtml(member.name)}</h4>
+                                <p class="recommendation-role">${escapeHtml(member.role)}</p>
+                                <p class="character-guide-summary">${escapeHtml(member.battleAdvice)}</p>
+                            </div>
+                        </div>
+                        <div class="character-guide-actions">
+                            <a class="character-guide-action" href="${escapeHtml(catalogHref)}">Tutti gli oggetti</a>
+                            <a class="character-guide-action" href="${escapeHtml(aiHref)}">Preset AI completo</a>
+                        </div>
+                    </header>
+                    <div class="character-guide-overview-grid">
+                        <article class="character-guide-overview-card">
+                            <p class="character-guide-overview-kicker">Focus equip</p>
+                            <h5>Che cosa cercare</h5>
+                            <p>${escapeHtml(member.equipmentAdvice)}</p>
+                            <div class="character-guide-chip-row">${categoryChips}</div>
+                        </article>
+                        <article class="character-guide-overview-card">
+                            <p class="character-guide-overview-kicker">Preset AI</p>
+                            <h5>Riepilogo rapido</h5>
+                            ${renderAiDigest(member)}
+                        </article>
+                        <article class="character-guide-overview-card">
+                            <p class="character-guide-overview-kicker">Title consigliato</p>
+                            <h5>Scelta sicura</h5>
+                            <p>${escapeHtml(details.titleAdvice || "Incapacitator fino a Rings +8; poi scegli in base all'obiettivo del personaggio.")}</p>
+                            <p class="guide-mini-note"><strong>Promemoria:</strong> il valore reale dei Rings è anche il loro Enhancement Bonus contro lo Stun.</p>
+                        </article>
+                        <article class="character-guide-overview-card">
+                            <p class="character-guide-overview-kicker">Curva statistiche</p>
+                            <h5>Talento naturale</h5>
+                            ${growthMarkup(member)}
+                        </article>
+                    </div>
+                    <div class="character-guide-slot-grid">${slotSections}</div>
+                </section>
+            `;
+        }).filter(Boolean);
+
+        if (!visible.length) {
+            target.innerHTML = '<p class="muted">Le pagine personaggio restano nascoste finché il filtro anti-spoiler non rende visibili gli alleati interessati.</p>';
+            return;
+        }
+
+        const jumpLinks = visibleMembers().map(function(member) {
+            return `<a href="#character-page-${escapeHtml(member.id)}">${escapeHtml(member.name)}</a>`;
+        }).join("");
+
+        target.innerHTML = `
+            <div class="character-guide-jumpbar">
+                <p><strong>Vai al personaggio:</strong></p>
+                <div class="character-guide-jump-links">${jumpLinks}</div>
+            </div>
+            <div class="character-guide-pages">${visible.join("")}</div>
+        `;
     }
 
     function renderReferenceCards(data) {
@@ -894,7 +1352,7 @@
         }
 
         if (!data || data.complete !== true || !Array.isArray(data.items)) {
-            target.innerHTML = "<p class=\"muted\">Le schede rapide saranno disponibili dopo la creazione del catalogo locale completo.</p>";
+            target.innerHTML = '<p class="muted">Le schede rapide saranno disponibili dopo la creazione del catalogo locale completo.</p>';
             return;
         }
 
@@ -906,24 +1364,45 @@
         }));
 
         if (!entries.length) {
-            target.innerHTML = "<p class=\"muted\">Le schede rapide degli alleati non ancora sbloccati sono nascoste dal filtro anti-spoiler.</p>";
+            target.innerHTML = '<p class="muted">Le schede rapide degli alleati non ancora sbloccati sono nascoste dal filtro anti-spoiler.</p>';
             return;
         }
 
-        target.innerHTML = entries.map(function(entry) {
-            const item = itemByKey.get(`${entry.category_id}|${entry.rarity}|${normalizeText(entry.name)}`);
-            const href = item ? `#${itemId(item)}` : "#catalogo";
-            const title = item ? item.name : entry.name;
-            const phase = displayPhase(entry.phase || (item && item.phase) || "Progressione");
-            const category = displayCategory(entry.category || (item && item.category) || "Categoria");
-            const character = visibleCharacterNames(entry.character || (item && item.character) || "");
+        const phaseOrder = ["Main game", "Post-game"];
+        target.innerHTML = phaseOrder.map(function(phase) {
+            const phaseEntries = entries.filter(function(entry) {
+                return entry.phase === phase;
+            });
+
+            if (!phaseEntries.length) {
+                return "";
+            }
+
+            const cards = phaseEntries.map(function(entry) {
+                const item = itemByKey.get(`${entry.category_id}|${entry.rarity}|${normalizeText(entry.name)}`);
+                const href = item ? `#${itemId(item)}` : "#catalogo";
+                const title = item ? item.name : entry.name;
+                const category = displayCategory(entry.category || (item && item.category) || "Categoria");
+                const character = visibleCharacterNames(entry.character || (item && item.character) || "");
+
+                return `
+                    <article class="noteworthy-card">
+                        <p class="noteworthy-kicker">${escapeHtml(categoryIcon(category))} Noteworthy ${escapeHtml(category)}</p>
+                        <h4><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></h4>
+                        <p class="noteworthy-meta">${character ? `${escapeHtml(character)} · ` : ""}Rarità ${escapeHtml(entry.rarity || "—")}</p>
+                        <p>${escapeHtml(displayReferenceReason(entry.reason))}</p>
+                    </article>
+                `;
+            }).join("");
 
             return `
-                <article class="noteworthy-card">
-                    <p class="noteworthy-meta">${escapeHtml(category)}${character ? ` · ${escapeHtml(character)}` : ""} · ${escapeHtml(phase)} · Rarità ${escapeHtml(entry.rarity || "—")}</p>
-                    <h4><a href="${escapeHtml(href)}">${escapeHtml(title)}</a></h4>
-                    <p>${escapeHtml(displayReferenceReason(entry.reason))}</p>
-                </article>
+                <section class="reference-phase-group">
+                    <div class="reference-phase-heading">
+                        <p class="reference-phase-kicker">${escapeHtml(phaseIcon(phase))} Fase della guida</p>
+                        <h4>${escapeHtml(displayPhase(phase))}</h4>
+                    </div>
+                    <div class="noteworthy-list">${cards}</div>
+                </section>
             `;
         }).join("");
     }
@@ -1181,6 +1660,7 @@
             .then(function(data) {
                 catalogueData = data;
                 renderGrowthTable(data);
+                renderCategoryGuide();
                 renderCatalogue(data);
                 renderReferenceCards(data);
                 renderRecommendedEquipment(data);
