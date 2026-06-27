@@ -432,28 +432,25 @@
      */
     const bestInSlotByCharacterSlot = Object.freeze({
         "velvet::Weapon": "Unnamed Blade",
-        "velvet::Accessory": "Gloire des Mousseux Sash",
+        "velvet::Accessory": "Helmut Schmidt Sash",
         "velvet::Armor": "Uprising Veil",
         "velvet::Rings": "Unnamed Ring",
         "velvet::Shoes": "Queen Ellis Heels",
 
         "rokurou::Weapon": "Unnamed Daggers",
         "rokurou::Accessory": "Stoic Idol",
-        "rokurou::Armor": "Summertime Waistcoat",
         "rokurou::Rings": "Unnamed Ring",
         "rokurou::Shoes": "Turbulent Shoes",
 
         "laphicet::Weapon": "Lost Parlance",
         "laphicet::Accessory": "Galactic Satchel",
-        "laphicet::Armor": "Reflex Waistcoat",
         "laphicet::Rings": "Unnamed Ring",
         "laphicet::Shoes": "Turbulent Shoes",
 
         "eizen::Weapon": "Unnamed Bracelet",
-        "eizen::Accessory": "Gnome's Force",
-        "eizen::Armor": "Summertime Waistcoat",
+        "eizen::Accessory": "Sylph's Invitation",
         "eizen::Rings": "Unnamed Ring",
-        "eizen::Shoes": "Kaiser Road",
+        "eizen::Shoes": "Turbulent Shoes",
 
         "magilou::Weapon": "Doppelganger",
         "magilou::Accessory": "Lucifer's Pride Earrings",
@@ -461,35 +458,62 @@
         "magilou::Rings": "Unnamed Ring",
         "magilou::Shoes": "Grounded Shoes",
 
-        "eleanor::Weapon": "Guandao",
+        "eleanor::Weapon": "Nameless Spear",
         "eleanor::Accessory": "Unnamed Ribbon",
         "eleanor::Armor": "Uprising Veil",
         "eleanor::Rings": "Unnamed Ring",
         "eleanor::Shoes": "Queen Ellis Heels"
     });
 
+    /*
+     * These three Men's Armor routes deliberately have no general crown.  The source
+     * describes three valid endpoints with distinct jobs, so the dossier shows each
+     * one as a Recommended choice instead of inventing a single Best in slot.
+     */
+    const noClearBestInSlotRoutes = Object.freeze(new Set([
+        "rokurou::Armor",
+        "laphicet::Armor",
+        "eizen::Armor"
+    ]));
+
     /* Character-specific source judgements override the shared baseline when needed. */
     const sourceCalloutByCharacterItem = Object.freeze({
+        "velvet::Gloire des Mousseux Sash": { key: "recommended", label: "Recommended · raw Arte Attack", icon: "✓" },
+        "velvet::Helmut Schmidt Sash": { key: "recommended", label: "Recommended · Focus + Break Soul", icon: "✓" },
         "velvet::Uprising Veil": { key: "build", label: "Velvet post-game carry", icon: "✦" },
-        "magilou::Uprising Veil": { key: "caution", label: "Low priority for Magilou", icon: "◌" },
-        "rokurou::Summertime Waistcoat": { key: "final", label: "Late-game standout", icon: "★" },
-        "eizen::Summertime Waistcoat": { key: "final", label: "Late-game standout", icon: "★" },
-        "laphicet::Summertime Waistcoat": { key: "caution", label: "Low priority for Laphicet", icon: "◌" },
-        "laphicet::Topaz Waistcoat": { key: "offense", label: "Late-game offensive route", icon: "🔥" },
-        "eizen::Topaz Waistcoat": { key: "offense", label: "Late-game offensive route", icon: "🔥" },
+
+        "rokurou::Summertime Waistcoat": { key: "recommended", label: "Recommended · pure Attack", icon: "✓" },
+        "rokurou::Mumbane": { key: "recommended", label: "Recommended · Focus", icon: "✓" },
+        "rokurou::Unnamed Vestments": { key: "recommended", label: "Recommended · pure defense", icon: "✓" },
         "rokurou::Topaz Waistcoat": { key: "caution", label: "Easy but secondary option", icon: "◌" },
-        "laphicet::Reflex Waistcoat": { key: "final", label: "High-stat reflection route", icon: "★" },
-        "eizen::Reflex Waistcoat": { key: "build", label: "Situational reflection", icon: "✦" },
         "rokurou::Reflex Waistcoat": { key: "defense", label: "Defensive reflection", icon: "🛡️" },
-        "velvet::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
+
+        "laphicet::Summertime Waistcoat": { key: "caution", label: "Low priority for Laphicet", icon: "◌" },
+        "laphicet::Topaz Waistcoat": { key: "recommended", label: "Recommended · pure damage", icon: "✓" },
+        "laphicet::Reflex Waistcoat": { key: "recommended", label: "Recommended · defensive alternative", icon: "✓" },
+        "laphicet::Unnamed Vestments": { key: "recommended", label: "Recommended · pure defense", icon: "✓" },
+
+        "eizen::Gnome's Force": { key: "recommended", label: "Recommended · best campaign option", icon: "✓" },
+        "eizen::Sylph's Invitation": { key: "recommended", label: "Recommended · post-game offense", icon: "✓" },
+        "eizen::Summertime Waistcoat": { key: "recommended", label: "Recommended · pure Attack", icon: "✓" },
+        "eizen::Mumbane": { key: "recommended", label: "Recommended · Focus", icon: "✓" },
+        "eizen::Unnamed Vestments": { key: "recommended", label: "Recommended · pure defense", icon: "✓" },
+        "eizen::Topaz Waistcoat": { key: "offense", label: "Late-game offensive route", icon: "🔥" },
+        "eizen::Reflex Waistcoat": { key: "build", label: "Situational reflection", icon: "✦" },
+        "eizen::Kaiser Road": { key: "recommended", label: "Recommended · best campaign option", icon: "✓" },
+
+        "magilou::Uprising Veil": { key: "caution", label: "Low priority for Magilou", icon: "◌" },
+        "magilou::Queen Ellis Heels": { key: "focus", label: "Focus crown route", icon: "◈" },
+
+        "eleanor::Guandao": { key: "recommended", label: "Recommended · best campaign option", icon: "✓" },
         "eleanor::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
-        "magilou::Queen Ellis Heels": { key: "focus", label: "Focus crown route", icon: "◈" }
+        "velvet::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" }
     });
 
 
     function sourceCallout(member, entry) {
         const slotKey = `${member.id}::${String(entry.slot || "")}`;
-        if (bestInSlotByCharacterSlot[slotKey] === String(entry.item || "")) {
+        if (!noClearBestInSlotRoutes.has(slotKey) && bestInSlotByCharacterSlot[slotKey] === String(entry.item || "")) {
             return { key: "bis", label: "Best in slot", icon: "👑" };
         }
 

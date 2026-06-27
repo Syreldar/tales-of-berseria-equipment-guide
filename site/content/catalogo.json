@@ -4519,9 +4519,9 @@
       "master_skill": "All damage taken reduced by 45",
       "enhancement_bonus": "Damage over 1,000 is reduced by 50%",
       "main_ingredient": "Void Scrap",
-      "rare_drop": "Unnamed Vestments",
+      "rare_drop": "Orc Gorilla",
       "source_kind": "rare_drop",
-      "acquisition": "Rare drop — Unnamed Vestments"
+      "acquisition": "Drop raro — Orc Gorilla, Heavenly Steppes, 4ª Camera."
     },
     {
       "category_id": "mens-shoes",
@@ -10944,7 +10944,7 @@
     "expected_categories": 18,
     "expected_items": 350,
     "expected_category_phase_pairs": 36,
-    "identity_sha256": "87dc261581254285ebd25d736961b8e0258559813349fc90e75251deebb692b0"
+    "identity_sha256": "7552f5919759c076f1423dd9cbb5fa723fc01213ea35c2bc87117e3e09235a06"
   },
   "character_growth": [
     {

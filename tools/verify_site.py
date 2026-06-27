@@ -336,8 +336,18 @@ def validate_guide(guide: Path) -> list[str]:
             fail(message)
     if '"Force Ring": { key: "bis"' in dossier or '"Barrier Ring": { key: "bis"' in dossier:
         fail("Force Ring and Barrier Ring must remain Best early, not Best in slot")
-    if '"eizen::Weapon": "Unnamed Bracelet"' not in dossier:
-        fail("Unnamed Bracelet must be Eizen's source-led Best in slot Weapon")
+    expected_explicit_bis = {
+        '"eizen::Weapon": "Unnamed Bracelet"': "Unnamed Bracelet must be Eizen's source-led Best in slot Weapon",
+        '"velvet::Accessory": "Helmut Schmidt Sash"': "Helmut Schmidt Sash must be Velvet's Best in slot Accessory",
+        "\"eizen::Accessory\": \"Sylph's Invitation\"": "Sylph's Invitation must be Eizen's Best in slot Accessory",
+        '"eizen::Shoes": "Turbulent Shoes"': "Turbulent Shoes must be Eizen's Best in slot Shoes",
+        '"eleanor::Weapon": "Nameless Spear"': "Nameless Spear must be Eleanor's Best in slot Weapon",
+    }
+    for token, message in expected_explicit_bis.items():
+        if token not in dossier:
+            fail(message)
+    if '"Fluoric Boots": { key: "bis"' in dossier or '::Shoes": "Fluoric Boots"' in dossier:
+        fail("Fluoric Boots must remain an early-game option, never Best in slot")
 
     roadmap_match = re.search(r'const sourceCalloutByItem = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
     if not roadmap_match:
@@ -354,8 +364,14 @@ def validate_guide(guide: Path) -> list[str]:
     if not best_map_match:
         fail("Character dossier is missing the per-character/logical-slot Best in slot selection map")
     best_by_character_slot = dict(re.findall(r'^\s*"([^"]+)": "([^"]+)",?$', best_map_match.group("body"), flags=re.MULTILINE))
-    if len(best_by_character_slot) != 30:
-        fail(f"Best in slot map must cover all 30 character/logical-slot routes, found {len(best_by_character_slot)}")
+    no_clear_bis_routes = {
+        "rokurou::Armor",
+        "laphicet::Armor",
+        "eizen::Armor",
+    }
+    expected_bis_count = 30 - len(no_clear_bis_routes)
+    if len(best_by_character_slot) != expected_bis_count:
+        fail(f"Best in slot map must cover every clear character/logical-slot route, found {len(best_by_character_slot)} instead of {expected_bis_count}")
 
     expected_slots: dict[tuple[str, str], set[str]] = {}
     for entry in catalogue.get("recommended_equipment", []):
@@ -370,9 +386,14 @@ def validate_guide(guide: Path) -> list[str]:
 
     missing_bis: list[str] = []
     invalid_bis: list[str] = []
+    unexpected_bis: list[str] = []
     for (character, slot), item_names in expected_slots.items():
         key = f"{character.lower()}::{slot}"
         selected = best_by_character_slot.get(key)
+        if key in no_clear_bis_routes:
+            if selected:
+                unexpected_bis.append(key)
+            continue
         if not selected:
             missing_bis.append(key)
             continue
@@ -380,7 +401,9 @@ def validate_guide(guide: Path) -> list[str]:
             invalid_bis.append(f"{key} -> {selected}")
 
     if missing_bis:
-        fail(f"Every character/logical-slot route must have exactly one Best in slot selection: {missing_bis}")
+        fail(f"Every clear character/logical-slot route must have exactly one Best in slot selection: {missing_bis}")
+    if unexpected_bis:
+        fail(f"Routes with no clear general Best in slot must not receive a crown: {unexpected_bis}")
     if invalid_bis:
         fail(f"Best in slot selections must refer to a recommended item in that logical slot: {invalid_bis}")
 
@@ -405,10 +428,21 @@ def validate_guide(guide: Path) -> list[str]:
         fail("Character-specific roadmap overrides must not create additional Best in slot badges")
     if 'key: "bis"' in roadmap_match.group("body"):
         fail("Shared roadmap callouts must not create additional Best in slot badges")
-    if 'bestInSlotByCharacterSlot[slotKey]' not in dossier:
-        fail("Best in slot badges must be resolved from the logical slot map")
+    if 'bestInSlotByCharacterSlot[slotKey]' not in dossier or 'noClearBestInSlotRoutes.has(slotKey)' not in dossier:
+        fail("Best in slot badges must be resolved from the logical slot map with explicit no-crown exceptions")
     if 'dossier-roadmap-legend' not in dossier or 'dossier-pick-item-theme-' not in dossier:
         fail("Character dossier must expose the roadmap colour legend and semantic item themes")
+    required_recommended_labels = (
+        'Recommended · pure Attack',
+        'Recommended · Focus',
+        'Recommended · pure defense',
+        'Recommended · pure damage',
+        'Recommended · defensive alternative',
+        'Recommended · best campaign option',
+    )
+    for label in required_recommended_labels:
+        if label not in dossier:
+            fail(f"Character dossier is missing an explicit recommended-route label: {label}")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
     if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:
@@ -480,6 +514,9 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
         fail("Catalogue must contain exactly 18 categories")
     if not isinstance(items, list) or len(items) != EXPECTED_ITEM_COUNT:
         fail("Catalogue must contain exactly 350 items")
+    unnamed_vestments = next((item for item in items if item.get("name") == "Unnamed Vestments"), None)
+    if not unnamed_vestments or unnamed_vestments.get("rare_drop") != "Orc Gorilla" or unnamed_vestments.get("acquisition") != "Drop raro — Orc Gorilla, Heavenly Steppes, 4ª Camera.":
+        fail("Unnamed Vestments must show the verified Orc Gorilla drop in Heavenly Steppes, 4th Chamber")
     if not isinstance(cards, list) or len(cards) != EXPECTED_PHASE_CARD_COUNT:
         fail("Catalogue must contain exactly 36 category/phase reference cards")
     if not isinstance(growth, list) or len(growth) != 6:

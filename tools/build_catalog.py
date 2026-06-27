@@ -883,6 +883,7 @@ VERIFIED_ACQUISITION_OVERRIDES: dict[str, dict[str, str]] = {
     "Natural Waistcoat": {"source_kind": "starting_equipment", "acquisition": "Equipaggiamento iniziale di Rokurou; anche acquistabile al negozio di Beardsley."},
     "Thorny Waistcoat": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Reneed."},
     "Summertime Waistcoat": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Meirchio."},
+    "Unnamed Vestments": {"source_kind": "rare_drop", "rare_drop": "Orc Gorilla", "acquisition": "Drop raro — Orc Gorilla, Heavenly Steppes, 4ª Camera."},
     "Battle Garment": {"source_kind": "starting_equipment", "acquisition": "Equipaggiamento iniziale di Velvet; anche acquistabile al negozio di Beardsley."},
     "Garish Pink Shirt": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Burnack Plateau; anche acquistabile al negozio di Yseult."},
 

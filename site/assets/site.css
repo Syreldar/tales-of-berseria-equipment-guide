@@ -3426,6 +3426,7 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
 .dossier-pick-group .dossier-pick-item-theme-story { --roadmap-accent: #8a93a3; }
 .dossier-pick-group .dossier-pick-item-theme-early,
 .dossier-pick-group .dossier-pick-item-theme-best-early { --roadmap-accent: #75af70; }
+.dossier-pick-group .dossier-pick-item-theme-recommended { --roadmap-accent: #4aa58b; }
 .dossier-pick-group .dossier-pick-item-theme-mid { --roadmap-accent: #7f95c9; }
 .dossier-pick-group .dossier-pick-item-theme-late,
 .dossier-pick-group .dossier-pick-item-theme-final { --roadmap-accent: #d49a51; }
@@ -3479,6 +3480,12 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
 .dossier-item-callout-best-early {
     border-color: color-mix(in srgb, #75af70 72%, var(--line));
     background: color-mix(in srgb, #75af70 18%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-recommended,
+.dossier-item-callout-recommended {
+    border-color: color-mix(in srgb, #4aa58b 72%, var(--line));
+    background: color-mix(in srgb, #4aa58b 18%, var(--surface));
 }
 
 .dossier-roadmap-legend-chip-mastery,
