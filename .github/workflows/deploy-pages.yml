@@ -57,12 +57,13 @@ jobs:
           set -euo pipefail
           python tools/build_catalog.py --output site/content/catalogo.json
 
-      - name: Validate published content
+      - name: Validate published content and repository Node usage
         run: |
           set -euo pipefail
           python tools/verify_site.py --site site
           node --check site/assets/site.js
           node --check site/assets/ai.js
+          node tools/check_node_runtime.mjs
 
       - name: Commit the initial catalogue snapshot
         if: steps.snapshot.outputs.bootstrap == 'true'

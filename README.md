@@ -98,3 +98,14 @@ Il validatore controlla tutti i link locali e tutti gli anchor delle pagine pubb
 ## Curated story progression
 
 The guide now includes a spoiler-aware, slot-by-slot recommended-equipment path for every party member. Each character is divided into Weapon, Accessory, Armor, Rings, and Shoes, with a story checkpoint, precise category, rarity, and a practical editorial note for every recommended item; its name opens the existing local catalogue record. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.
+
+## Node DEP0040 diagnostic
+
+The project has no `package.json`, lockfile or committed `node_modules`: Node is used only for syntax checks of the two browser scripts. `tools/check_node_runtime.mjs` records the runtime used by CI and fails if first-party JavaScript imports the deprecated `node:punycode`/`punycode` module.
+
+For a warning printed by GitHub Actions, run **Actions → Diagnose Node deprecations → Run workflow**. The workflow enables `--trace-deprecation` for the whole diagnostic job and recreates the Pages-artifact upload in isolation. The resulting stack trace separates a repository issue from a bundled GitHub Action dependency:
+
+- paths under `site/` or `tools/`: correct the project code;
+- paths under an `@actions/*` bundle: the warning is upstream and cannot be fixed by adding `punycode` to this repository.
+
+The normal deployment workflows stay strict: they run the same first-party import probe on every validation. The manual workflow should remain available until the upstream Action removes the dependency that emits `DEP0040`.

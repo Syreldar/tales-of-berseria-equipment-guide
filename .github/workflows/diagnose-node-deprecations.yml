@@ -1,0 +1,51 @@
+name: Diagnose Node deprecations
+
+on:
+  workflow_dispatch:
+    inputs:
+      trace_deprecations:
+        description: Enable Node's full deprecation stack traces for every JavaScript action in this workflow.
+        required: false
+        default: true
+        type: boolean
+
+permissions:
+  contents: read
+
+jobs:
+  diagnose:
+    name: Trace DEP0040 origin
+    runs-on: ubuntu-latest
+    env:
+      NODE_OPTIONS: ${{ inputs.trace_deprecations && '--trace-deprecation' || '' }}
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v6
+
+      - name: Report the repository Node runtime
+        shell: bash
+        run: |
+          set -euo pipefail
+          node --version
+          node --trace-deprecation tools/check_node_runtime.mjs
+          node --trace-deprecation --check site/assets/site.js
+          node --trace-deprecation --check site/assets/ai.js
+
+      - name: Reproduce the Pages artifact upload in isolation
+        uses: actions/upload-pages-artifact@v5
+        with:
+          path: site
+
+      - name: Explain the result
+        shell: bash
+        run: |
+          set -euo pipefail
+          cat <<'MESSAGE'
+          Inspect this workflow's complete log for [DEP0040].
+
+          - A trace under site/ or tools/ means repository code must be changed.
+          - A trace under an action bundle, typically an @actions/* path, means the warning belongs to the GitHub Action dependency tree.
+
+          This repository has no Node package manifest or installed Node dependency tree. The runtime probe above also fails if first-party JavaScript imports node:punycode or punycode directly.
+          MESSAGE
