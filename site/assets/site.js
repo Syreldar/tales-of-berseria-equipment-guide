@@ -698,23 +698,22 @@
     }
 
     function getAcquisition(item) {
+        const recorded = String(item.acquisition || "").trim();
+        const needsLocalizedFallback = /^(rare drop|common drop|post-game enemy drop)/i.test(recorded);
+        if (recorded && !needsLocalizedFallback && !/provenienza .*verificare|fonte non registrata/i.test(recorded)) {
+            return recorded;
+        }
+
         const kind = String(item.source_kind || "").trim();
         const rare = String(item.rare_drop || "").trim();
-
         if (kind === "rare_drop" && rare && rare !== "—" && rare !== "N/A") {
             return `Drop raro — ${rare}`;
         }
         if (kind === "common_drop") {
             return "Drop comune — rarità equivalente; usa la regola Common Target nella sezione dedicata al farming.";
         }
-        if (kind === "chest_or_story") {
-            return "Forziere / negozio / storia — per questa scheda non è registrato alcun mostro raro.";
-        }
-        if (kind === "postgame_chest_or_drop") {
-            return "Post-game — forziere o altra fonte finale; per questa scheda non è registrato alcun mostro raro.";
-        }
         if (kind === "postgame_enemy_drop") {
-            return "Drop dei nemici nel post-game — nella tabella strutturata non è registrato alcun mostro.";
+            return "Drop dei nemici nel post-game — fonte specifica non registrata nella tabella strutturata.";
         }
         if (rare && rare !== "—" && rare !== "N/A") {
             return `Drop raro — ${rare}`;
@@ -724,23 +723,22 @@
 
     function sourceBadge(item) {
         const kind = String(item.source_kind || "").trim();
-
-        if (kind === "rare_drop") {
-            return "Drop raro";
-        }
-        if (kind === "common_drop") {
-            return "Drop comune";
-        }
-        if (kind === "postgame_enemy_drop") {
-            return "Drop dei nemici nel post-game";
-        }
-        if (kind === "postgame_chest_or_drop") {
-            return "Post-game";
-        }
-        if (kind === "chest_or_story") {
-            return "Forziere / storia";
-        }
-        return "Indicazione";
+        const labels = {
+            rare_drop: "Drop raro",
+            common_drop: "Drop comune",
+            shop_and_common_drop: "Negozio / drop comune",
+            chest: "Forziere",
+            chest_or_shop: "Forziere / negozio",
+            chest_or_shop_rank: "Forziere / grado negozio",
+            shop: "Negozio",
+            story: "Storia",
+            starting_equipment: "Equipaggiamento iniziale",
+            postgame_chest: "Forziere post-game",
+            postgame_enemy_drop: "Drop nemici post-game",
+            chest_or_story: "Forziere / storia",
+            postgame_chest_or_drop: "Post-game"
+        };
+        return labels[kind] || "Indicazione";
     }
 
     function recommendationSlotLabel(slotName) {

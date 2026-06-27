@@ -320,7 +320,7 @@ def validate_guide(guide: Path) -> list[str]:
     if not dossier_page.exists() or not dossier_script.exists():
         fail("Dedicated character dossier page or its runtime script is missing")
     dossier = dossier_script.read_text(encoding="utf-8")
-    for token in ("source_note_group", "Best in slot", "Best early", "Good Master Skill material", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json", "sourceCalloutByItem", "recommendedByCharacterCategory", "Recommended", "dossier-progression-badge"):
+    for token in ("source_note_group", "Best in slot", "Best early", "Good Master Skill material", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json", "sourceCalloutByItem", "dossier-progression-badge"):
         if token not in dossier:
             fail(f"Character dossier is missing required guide content: {token}")
     if "sourceTierByItem" in dossier or "recommendationTier(" in dossier or "Really recommended" in dossier or "Suggested" in dossier:
@@ -350,15 +350,12 @@ def validate_guide(guide: Path) -> list[str]:
     if "sourceCalloutByCharacterItem" not in dossier:
         fail("Character dossier must support character-specific roadmap labels")
 
-    recommended_map_match = re.search(r'const recommendedByCharacterCategory = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
-    if not recommended_map_match:
-        fail("Character dossier is missing the per-character/category Recommended selection map")
-    recommended_by_character_category = dict(re.findall(r'^\s*"([^"]+)": "([^"]+)",?$', recommended_map_match.group("body"), flags=re.MULTILINE))
-
     best_map_match = re.search(r'const bestInSlotByCharacterCategory = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
     if not best_map_match:
-        fail("Character dossier is missing the explicit Best in slot selection map")
+        fail("Character dossier is missing the per-character/category Best in slot selection map")
     best_by_character_category = dict(re.findall(r'^\s*"([^"]+)": "([^"]+)",?$', best_map_match.group("body"), flags=re.MULTILINE))
+    if len(best_by_character_category) != 36:
+        fail(f"Best in slot map must cover all 36 character/category routes, found {len(best_by_character_category)}")
 
     expected_categories: dict[tuple[str, str], set[str]] = {}
     for entry in catalogue.get("recommended_equipment", []):
@@ -370,62 +367,45 @@ def validate_guide(guide: Path) -> list[str]:
 
     if len(expected_categories) != 36:
         fail(f"Expected 36 character/category routes from the recommendation data, found {len(expected_categories)}")
-    if len(recommended_by_character_category) != len(expected_categories):
-        fail(f"Recommended map must cover all {len(expected_categories)} character/category routes, found {len(recommended_by_character_category)}")
 
-    recommended_reason_match = re.search(r'const recommendedReasonByCharacterCategory = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
-    if not recommended_reason_match:
-        fail("Character dossier is missing source-led Recommended explanations")
-    recommended_reason_keys = set(re.findall(r'^\s*"([^"]+)": ', recommended_reason_match.group("body"), flags=re.MULTILINE))
-    missing_reason_keys = sorted(set(recommended_by_character_category) - recommended_reason_keys)
-    if missing_reason_keys:
-        fail(f"Every Recommended route needs a source-led explanation: {missing_reason_keys}")
-
-    missing_recommended: list[str] = []
-    invalid_recommended: list[str] = []
+    missing_bis: list[str] = []
+    invalid_bis: list[str] = []
     for (character, category), item_names in expected_categories.items():
         key = f"{character.lower()}::{category}"
-        selected = recommended_by_character_category.get(key)
+        selected = best_by_character_category.get(key)
         if not selected:
-            missing_recommended.append(key)
+            missing_bis.append(key)
             continue
         if selected not in item_names:
-            invalid_recommended.append(f"{key} -> {selected}")
-
-    if missing_recommended:
-        fail(f"Every character/category route needs one source-led Recommended item: {missing_recommended}")
-    if invalid_recommended:
-        fail(f"Recommended selections must refer to a recommended item in that exact category: {invalid_recommended}")
-
-    invalid_bis: list[str] = []
-    missing_recommended_for_bis: list[str] = []
-    for key, selected in best_by_character_category.items():
-        try:
-            character_key, category = key.split("::", 1)
-        except ValueError:
-            invalid_bis.append(f"invalid key: {key}")
-            continue
-        item_names = expected_categories.get((character_key.title(), category))
-        if item_names is None or selected not in item_names:
             invalid_bis.append(f"{key} -> {selected}")
-            continue
-        if recommended_by_character_category.get(key) != selected:
-            missing_recommended_for_bis.append(key)
 
+    if missing_bis:
+        fail(f"Every character/category route must have exactly one Best in slot selection: {missing_bis}")
     if invalid_bis:
         fail(f"Best in slot selections must refer to a recommended item in that exact category: {invalid_bis}")
-    if missing_recommended_for_bis:
-        fail(f"Best in slot selections must also carry the Recommended label: {missing_recommended_for_bis}")
-    if not best_by_character_category:
-        fail("At least one explicitly source-backed Best in slot selection is required")
 
     expected_ring_users = {str(entry.get("name", "")) for entry in catalogue.get("character_growth", [])}
     for user in expected_ring_users:
-        key = f"{user.lower()}::Rings"
-        if recommended_by_character_category.get(key) != "Unnamed Ring":
-            fail("Unnamed Ring must be the Recommended Ring for every character dossier")
-        if best_by_character_category.get(key) != "Unnamed Ring":
-            fail("Unnamed Ring must remain the Best in slot Ring for every character dossier")
+        if best_by_character_category.get(f"{user.lower()}::Rings") != "Unnamed Ring":
+            fail("Unnamed Ring must be the Best in slot Ring for every character dossier")
+
+    expected_womens_shoes_bis = {
+        "velvet::Women’s Shoes": "Queen Ellis Heels",
+        "magilou::Women’s Shoes": "Grounded Shoes",
+        "eleanor::Women’s Shoes": "Queen Ellis Heels",
+    }
+    for route, item_name in expected_womens_shoes_bis.items():
+        if best_by_character_category.get(route) != item_name:
+            fail(f"Women’s Shoes Best in slot selection is incorrect for {route}: expected {item_name}")
+
+    expected_bis_callouts = (
+        ('"velvet::Queen Ellis Heels": { key: "bis"', "Velvet Queen Ellis Heels must render as Best in slot"),
+        ('"magilou::Grounded Shoes": { key: "bis"', "Magilou Grounded Shoes must render as Best in slot"),
+        ('"eleanor::Queen Ellis Heels": { key: "bis"', "Eleanor Queen Ellis Heels must render as Best in slot"),
+    )
+    for token, message in expected_bis_callouts:
+        if token not in dossier:
+            fail(message)
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
     if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:
@@ -571,6 +551,10 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
                 fail(f"Missing {field}: {item.get('name')}")
             if PUBLIC_URL.search(value) or FORBIDDEN_PUBLIC_REFERENCE.search(value):
                 fail(f"Forbidden content in {field}: {item.get('name')}")
+        if item.get("source_kind") in {"chest_or_story", "postgame_chest_or_drop"}:
+            fail(f"Catalogue acquisition must name a concrete route: {item.get('name')}")
+        if "verificare" in str(item.get("acquisition", "")).lower():
+            fail(f"Catalogue acquisition is still unresolved: {item.get('name')}")
 
     if found_pairs != required_pairs:
         missing = sorted(required_pairs - found_pairs)

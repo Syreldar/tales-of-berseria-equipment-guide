@@ -3329,34 +3329,6 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     color: var(--muted);
 }
 
-.dossier-pick-group .dossier-pick-item-recommended {
-    border-color: color-mix(in srgb, #4f9a80 70%, var(--line));
-    background: linear-gradient(135deg, color-mix(in srgb, #4f9a80 12%, var(--surface)), var(--surface));
-    box-shadow: 0 8px 20px -20px color-mix(in srgb, #4f9a80 72%, transparent);
-}
-
-.dossier-item-callout-row {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.4rem;
-}
-
-.dossier-item-callout-row .dossier-item-callout {
-    margin: 0;
-}
-
-.dossier-item-callout-recommended {
-    border-color: color-mix(in srgb, #4f9a80 72%, var(--line));
-    background: color-mix(in srgb, #4f9a80 19%, var(--surface));
-}
-
-.dossier-item-callout-detail {
-    margin: 0;
-    color: var(--muted);
-    font-size: 0.82rem;
-    line-height: 1.4;
-}
-
 .dossier-item-callout-best-early {
     border-color: color-mix(in srgb, #75af70 72%, var(--line));
     background: color-mix(in srgb, #75af70 18%, var(--surface));
@@ -3402,6 +3374,150 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     background: color-mix(in srgb, #a29ab4 17%, var(--surface));
 }
 
+.dossier-item-callout-caution {
+    border-style: dashed;
+    color: var(--muted);
+    background: var(--surface-muted);
+}
+
+/* Roadmap color logic: item card color explains the item's role; step badge color explains progression. */
+.dossier-roadmap-legend {
+    display: grid;
+    gap: 0.7rem;
+    margin-top: 0.9rem;
+    padding: 0.9rem 1rem;
+    border: 1px solid var(--line);
+    border-radius: 0.9rem;
+    background: color-mix(in srgb, var(--surface-muted) 82%, var(--surface));
+}
+
+.dossier-roadmap-legend-list {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.45rem;
+}
+
+.dossier-roadmap-legend-chip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    padding: 0.24rem 0.58rem;
+    border: 1px solid var(--line);
+    border-radius: 999px;
+    background: var(--surface);
+    color: var(--text);
+    font-size: 0.76rem;
+    font-weight: 800;
+}
+
+.dossier-pick-group .dossier-pick-item {
+    --roadmap-accent: color-mix(in srgb, var(--line) 70%, transparent);
+    border-color: color-mix(in srgb, var(--roadmap-accent) 72%, var(--line));
+    background:
+        linear-gradient(135deg, color-mix(in srgb, var(--roadmap-accent) 10%, var(--surface)), var(--surface)),
+        var(--surface-muted);
+    box-shadow: inset 0 1px 0 color-mix(in srgb, var(--roadmap-accent) 12%, transparent);
+}
+
+.dossier-pick-group .dossier-pick-item[class*="dossier-pick-item-theme-"] {
+    border-left-width: 4px;
+}
+
+.dossier-pick-group .dossier-pick-item-theme-story { --roadmap-accent: #8a93a3; }
+.dossier-pick-group .dossier-pick-item-theme-early,
+.dossier-pick-group .dossier-pick-item-theme-best-early { --roadmap-accent: #75af70; }
+.dossier-pick-group .dossier-pick-item-theme-mid { --roadmap-accent: #7f95c9; }
+.dossier-pick-group .dossier-pick-item-theme-late,
+.dossier-pick-group .dossier-pick-item-theme-final { --roadmap-accent: #d49a51; }
+.dossier-pick-group .dossier-pick-item-theme-postgame { --roadmap-accent: #a29ab4; }
+.dossier-pick-group .dossier-pick-item-theme-mastery { --roadmap-accent: #6caed6; }
+.dossier-pick-group .dossier-pick-item-theme-bis { --roadmap-accent: #d7b75e; }
+.dossier-pick-group .dossier-pick-item-theme-offense { --roadmap-accent: #c9655d; }
+.dossier-pick-group .dossier-pick-item-theme-defense { --roadmap-accent: #7188b5; }
+.dossier-pick-group .dossier-pick-item-theme-focus { --roadmap-accent: #45a798; }
+.dossier-pick-group .dossier-pick-item-theme-build { --roadmap-accent: #9b78bf; }
+.dossier-pick-group .dossier-pick-item-theme-caution {
+    --roadmap-accent: #7c8796;
+    border-style: dashed;
+    background: color-mix(in srgb, var(--surface-muted) 84%, var(--surface));
+}
+
+.dossier-progression-badge {
+    color: var(--muted);
+    background: color-mix(in srgb, var(--surface) 85%, transparent);
+}
+
+.dossier-progression-badge-story,
+.dossier-progression-badge-mid {
+    border-color: color-mix(in srgb, #8a93a3 60%, var(--line));
+    color: color-mix(in srgb, #d9e2f4 78%, var(--text));
+}
+
+.dossier-progression-badge-early {
+    border-color: color-mix(in srgb, #75af70 65%, var(--line));
+    color: color-mix(in srgb, #93d08d 80%, var(--text));
+}
+
+.dossier-progression-badge-late,
+.dossier-progression-badge-final {
+    border-color: color-mix(in srgb, #d49a51 65%, var(--line));
+    color: color-mix(in srgb, #f0be7a 80%, var(--text));
+}
+
+.dossier-progression-badge-postgame {
+    border-color: color-mix(in srgb, #a29ab4 65%, var(--line));
+    color: color-mix(in srgb, #cec3e7 80%, var(--text));
+}
+
+.dossier-roadmap-legend-chip-bis,
+.dossier-item-callout-bis {
+    border-color: color-mix(in srgb, #d7b75e 70%, var(--line));
+    background: color-mix(in srgb, #d7b75e 20%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-best-early,
+.dossier-item-callout-best-early {
+    border-color: color-mix(in srgb, #75af70 72%, var(--line));
+    background: color-mix(in srgb, #75af70 18%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-mastery,
+.dossier-item-callout-mastery {
+    border-color: color-mix(in srgb, #6caed6 70%, var(--line));
+    background: color-mix(in srgb, #6caed6 18%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-offense,
+.dossier-item-callout-offense {
+    border-color: color-mix(in srgb, #c9655d 70%, var(--line));
+    background: color-mix(in srgb, #c9655d 17%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-defense,
+.dossier-item-callout-defense {
+    border-color: color-mix(in srgb, #7188b5 70%, var(--line));
+    background: color-mix(in srgb, #7188b5 17%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-focus,
+.dossier-item-callout-focus {
+    border-color: color-mix(in srgb, #45a798 70%, var(--line));
+    background: color-mix(in srgb, #45a798 17%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-build,
+.dossier-item-callout-build {
+    border-color: color-mix(in srgb, #9b78bf 70%, var(--line));
+    background: color-mix(in srgb, #9b78bf 17%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-postgame,
+.dossier-item-callout-postgame {
+    border-color: color-mix(in srgb, #a29ab4 70%, var(--line));
+    background: color-mix(in srgb, #a29ab4 17%, var(--surface));
+}
+
+.dossier-roadmap-legend-chip-caution,
 .dossier-item-callout-caution {
     border-style: dashed;
     color: var(--muted);

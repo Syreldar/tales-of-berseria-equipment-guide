@@ -1,7 +1,7 @@
 {
   "schema_version": 6,
   "complete": true,
-  "generated_at": "2026-06-27T04:02:09+00:00",
+  "generated_at": "2026-06-27T07:11:06+00:00",
   "categories": [
     {
       "id": "blades",
@@ -200,8 +200,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — West Laban Tunnel; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "bags",
@@ -440,8 +440,8 @@
       "enhancement_bonus": "+30% defense after inflicting slow",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Rovine di Faldies; anche acquistabile al negozio di Taliesin."
     },
     {
       "category_id": "bags",
@@ -560,8 +560,8 @@
       "enhancement_bonus": "+30% defense after inflicting slow",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Meirchio; anche acquistabile al negozio di Meirchio."
     },
     {
       "category_id": "bags",
@@ -710,8 +710,8 @@
       "enhancement_bonus": "Non-elemental malak arte casting time -20%",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."
     },
     {
       "category_id": "bags",
@@ -950,8 +950,8 @@
       "enhancement_bonus": "Adds a fire element hit to the first part of an attack arte",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Warg Forest; anche acquistabile al negozio di Yseult."
     },
     {
       "category_id": "belts",
@@ -1190,8 +1190,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.15x",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Mount Killaraus; anche acquistabile al negozio di Meirchio."
     },
     {
       "category_id": "belts",
@@ -1250,8 +1250,8 @@
       "enhancement_bonus": "Break Soul HP recovery 1.3x",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop_rank",
+      "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop dopo il grado negozio 10."
     },
     {
       "category_id": "belts",
@@ -1310,8 +1310,8 @@
       "enhancement_bonus": "HP recovery on attacking stunned foes +80",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "belts",
@@ -1520,8 +1520,8 @@
       "enhancement_bonus": "+30% EXP from defeating crustaceans",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Empyrean’s Throne; anche acquistabile al negozio di Loegres."
     },
     {
       "category_id": "blades",
@@ -1880,8 +1880,8 @@
       "enhancement_bonus": "+30% EXP from defeating undead foes",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop."
     },
     {
       "category_id": "blades",
@@ -1970,8 +1970,8 @@
       "enhancement_bonus": "+30% EXP from defeating dragons",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "blades",
@@ -2600,8 +2600,8 @@
       "enhancement_bonus": "+30% defense after inflicting slow",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "bracelets",
@@ -2660,8 +2660,8 @@
       "enhancement_bonus": "+30% EXP from defeating winged foes",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "earrings",
@@ -2900,8 +2900,8 @@
       "enhancement_bonus": "+30% arte defense after inflicting poison",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest",
+      "acquisition": "Forziere — Manann Reef."
     },
     {
       "category_id": "earrings",
@@ -3020,8 +3020,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.1x",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Hexen Isle; anche acquistabile al negozio di Meirchio."
     },
     {
       "category_id": "earrings",
@@ -3200,8 +3200,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.15x",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "earrings",
@@ -3290,8 +3290,8 @@
       "enhancement_bonus": "+30% EXP from defeating crustaceans",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "guardians",
@@ -3530,8 +3530,8 @@
       "enhancement_bonus": "Fire element malak arte casting time -15%",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest",
+      "acquisition": "Forziere — Tempio di Palamides."
     },
     {
       "category_id": "guardians",
@@ -3830,8 +3830,8 @@
       "enhancement_bonus": "Attack increased by 1.15x",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "guardians",
@@ -3920,8 +3920,8 @@
       "enhancement_bonus": "Defense increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "starting_equipment",
+      "acquisition": "Equipaggiamento iniziale di Rokurou; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "mens-armor",
@@ -4040,8 +4040,8 @@
       "enhancement_bonus": "During increased defense, adds a slowing hit to 1st step artes",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Reneed."
     },
     {
       "category_id": "mens-armor",
@@ -4280,8 +4280,8 @@
       "enhancement_bonus": "25% chance to nullify earth element damage",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Meirchio."
     },
     {
       "category_id": "mens-armor",
@@ -4700,8 +4700,8 @@
       "enhancement_bonus": "During increased focus, adds a fatiguing hit to 1st step artes",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes, visita di ritorno."
     },
     {
       "category_id": "mens-shoes",
@@ -4910,8 +4910,8 @@
       "enhancement_bonus": "Attack increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Vortigern; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "paper",
@@ -5030,8 +5030,8 @@
       "enhancement_bonus": "Water element malak arte casting time -15%",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Yseult; anche acquistabile al negozio di Yseult."
     },
     {
       "category_id": "paper",
@@ -5210,8 +5210,8 @@
       "enhancement_bonus": "+30% attack after inflicting paralysis",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes."
     },
     {
       "category_id": "paper",
@@ -5330,8 +5330,8 @@
       "enhancement_bonus": "+30% arte attack after inflicting burn",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Zamahl Grotto; anche acquistabile al Katz Corner Shop."
     },
     {
       "category_id": "paper",
@@ -5390,8 +5390,8 @@
       "enhancement_bonus": "Earth element malak arte casting time -20%",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "paper",
@@ -5720,8 +5720,8 @@
       "enhancement_bonus": "+30% EXP from defeating undead foes",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Manann Reef; anche acquistabile al negozio di Taliesin."
     },
     {
       "category_id": "pendants",
@@ -5840,8 +5840,8 @@
       "enhancement_bonus": "Equipment drop rates +1.35x",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop_rank",
+      "acquisition": "Forziere — Hexen Isle; anche ricompensa del grado negozio 8."
     },
     {
       "category_id": "pendants",
@@ -6020,8 +6020,8 @@
       "enhancement_bonus": "Wind element malak arte casting time -20%",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "pendants",
@@ -6230,8 +6230,8 @@
       "enhancement_bonus": "+30% EXP from defeating armored foes",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Port Cadnix; anche acquistabile al negozio di Loegres."
     },
     {
       "category_id": "ribbons",
@@ -6290,8 +6290,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.07x",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Lothringen; anche acquistabile al negozio di Yseult."
     },
     {
       "category_id": "ribbons",
@@ -6680,8 +6680,8 @@
       "enhancement_bonus": "Arte Attack increased by 1.15x",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 3ª Camera."
     },
     {
       "category_id": "ribbons",
@@ -6740,8 +6740,8 @@
       "enhancement_bonus": "Arte Defense increased by 1.07x",
       "main_ingredient": "Amber Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Beardsley."
     },
     {
       "category_id": "rings",
@@ -6770,8 +6770,8 @@
       "enhancement_bonus": "5% chance to nullify non-elemental damage",
       "main_ingredient": "Amber Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Beardsley."
     },
     {
       "category_id": "rings",
@@ -6830,8 +6830,8 @@
       "enhancement_bonus": "5% chance to nullify earth element damage",
       "main_ingredient": "Calcite Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Loegres."
     },
     {
       "category_id": "rings",
@@ -6890,8 +6890,8 @@
       "enhancement_bonus": "5% chance to nullify wind element damage",
       "main_ingredient": "Fluorite Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Loegres."
     },
     {
       "category_id": "rings",
@@ -6950,8 +6950,8 @@
       "enhancement_bonus": "Slowing attack damage -20%",
       "main_ingredient": "Amphibole Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Reneed."
     },
     {
       "category_id": "rings",
@@ -7010,8 +7010,8 @@
       "enhancement_bonus": "Poisoning attack damage -20%",
       "main_ingredient": "Feldspar Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Yseult."
     },
     {
       "category_id": "rings",
@@ -7100,8 +7100,8 @@
       "enhancement_bonus": "+40% EXP from defeating beasts",
       "main_ingredient": "Quartz Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Stonebury."
     },
     {
       "category_id": "rings",
@@ -7160,8 +7160,8 @@
       "enhancement_bonus": "+40% EXP from defeating amorphous foes",
       "main_ingredient": "Topaz Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Hellawes, visita di ritorno."
     },
     {
       "category_id": "rings",
@@ -7250,8 +7250,8 @@
       "enhancement_bonus": "+40% EXP from defeating winged foes",
       "main_ingredient": "Mythril Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Meirchio."
     },
     {
       "category_id": "rings",
@@ -7310,8 +7310,8 @@
       "enhancement_bonus": "+40% EXP from defeating armored foes",
       "main_ingredient": "Adamantine Fragment",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop_and_common_drop",
+      "acquisition": "Katz Corner Shop; anche Common drop nell’Innominat."
     },
     {
       "category_id": "rings",
@@ -7400,8 +7400,8 @@
       "enhancement_bonus": "+40% EXP from defeating dragons",
       "main_ingredient": "Adamantine Fragment",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."
     },
     {
       "category_id": "rings",
@@ -7460,8 +7460,8 @@
       "enhancement_bonus": "Focus increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "shop",
+      "acquisition": "Negozio — Beardsley."
     },
     {
       "category_id": "shoes",
@@ -7790,8 +7790,8 @@
       "enhancement_bonus": "Attack increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "starting_equipment",
+      "acquisition": "Equipaggiamento iniziale di Rokurou; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "short-swords",
@@ -8030,8 +8030,8 @@
       "enhancement_bonus": "Adds an earth element hit to the first part of an attack arte",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest",
+      "acquisition": "Forziere — Titania, seconda visita."
     },
     {
       "category_id": "short-swords",
@@ -8240,8 +8240,8 @@
       "enhancement_bonus": "Break Soul HP recovery 1.3x",
       "main_ingredient": "N/A",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "story",
+      "acquisition": "Ricompensa della storia principale."
     },
     {
       "category_id": "short-swords",
@@ -8300,8 +8300,8 @@
       "enhancement_bonus": "Adds a non-elemental hit to the first part of an attack arte",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop."
     },
     {
       "category_id": "short-swords",
@@ -8390,8 +8390,8 @@
       "enhancement_bonus": "+30% focus after inflicting fatigue",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."
     },
     {
       "category_id": "short-swords",
@@ -8450,8 +8450,8 @@
       "enhancement_bonus": "+30% defense after inflicting slow",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Vester Tunnels; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "spears",
@@ -8810,8 +8810,8 @@
       "enhancement_bonus": "Break Soul HP recovery 1.3x",
       "main_ingredient": "Gold Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes."
     },
     {
       "category_id": "spears",
@@ -8990,8 +8990,8 @@
       "enhancement_bonus": "+30% attack after inflicting paralysis",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."
     },
     {
       "category_id": "spears",
@@ -9080,8 +9080,8 @@
       "enhancement_bonus": "During increased arte attack, adds a burning hit to 1st step artes",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Beardsley; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "talismans",
@@ -9260,8 +9260,8 @@
       "enhancement_bonus": "+20% EXP from defeating undead foes",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — East Laban Tunnel; anche acquistabile al negozio di Yseult."
     },
     {
       "category_id": "talismans",
@@ -9380,8 +9380,8 @@
       "enhancement_bonus": "Adds a fire element hit to the first part of an attack arte",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Davahl Forest; anche acquistabile al negozio di Taliesin."
     },
     {
       "category_id": "talismans",
@@ -9650,8 +9650,8 @@
       "enhancement_bonus": "Equipment drop rates +1.35x",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."
     },
     {
       "category_id": "talismans",
@@ -9710,8 +9710,8 @@
       "enhancement_bonus": "Defense increased by 1.07x",
       "main_ingredient": "Bronze Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "starting_equipment",
+      "acquisition": "Equipaggiamento iniziale di Velvet; anche acquistabile al negozio di Beardsley."
     },
     {
       "category_id": "womens-armor",
@@ -9890,8 +9890,8 @@
       "enhancement_bonus": "Recovers 35% of damage you take",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest_or_shop",
+      "acquisition": "Forziere — Burnack Plateau; anche acquistabile al negozio di Yseult."
     },
     {
       "category_id": "womens-armor",
@@ -10460,8 +10460,8 @@
       "enhancement_bonus": "During increased arte defense, adds a poisoning hit to 1st step artes",
       "main_ingredient": "Silver Scrap",
       "rare_drop": "N/A",
-      "source_kind": "chest_or_story",
-      "acquisition": "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "chest",
+      "acquisition": "Forziere — Rovine di Faldies."
     },
     {
       "category_id": "womens-shoes",
@@ -10580,8 +10580,8 @@
       "enhancement_bonus": "50% of healing arte effects reapplied after 5 seconds",
       "main_ingredient": "Platinum Scrap",
       "rare_drop": "N/A",
-      "source_kind": "postgame_chest_or_drop",
-      "acquisition": "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
+      "source_kind": "postgame_chest",
+      "acquisition": "Forziere post-game — Heavenly Steppes, 2ª–6ª Camera."
     },
     {
       "category_id": "womens-shoes",
@@ -10944,7 +10944,7 @@
     "expected_categories": 18,
     "expected_items": 350,
     "expected_category_phase_pairs": 36,
-    "identity_sha256": "3b284500df8f529f1302d6631c46fbd64741000fbb5b7d098e8fa53875a9b5c2"
+    "identity_sha256": "87dc261581254285ebd25d736961b8e0258559813349fc90e75251deebb692b0"
   },
   "character_growth": [
     {

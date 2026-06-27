@@ -809,17 +809,107 @@ def phase_from_rarity(rarity: int) -> str:
 
 
 def source_from_fields(rarity: int, rare_drop: str) -> tuple[str, str]:
-    """Create a transparent acquisition label without inventing a location."""
+    """Create a transparent acquisition label when a verified override is unavailable."""
     has_rare_monster = rare_drop and rare_drop not in {"—", "N/A"}
     if has_rare_monster:
-        return "rare_drop", f"Rare drop — {rare_drop}"
+        return "rare_drop", f"Drop raro — {rare_drop}"
     if rarity <= 18 and rarity % 2 == 0:
-        return "common_drop", "Common drop — Rarity pari; usa la regola Common Target nella sezione Farming."
+        return "common_drop", "Drop comune — rarità equivalente; usa la regola Common Target nella sezione Farming."
     if rarity <= 18:
-        return "chest_or_story", "Chest / shop / storia — nessun Monster Rare è registrato per questa scheda."
+        return "chest_or_story", "Provenienza da verificare nella tabella locale."
     if rarity in {19, 20}:
-        return "postgame_chest_or_drop", "Post-game — chest o altra fonte di end-game; nessun Monster Rare è registrato per questa scheda."
-    return "postgame_enemy_drop", "Post-game enemy drop — nessun Monster è registrato nella tabella strutturata."
+        return "postgame_chest_or_drop", "Provenienza post-game da verificare nella tabella locale."
+    return "postgame_enemy_drop", "Drop nemico post-game — fonte specifica non registrata nella tabella strutturata."
+
+
+# Verified locations for every item whose structured catalogue row does not name a
+# specific enemy drop.  These entries preserve exact chest, shop, story, or
+# post-game chamber information in the published local catalogue.
+VERIFIED_ACQUISITION_OVERRIDES: dict[str, dict[str, str]] = {
+    "Mercury Satchel": {"source_kind": "chest_or_shop", "acquisition": "Forziere — West Laban Tunnel; anche acquistabile al negozio di Beardsley."},
+    "Saturn Satchel": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Rovine di Faldies; anche acquistabile al negozio di Taliesin."},
+    "Neptune Satchel": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Meirchio; anche acquistabile al negozio di Meirchio."},
+    "Galactic Satchel": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."},
+
+    "Cassandra Sash": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Warg Forest; anche acquistabile al negozio di Yseult."},
+    "Gloire des Mousseux Sash": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Mount Killaraus; anche acquistabile al negozio di Meirchio."},
+    "Helmut Schmidt Sash": {"source_kind": "chest_or_shop_rank", "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop dopo il grado negozio 10."},
+    "Intrigue Sash": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Shell Shredder": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Empyrean’s Throne; anche acquistabile al negozio di Loegres."},
+    "Purified Blade": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop."},
+    "Dragon Slayer": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Shadow Daggers": {"source_kind": "starting_equipment", "acquisition": "Equipaggiamento iniziale di Rokurou; anche acquistabile al negozio di Beardsley."},
+    "Cumbrous Daggers": {"source_kind": "chest", "acquisition": "Forziere — Titania, seconda visita."},
+    "Kurogane Daggers": {"source_kind": "story", "acquisition": "Ricompensa della storia principale."},
+    "Stygian Daggers": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Innominat; anche acquistabile al Katz Corner Shop."},
+    "Lunar Tempests": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."},
+
+    "Plain Paper": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Vortigern; anche acquistabile al negozio di Beardsley."},
+    "Silky Paper": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Yseult; anche acquistabile al negozio di Yseult."},
+    "Old Flyers": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes."},
+    "Ember Paper": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Zamahl Grotto; anche acquistabile al Katz Corner Shop."},
+    "Ragnarok": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Broken Shackle": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Weathered Guardian": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Beardsley."},
+    "Gradient Doll": {"source_kind": "chest", "acquisition": "Forziere — Tempio di Palamides."},
+    "Corpore Sano": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Worn Spear": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Vester Tunnels; anche acquistabile al negozio di Beardsley."},
+    "Valkyrie": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes."},
+    "Final Scepter": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Express Pendant": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Manann Reef; anche acquistabile al negozio di Taliesin."},
+    "Pumper-Upper": {"source_kind": "chest_or_shop_rank", "acquisition": "Forziere — Hexen Isle; anche ricompensa del grado negozio 8."},
+    "Sylph's Invitation": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Tarnished Earrings": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Beardsley."},
+    "Asmodeus Earrings": {"source_kind": "chest", "acquisition": "Forziere — Manann Reef."},
+    "Satan's Wrath Earrings": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Hexen Isle; anche acquistabile al negozio di Meirchio."},
+    "Lucifer's Pride Earrings": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 1ª–4ª Camera."},
+
+    "Tranquillo": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Port Cadnix; anche acquistabile al negozio di Loegres."},
+    "Simple Ribbon": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Lothringen; anche acquistabile al negozio di Yseult."},
+    "Grandioso": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 3ª Camera."},
+
+    "Twin Charm": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Beardsley; anche acquistabile al negozio di Beardsley."},
+    "Death Ward": {"source_kind": "chest_or_shop", "acquisition": "Forziere — East Laban Tunnel; anche acquistabile al negozio di Yseult."},
+    "Purity Charm": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Davahl Forest; anche acquistabile al negozio di Taliesin."},
+    "Perfect Bulwark": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."},
+
+    "Natural Waistcoat": {"source_kind": "starting_equipment", "acquisition": "Equipaggiamento iniziale di Rokurou; anche acquistabile al negozio di Beardsley."},
+    "Thorny Waistcoat": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Yvolg Ruins; anche acquistabile al negozio di Reneed."},
+    "Summertime Waistcoat": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Meirchio."},
+    "Battle Garment": {"source_kind": "starting_equipment", "acquisition": "Equipaggiamento iniziale di Velvet; anche acquistabile al negozio di Beardsley."},
+    "Garish Pink Shirt": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Burnack Plateau; anche acquistabile al negozio di Yseult."},
+
+    "Resistance Ring": {"source_kind": "shop", "acquisition": "Negozio — Beardsley."},
+    "Void Ring": {"source_kind": "shop", "acquisition": "Negozio — Beardsley."},
+    "Earth Ring": {"source_kind": "shop", "acquisition": "Negozio — Loegres."},
+    "Wind Ring": {"source_kind": "shop", "acquisition": "Negozio — Loegres."},
+    "Slow Ward": {"source_kind": "shop", "acquisition": "Negozio — Reneed."},
+    "Poison Ward": {"source_kind": "shop", "acquisition": "Negozio — Yseult."},
+    "Animalia Ring": {"source_kind": "shop", "acquisition": "Negozio — Stonebury."},
+    "Blob Ring": {"source_kind": "shop", "acquisition": "Negozio — Hellawes, visita di ritorno."},
+    "Pinion Ring": {"source_kind": "shop", "acquisition": "Negozio — Meirchio."},
+    "Plated Ring": {"source_kind": "shop_and_common_drop", "acquisition": "Katz Corner Shop; anche Common drop nell’Innominat."},
+    "Lindworm Ring": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 3ª–6ª Camera."},
+
+    "Battle Boots": {"source_kind": "shop", "acquisition": "Negozio — Beardsley."},
+    "Military Hike": {"source_kind": "chest_or_shop", "acquisition": "Forziere — Baird Marsh; anche acquistabile al negozio di Hellawes, visita di ritorno."},
+    "Runner's High": {"source_kind": "chest", "acquisition": "Forziere — Rovine di Faldies."},
+    "Grounded Shoes": {"source_kind": "postgame_chest", "acquisition": "Forziere post-game — Heavenly Steppes, 2ª–6ª Camera."},
+}
+
+
+def apply_verified_acquisition(row: dict[str, Any]) -> dict[str, Any]:
+    override = VERIFIED_ACQUISITION_OVERRIDES.get(str(row.get("name", "")))
+    if override:
+        row.update(override)
+    return row
 
 
 def make_session() -> requests.Session:
@@ -910,7 +1000,7 @@ def category_rows(session: requests.Session, category: Category) -> list[dict[st
         ]
         rare_drop = first_english(cells[positions["rare_drop"]], "—")
         source_kind, acquisition = source_from_fields(rarity, rare_drop)
-        rows.append({
+        rows.append(apply_verified_acquisition({
             "category_id": category.identifier,
             "category": category.label,
             "slot": category.slot,
@@ -927,7 +1017,7 @@ def category_rows(session: requests.Session, category: Category) -> list[dict[st
             "rare_drop": rare_drop,
             "source_kind": source_kind,
             "acquisition": acquisition,
-        })
+        }))
     if not rows:
         raise RuntimeError(f"No equipment rows parsed for {category.label}")
     return rows
