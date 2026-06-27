@@ -94,3 +94,7 @@ Ogni scheda elenca tutte le categorie applicabili. Sono incluse `Shoes` universa
 ### Controllo dei link e delle categorie
 
 Il validatore controlla tutti i link locali e tutti gli anchor delle pagine pubblicate. Controlla inoltre l’elenco esatto delle categorie su ogni scheda personaggio: Velvet include anche `Blades`, `Women’s Armor` e `Women’s Shoes`; Laphicet usa `Paper`; Magilou usa `Guardians`. Se una categoria viene rimossa, assegnata al personaggio sbagliato oppure un chip non usa la rotta filtrata del catalogo, il deploy si ferma.
+
+## Curated story progression
+
+The guide now includes a spoiler-aware recommended-equipment timeline for every party member. Each recommendation identifies the story checkpoint, category, rarity, and a practical reason to keep or target the item; its name opens the existing local catalogue record. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.

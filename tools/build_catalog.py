@@ -34,7 +34,7 @@ PHASES = ("Main game", "Post-game")
 EXPECTED_REFERENCE_CARD_COUNT = EXPECTED_CATEGORY_COUNT * len(PHASES)
 HEADERS = {
     "Accept": "application/json,text/html;q=0.9,*/*;q=0.8",
-    "User-Agent": "TalesOfBerseriaEquipmentGuide/4.0 (catalogue snapshot)",
+    "User-Agent": "TalesOfBerseriaEquipmentGuide/5.0 (catalogue snapshot)",
 }
 
 
@@ -67,6 +67,65 @@ CATEGORIES: tuple[Category, ...] = (
     Category("mens-shoes", "Men’s Shoes", "Footwear", "Rokurou · Laphicet · Eizen", "ToB - Equipment (Men's Shoes)"),
     Category("womens-shoes", "Women’s Shoes", "Footwear", "Velvet · Magilou · Eleanor", "ToB - Equipment (Women's Shoes)"),
 )
+
+CHARACTER_GROWTH: tuple[dict[str, Any], ...] = (
+    {"name": "Velvet", "stage": 0, "base": [66, 2.44, 2.44, 2.85, 1.63, 2.85], "level_200": [6864, 253.8, 253.8, 296.4, 169.5, 296.4]},
+    {"name": "Rokurou", "stage": 1, "base": [70, 2.75, 1.97, 3.15, 1.97, 1.97], "level_200": [7280, 286, 204.9, 327.6, 204.9, 204.9]},
+    {"name": "Laphicet", "stage": 2, "base": [54, 1.81, 3.17, 2.26, 3.62, 2.72], "level_200": [5616, 188.2, 329.7, 235, 376.5, 282.9]},
+    {"name": "Eizen", "stage": 3, "base": [64, 2.48, 2.48, 1.65, 2.48, 3.31], "level_200": [6656, 257.9, 257.9, 171.6, 257.9, 344.2]},
+    {"name": "Magilou", "stage": 4, "base": [58, 2.18, 3.49, 2.62, 3.05, 1.75], "level_200": [6032, 226.7, 363, 272.5, 317.2, 182]},
+    {"name": "Eleanor", "stage": 5, "base": [62, 3.37, 1.68, 2.53, 2.53, 2.53], "level_200": [6448, 350.5, 174.7, 263.1, 263.1, 263.1]},
+)
+
+RECOMMENDED_EQUIPMENT: tuple[dict[str, Any], ...] = (
+    {"character": "All", "stage": 0, "order": 10, "checkpoint": "Taliesin shop", "item": "Force Ring", "category": "Rings", "rarity": 10, "reason": "Reliable Arte Defense option when the party reaches its first R10 shop upgrade."},
+    {"character": "All", "stage": 0, "order": 20, "checkpoint": "Stonebury shop", "item": "Quartz Boots", "category": "Shoes", "rarity": 12, "reason": "Universal Footwear pick with a useful Stun-oriented skill while replacing older common drops."},
+    {"character": "All", "stage": 0, "order": 30, "checkpoint": "Mount Killaraus", "item": "Barrier Ring", "category": "Rings", "rarity": 15, "reason": "High Arte Defense Ring for encounters where arte damage is the main danger."},
+    {"character": "All", "stage": 0, "order": 40, "checkpoint": "Innominat / Katz routes", "item": "Plated Ring", "category": "Rings", "rarity": 17, "reason": "Convenient late-story universal Ring when moving into the final equipment tiers."},
+
+    {"character": "Velvet", "stage": 0, "order": 10, "checkpoint": "Warg Forest", "item": "Cassandra Sash", "category": "Belts", "rarity": 7, "reason": "Early Arte Attack Belt with fire-hit utility; a meaningful upgrade as rare R7 equipment begins appearing."},
+    {"character": "Velvet", "stage": 0, "order": 20, "checkpoint": "Yseult shop", "item": "Amphibole Blade", "category": "Blades", "rarity": 8, "reason": "Accessible R8 Blade that keeps physical offense moving without waiting for a rare drop."},
+    {"character": "Velvet", "stage": 0, "order": 30, "checkpoint": "Hexen Isle", "item": "Fonon Blade", "category": "Blades", "rarity": 15, "reason": "Late-story Blade with an offensive distribution suited to a frontline set."},
+    {"character": "Velvet", "stage": 0, "order": 40, "checkpoint": "Innominat", "item": "Helmut Schmidt Sash", "category": "Belts", "rarity": 17, "reason": "Final-story Belt checkpoint before replacing the set with endgame equipment."},
+    {"character": "Velvet", "stage": 0, "order": 50, "checkpoint": "Innominat", "item": "Pegasus Wings", "category": "Women’s Shoes", "rarity": 17, "reason": "Late Footwear upgrade for the final route; compare its Master Skill before dismantling older shoes."},
+    {"character": "Velvet", "stage": 0, "order": 60, "checkpoint": "End of main game", "item": "Adamantine Blade", "category": "Blades", "rarity": 18, "reason": "R18 main-game Blade to complete the progression before post-game tiers."},
+
+    {"character": "Rokurou", "stage": 1, "order": 10, "checkpoint": "Story reward", "item": "Kurogane Daggers", "category": "Short Swords", "rarity": 15, "reason": "Keep the story weapon long enough to learn its Master Skill; it has a notably balanced offensive spread."},
+    {"character": "Rokurou", "stage": 1, "order": 20, "checkpoint": "Taliesin shop", "item": "Feldspar Daggers", "category": "Short Swords", "rarity": 10, "reason": "Direct shop replacement that is easy to obtain while entering the R10 equipment tier."},
+    {"character": "Rokurou", "stage": 1, "order": 30, "checkpoint": "Innominat", "item": "Soothing Knife", "category": "Talismans", "rarity": 17, "reason": "Late-story Short Swords choice with a final-tier Master Skill to learn."},
+    {"character": "Rokurou", "stage": 1, "order": 40, "checkpoint": "Innominat / Katz routes", "item": "Stygian Daggers", "category": "Short Swords", "rarity": 17, "reason": "Alternative final R17 Short Swords route, useful when the other weapon has already taught its skill."},
+    {"character": "Rokurou", "stage": 1, "order": 50, "checkpoint": "Empyrean’s Throne return", "item": "Kaiser Road", "category": "Men’s Shoes", "rarity": 17, "reason": "Late Footwear upgrade for a durable close-range set."},
+    {"character": "Rokurou", "stage": 1, "order": 60, "checkpoint": "Meirchio shop", "item": "Mythril Waistcoat", "category": "Men’s Armor", "rarity": 16, "reason": "Reliable Armor shop upgrade before the final R17 route."},
+
+    {"character": "Laphicet", "stage": 2, "order": 10, "checkpoint": "Vester Tunnels", "item": "Mars Satchel", "category": "Bags", "rarity": 7, "reason": "Early Bag with strong Arte Attack value and a burn-oriented Master Skill."},
+    {"character": "Laphicet", "stage": 2, "order": 20, "checkpoint": "Manann Reef", "item": "Secret Histories", "category": "Paper", "rarity": 9, "reason": "Rare Paper checkpoint for a caster-focused stat split before the R10 shops."},
+    {"character": "Laphicet", "stage": 2, "order": 30, "checkpoint": "Baird Marsh", "item": "Old Flyers", "category": "Paper", "rarity": 13, "reason": "Chest reward that provides a practical R13 Paper upgrade on the story route."},
+    {"character": "Laphicet", "stage": 2, "order": 40, "checkpoint": "Port Zekson shop", "item": "Topaz Bag", "category": "Bags", "rarity": 14, "reason": "Shop Bag checkpoint that avoids relying on a rare drop for the next tier."},
+    {"character": "Laphicet", "stage": 2, "order": 50, "checkpoint": "Zamahl Grotto / Katz routes", "item": "Ember Paper", "category": "Paper", "rarity": 17, "reason": "Late Paper route for learning a final main-game Master Skill."},
+    {"character": "Laphicet", "stage": 2, "order": 60, "checkpoint": "End of main game", "item": "Adamantine Bag", "category": "Bags", "rarity": 18, "reason": "R18 Bag to close out the story progression before post-game equipment."},
+
+    {"character": "Eizen", "stage": 3, "order": 10, "checkpoint": "Barona Catacombs", "item": "Armstrong", "category": "Bracelets", "rarity": 5, "reason": "Obtain it early, then keep it ready until Eizen joins; its Atk focus fits the Fist Bruiser phase."},
+    {"character": "Eizen", "stage": 3, "order": 20, "checkpoint": "Taliesin shop", "item": "Feldspar Pendant", "category": "Pendants", "rarity": 10, "reason": "Convenient R10 Pendant upgrade when advancing from early rare drops."},
+    {"character": "Eizen", "stage": 3, "order": 30, "checkpoint": "Baird Marsh", "item": "Perpetuity", "category": "Bracelets", "rarity": 13, "reason": "Rare R13 Pendant checkpoint with a useful late-story Master Skill to learn."},
+    {"character": "Eizen", "stage": 3, "order": 40, "checkpoint": "Hexen Isle", "item": "Pumper-Upper", "category": "Pendants", "rarity": 13, "reason": "Chest option that can fill the same tier while farming other Master Skills."},
+    {"character": "Eizen", "stage": 3, "order": 50, "checkpoint": "Mount Killaraus", "item": "Finger of God", "category": "Bracelets", "rarity": 15, "reason": "Strong R15 Pendant milestone when switching toward late-story equipment."},
+    {"character": "Eizen", "stage": 3, "order": 60, "checkpoint": "Mount Killaraus", "item": "Gnome's Force", "category": "Pendants", "rarity": 17, "reason": "Final-story Pendant option for the last equipment tier."},
+
+    {"character": "Magilou", "stage": 4, "order": 10, "checkpoint": "Brigid Ravine", "item": "Mana Earrings", "category": "Earrings", "rarity": 5, "reason": "Early Earrings with a direct Arte Attack bonus for a ranged casting set."},
+    {"character": "Magilou", "stage": 4, "order": 20, "checkpoint": "Taliesin shop", "item": "Feldspar Doll", "category": "Guardians", "rarity": 10, "reason": "Straightforward R10 Guardian upgrade from the shop tier."},
+    {"character": "Magilou", "stage": 4, "order": 30, "checkpoint": "Mount Killaraus", "item": "Secret Agent Doll", "category": "Guardians", "rarity": 15, "reason": "R15 Guardian target with a caster-oriented progression point."},
+    {"character": "Magilou", "stage": 4, "order": 40, "checkpoint": "Empyrean’s Throne return", "item": "Leviathan Earrings", "category": "Earrings", "rarity": 15, "reason": "Late Earrings route for completing an Arte Attack-focused set."},
+    {"character": "Magilou", "stage": 4, "order": 50, "checkpoint": "Zamahl Grotto / Katz routes", "item": "Twoside Doll", "category": "Guardians", "rarity": 17, "reason": "Final main-game Guardian upgrade before post-game tiers."},
+    {"character": "Magilou", "stage": 4, "order": 60, "checkpoint": "End of main game", "item": "Adamantine Earrings", "category": "Earrings", "rarity": 18, "reason": "R18 Earrings to finish the main-game equipment path."},
+
+    {"character": "Eleanor", "stage": 5, "order": 10, "checkpoint": "East Labann Tunnel", "item": "Mana Lance", "category": "Spears", "rarity": 7, "reason": "R7 Spear whose Master Skill improves equipment-learning efficiency; learn it early once Eleanor is available."},
+    {"character": "Eleanor", "stage": 5, "order": 20, "checkpoint": "Perniya Cliffside", "item": "Con Fuoco", "category": "Ribbons", "rarity": 11, "reason": "Mid-story Spear milestone for an Atk-focused Martial Artes setup."},
+    {"character": "Eleanor", "stage": 5, "order": 30, "checkpoint": "Tranquil Woods", "item": "Spiritoso", "category": "Ribbons", "rarity": 13, "reason": "R13 Spear choice when preparing the stronger story-area equipment tiers."},
+    {"character": "Eleanor", "stage": 5, "order": 40, "checkpoint": "Earthpulse", "item": "Guandao", "category": "Spears", "rarity": 15, "reason": "Late-story Spear upgrade before the final route."},
+    {"character": "Eleanor", "stage": 5, "order": 50, "checkpoint": "Earthpulse", "item": "Shimmery Shoes", "category": "Women’s Shoes", "rarity": 15, "reason": "Women’s Shoes route that supplies a useful late Footwear upgrade."},
+    {"character": "Eleanor", "stage": 5, "order": 60, "checkpoint": "Innominat", "item": "Brillante", "category": "Ribbons", "rarity": 17, "reason": "Final-story Spear target for completing the main-game progression."},
+)
+
 
 HEADER_ALIASES: dict[str, tuple[str, ...]] = {
     "rarity": ("rarity",),
@@ -274,7 +333,7 @@ def category_rows(session: requests.Session, category: Category) -> list[dict[st
 
 
 def reference_reason(item: dict[str, Any]) -> str:
-    labels = ("Atk", "A.Atk", "Def", "A.Def", "Focus")
+    labels = ("Atk", "Arte Attack", "Def", "Arte Defense", "Focus")
     stats = [int(value) for value in item["stats"]]
     strongest_index = max(range(len(stats)), key=lambda index: stats[index])
     strongest_label = labels[strongest_index]
@@ -347,7 +406,43 @@ def identity_sha256(items: list[dict[str, Any]]) -> str:
     return hashlib.sha256(canonical.encode("utf-8")).hexdigest()
 
 
+def validate_recommendation_data(items: list[dict[str, Any]]) -> None:
+    items_by_name = {normalized(str(item["name"])): item for item in items}
+    names = set(items_by_name)
+    expected_names = ("Velvet", "Rokurou", "Laphicet", "Eizen", "Magilou", "Eleanor")
+    growth_names = tuple(entry.get("name") for entry in CHARACTER_GROWTH)
+    if growth_names != expected_names:
+        raise RuntimeError("Character growth metadata must cover the six party members in story order")
+
+    for entry in CHARACTER_GROWTH:
+        for field in ("base", "level_200"):
+            values = entry.get(field)
+            if not isinstance(values, list) or len(values) != 6 or not all(isinstance(value, (int, float)) and value >= 0 for value in values):
+                raise RuntimeError(f"Invalid {field} growth vector for {entry.get('name')}")
+
+    covered = {name: 0 for name in expected_names}
+    for entry in RECOMMENDED_EQUIPMENT:
+        character = str(entry.get("character", ""))
+        if character != "All" and character not in covered:
+            raise RuntimeError(f"Unknown recommendation character: {character}")
+        item = items_by_name.get(normalized(str(entry.get("item", ""))))
+        if item is None:
+            raise RuntimeError(f"Recommended item is absent from the catalogue: {entry.get('item')}")
+        if entry.get("category") != item.get("category") or entry.get("rarity") != item.get("rarity"):
+            raise RuntimeError(f"Recommended equipment metadata does not match the catalogue: {entry.get('item')}")
+        for field in ("checkpoint", "category", "reason"):
+            if not str(entry.get(field, "")).strip():
+                raise RuntimeError(f"Recommended equipment is missing {field}: {entry.get('item')}")
+        if character in covered:
+            covered[character] += 1
+
+    missing = [name for name, count in covered.items() if count < 5]
+    if missing:
+        raise RuntimeError(f"Every party member needs a full recommended-equipment route: {missing}")
+
+
 def validate(categories: list[dict[str, str]], items: list[dict[str, Any]], cards: list[dict[str, Any]]) -> None:
+    validate_recommendation_data(items)
     if len(categories) != EXPECTED_CATEGORY_COUNT:
         raise RuntimeError(f"The category manifest must contain exactly {EXPECTED_CATEGORY_COUNT} categories")
     if len(items) != EXPECTED_ITEM_COUNT:
@@ -422,12 +517,14 @@ def main() -> int:
     validate(categories, items, cards)
 
     payload = {
-        "schema_version": 4,
+        "schema_version": 5,
         "complete": True,
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
         "categories": categories,
         "items": items,
         "reference_cards": cards,
+        "character_growth": list(CHARACTER_GROWTH),
+        "recommended_equipment": list(RECOMMENDED_EQUIPMENT),
         "integrity": {
             "expected_categories": EXPECTED_CATEGORY_COUNT,
             "expected_items": EXPECTED_ITEM_COUNT,

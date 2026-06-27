@@ -26,7 +26,7 @@ REQUIRED_IDS = {
     "master-skill", "enhancement", "smith", "costi", "main-ingredient", "dismantle",
     "fluid", "ricette", "matching", "ricette-common", "ricette-rare", "alchemist", "armory",
     "farming", "farming-equipment", "common-target", "catalogo",
-    "primo-set", "postgame", "massimizzazione", "random-skills", "glacite", "sovereign",
+    "primo-set", "consigli-storia", "postgame", "massimizzazione", "random-skills", "glacite", "sovereign",
     "glossario", "checklist",
 }
 PUBLIC_URL = re.compile(r"https?://[^\s\"'<>]+", re.IGNORECASE)
@@ -199,10 +199,10 @@ def validate_guide(guide: Path) -> list[str]:
     missing = REQUIRED_IDS - ids
     if missing:
         fail(f"Guide is missing required anchors: {', '.join(sorted(missing))}")
-    if text.count("<table") < 22:
-        fail("Guide must retain at least 22 explanatory tables for the novice flow")
-    if "catalogo-dinamico" not in text or "reference-cards-dynamic" not in text or "character-cards-dynamic" not in text:
-        fail("Guide is missing dynamic catalogue, reference-card, or character-card container")
+    if text.count("<table") < 21:
+        fail("Guide must retain at least 21 static explanatory tables alongside the runtime growth tables")
+    if "catalogo-dinamico" not in text or "reference-cards-dynamic" not in text or "recommended-equipment-dynamic" not in text or "growth-table-dynamic" not in text or "character-cards-dynamic" not in text:
+        fail("Guide is missing dynamic catalogue, growth, recommendation, reference-card, or character-card container")
     if "filtro anti-spoiler" not in text.lower() or "data-spoiler-stage" not in text:
         fail("Guide is missing the spoiler-safe character flow")
 
@@ -211,7 +211,7 @@ def validate_guide(guide: Path) -> list[str]:
     script = script_path.read_text(encoding="utf-8")
     for token in (
         "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
-        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast",
+        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "renderGrowthTable", "Arte Attack",
     ):
         if token not in script:
             fail(f"Character cards are missing role-specific guidance or direct navigation: {token}")
@@ -272,11 +272,13 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             return
         fail("Catalogue snapshot is not complete. The deployment workflow must materialize the initial local snapshot first.")
 
-    if payload.get("schema_version") != 4:
+    if payload.get("schema_version") != 5:
         fail("Catalogue schema version is not current")
     categories = payload.get("categories")
     items = payload.get("items")
     cards = payload.get("reference_cards")
+    growth = payload.get("character_growth")
+    recommendations = payload.get("recommended_equipment")
     integrity = payload.get("integrity")
     if not isinstance(categories, list) or len(categories) != EXPECTED_CATEGORY_COUNT:
         fail("Catalogue must contain exactly 18 categories")
@@ -284,6 +286,10 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
         fail("Catalogue must contain exactly 350 items")
     if not isinstance(cards, list) or len(cards) != EXPECTED_PHASE_CARD_COUNT:
         fail("Catalogue must contain exactly 36 category/phase reference cards")
+    if not isinstance(growth, list) or len(growth) != 6:
+        fail("Catalogue must contain the six character growth records")
+    if not isinstance(recommendations, list) or len(recommendations) < 34:
+        fail("Catalogue must contain the complete per-character recommended-equipment routes")
     if not isinstance(integrity, dict):
         fail("Catalogue integrity metadata is missing")
 
@@ -312,6 +318,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
     found_pairs: set[tuple[str, str]] = set()
     seen: set[tuple[Any, ...]] = set()
     item_names: set[str] = set()
+    items_by_name: dict[str, dict[str, Any]] = {}
     for item in items:
         stats = item.get("stats")
         stats_plus10 = item.get("stats_plus10")
@@ -320,6 +327,7 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             fail(f"Duplicate catalogue entry: {key}")
         seen.add(key)
         item_names.add(normalized(str(item.get("name", ""))))
+        items_by_name[normalized(str(item.get("name", "")))] = item
         rarity = item.get("rarity")
         if not isinstance(rarity, int) or not 1 <= rarity <= 21:
             fail(f"Invalid rarity: {item.get('name')}")
@@ -341,6 +349,35 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
         missing = sorted(required_pairs - found_pairs)
         unexpected = sorted(found_pairs - required_pairs)
         fail(f"Catalogue category/phase coverage is incomplete. Missing: {missing}; unexpected: {unexpected}")
+
+    expected_growth = ("Velvet", "Rokurou", "Laphicet", "Eizen", "Magilou", "Eleanor")
+    if tuple(entry.get("name") for entry in growth) != expected_growth:
+        fail("Character growth metadata must be in party/story order")
+    for entry in growth:
+        for field in ("base", "level_200"):
+            values = entry.get(field)
+            if not isinstance(values, list) or len(values) != 6 or not all(isinstance(value, (int, float)) and value >= 0 for value in values):
+                fail(f"Invalid growth vector for {entry.get('name')}: {field}")
+
+    recommendation_counts = {name: 0 for name in expected_growth}
+    for entry in recommendations:
+        character = entry.get("character")
+        item = normalized(str(entry.get("item", "")))
+        if character != "All" and character not in recommendation_counts:
+            fail(f"Unknown recommendation character: {character}")
+        catalogue_item = items_by_name.get(item)
+        if catalogue_item is None:
+            fail(f"Recommended equipment is absent from the catalogue: {entry.get('item')}")
+        if entry.get("category") != catalogue_item.get("category") or entry.get("rarity") != catalogue_item.get("rarity"):
+            fail(f"Recommended equipment metadata does not match the catalogue: {entry.get('item')}")
+        for field in ("checkpoint", "category", "reason"):
+            if not str(entry.get(field, "")).strip():
+                fail(f"Recommended equipment is missing {field}: {entry.get('item')}")
+        if character in recommendation_counts:
+            recommendation_counts[character] += 1
+    missing_routes = [name for name, count in recommendation_counts.items() if count < 5]
+    if missing_routes:
+        fail(f"Recommended-equipment route is incomplete: {', '.join(missing_routes)}")
 
     card_pairs = {(str(entry.get("category_id")), str(entry.get("phase"))) for entry in cards}
     if card_pairs != required_pairs:

@@ -9,7 +9,7 @@
     const storageKey = "tob-equipment-guide-theme";
     const spoilerModeKey = "tob-equipment-guide-spoiler-mode";
     const spoilerProgressKey = "tob-equipment-guide-spoiler-progress";
-    const statLabels = ["Atk", "A.Atk", "Def", "A.Def", "Focus"];
+    const statLabels = ["Atk", "Arte Attack", "Def", "Arte Defense", "Focus"];
 
     const partyMembers = Object.freeze([
         {
@@ -19,7 +19,7 @@
             tone: "velvet",
             role: "Attaccante in prima linea · combo, Stun e Therion Form",
             battleAdvice: "Se la affidi al controllo automatico, falla puntare un nemico resistente: la sua combo ha il tempo di finire e può entrare in Therion Form. Questa scelta non elimina gli spostamenti: se il bersaglio è lontano, Velvet dovrà comunque raggiungerlo.",
-            equipmentAdvice: "Le Lame privilegiano Atk; le Cinture, il suo accessorio, possono aggiungere Focus per lo Stun. Su armatura, anelli e calzature conserva prima le Master Skills che non hai ancora appreso.",
+            equipmentAdvice: "Blades privilegiano Atk; Belts, il suo Accessory, possono aggiungere Focus per lo Stun. Su Armor, Rings e Footwear conserva prima le Master Skills che non hai ancora appreso.",
             categories: ["Blades", "Belts", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Target Strong Enemies · Be Aggressive",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
@@ -31,7 +31,7 @@
             tone: "rokurou",
             role: "Duellante in prima linea · Souls, counter e colpi mirati",
             battleAdvice: "Target Enemy with Most Souls fa scegliere all’AI il bersaglio con più Souls. Non garantisce che resti sempre lontano da Velvet, ma evita una priorità casuale. Defense Only privilegia schivate e sicurezza quando il gruppo è sotto pressione.",
-            equipmentAdvice: "Cerca Atk su Spade corte e Talismani; armatura e calzature servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
+            equipmentAdvice: "Cerca Atk su Short Swords e Talismans; Armor e Footwear servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
             categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Most Souls · Defense Only",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
@@ -43,7 +43,7 @@
             tone: "laphicet",
             role: "Incantatore di supporto · magie rapide, cure e controllo",
             battleAdvice: "Lascialo a distanza con poche Malak Artes affidabili: Kaleidos Ray, Blessed Drops, Void Mire e Dark Fangs. Una lista corta riduce i cast lunghi e le occasioni in cui l’AI viene interrotta.",
-            equipmentAdvice: "Fogli e Borse favoriscono A.Atk. A.Def e Focus sono utili quando viene preso di mira; prima di sostituire un pezzo, impara la sua Master Skill.",
+            equipmentAdvice: "Paper e Bags favoriscono Arte Attack. Arte Defense e Focus sono utili quando viene preso di mira; prima di sostituire un pezzo, impara la sua Master Skill.",
             categories: ["Paper", "Bags", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Range · 4 Malak Artes",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Laphicet_Cut-in_%28ToB%29.png"
@@ -55,7 +55,7 @@
             tone: "eizen",
             role: "Combattente flessibile · pugni durante la storia, magia del vento più tardi",
             battleAdvice: "Usa Fist Bruiser durante la storia. Passa a Wind Master solo dopo avere Coercion, Last Throes, Stone Lance e Hell Gate: prima di allora la rotazione a distanza non è ancora completa.",
-            equipmentAdvice: "Nel set Fist Bruiser cerca Atk e Focus. Nel set Wind Master conta di più A.Atk, ma mantieni Def e A.Def: Eizen può comunque ricevere pressione.",
+            equipmentAdvice: "Nel set Fist Bruiser cerca Atk e Focus. Nel set Wind Master conta di più Arte Attack, ma mantieni Def e Arte Defense: Eizen può comunque ricevere pressione.",
             categories: ["Bracelets", "Pendants", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Fist prima · Wind Master dopo",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eizen_Cut-in_%28ToB%29.png"
@@ -67,7 +67,7 @@
             tone: "magilou",
             role: "Incantatrice offensiva · magie rapide da lontano",
             battleAdvice: "L’AI è più affidabile con Aqua Split e Blood Moon; Crown Fire è opzionale. Tenere poche Malak Artes abbrevia i cast e riduce le aperture in cui può essere interrotta.",
-            equipmentAdvice: "Guardiani e Orecchini favoriscono A.Atk. A.Def è utile perché un personaggio che lancia magie colpito durante un cast perde più valore di pochi punti aggiuntivi di danno.",
+            equipmentAdvice: "Guardians e Earrings favoriscono Arte Attack. Arte Defense è utile perché un personaggio che lancia magie colpito durante un cast perde più valore di pochi punti aggiuntivi di danno.",
             categories: ["Guardians", "Earrings", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Range · Aqua Split / Blood Moon",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Magilou_Cut-in_%28ToB%29.png"
@@ -79,7 +79,7 @@
             tone: "eleanor",
             role: "Combattente ibrida · lancia a distanza ravvicinata e Malak Artes",
             battleAdvice: "L’AI lavora meglio vicino al bersaglio con una rotazione corta. Flame Beast e Maelstrom restano le Malak Artes principali; le Artes che spingono troppo lontano il nemico restano fuori.",
-            equipmentAdvice: "Scegli una priorità per volta: Atk per le Martial Artes, A.Atk per Flame Beast e Maelstrom. Non distribuire le statistiche senza uno scopo.",
+            equipmentAdvice: "Scegli una priorità per volta: Atk per le Martial Artes, Arte Attack per Flame Beast e Maelstrom. Non distribuire le statistiche senza uno scopo.",
             categories: ["Spears", "Ribbons", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Close Combat · Flame Beast",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Eleanor_Cut-in_%28ToB%29.png"
@@ -87,53 +87,53 @@
     ]);
 
     const categorySlots = Object.freeze({
-        "Blades": "Arma",
-        "Short Swords": "Arma",
-        "Paper": "Arma",
-        "Bracelets": "Arma",
-        "Guardians": "Arma",
-        "Spears": "Arma",
-        "Belts": "Accessorio",
-        "Talismans": "Accessorio",
-        "Bags": "Accessorio",
-        "Pendants": "Accessorio",
-        "Earrings": "Accessorio",
-        "Ribbons": "Accessorio",
-        "Men’s Armor": "Armatura",
-        "Women’s Armor": "Armatura",
-        "Rings": "Anello",
-        "Shoes": "Calzature universali",
-        "Men’s Shoes": "Calzature",
-        "Women’s Shoes": "Calzature"
+        "Blades": "Weapon",
+        "Short Swords": "Weapon",
+        "Paper": "Weapon",
+        "Bracelets": "Weapon",
+        "Guardians": "Weapon",
+        "Spears": "Weapon",
+        "Belts": "Accessory",
+        "Talismans": "Accessory",
+        "Bags": "Accessory",
+        "Pendants": "Accessory",
+        "Earrings": "Accessory",
+        "Ribbons": "Accessory",
+        "Men’s Armor": "Armor",
+        "Women’s Armor": "Armor",
+        "Rings": "Ring",
+        "Shoes": "Footwear",
+        "Men’s Shoes": "Footwear",
+        "Women’s Shoes": "Footwear"
     });
 
     const categoryLabels = Object.freeze({
-        "Blades": "Lame",
-        "Short Swords": "Spade corte",
-        "Paper": "Fogli",
-        "Bracelets": "Bracciali",
-        "Guardians": "Guardiani",
-        "Spears": "Lance",
-        "Belts": "Cinture",
-        "Talismans": "Talismani",
-        "Bags": "Borse",
-        "Pendants": "Pendenti",
-        "Earrings": "Orecchini",
-        "Ribbons": "Nastri",
-        "Men’s Armor": "Armatura maschile",
-        "Women’s Armor": "Armatura femminile",
-        "Rings": "Anelli",
-        "Shoes": "Scarpe",
-        "Men’s Shoes": "Scarpe maschili",
-        "Women’s Shoes": "Scarpe femminili"
+        "Blades": "Blades",
+        "Short Swords": "Short Swords",
+        "Paper": "Paper",
+        "Bracelets": "Bracelets",
+        "Guardians": "Guardians",
+        "Spears": "Spears",
+        "Belts": "Belts",
+        "Talismans": "Talismans",
+        "Bags": "Bags",
+        "Pendants": "Pendants",
+        "Earrings": "Earrings",
+        "Ribbons": "Ribbons",
+        "Men’s Armor": "Men’s Armor",
+        "Women’s Armor": "Women’s Armor",
+        "Rings": "Rings",
+        "Shoes": "Shoes",
+        "Men’s Shoes": "Men’s Shoes",
+        "Women’s Shoes": "Women’s Shoes"
     });
 
     const slotLabels = Object.freeze({
-        "Weapon": "Arma",
-        "Accessory": "Accessorio",
-        "Armor": "Armatura",
-        "Ring": "Anello",
-        "Footwear": "Calzature"
+        "Weapon": "Weapon",
+        "Accessory": "Accessory",
+        "Armor": "Armor",
+        "Ring": "Ring",
+        "Footwear": "Footwear"
     });
 
     const phaseLabels = Object.freeze({
@@ -629,7 +629,7 @@
             <div class="character-grid">${cards.join("")}</div>
             <div class="character-help">
                 <div><strong>Ruolo spiegato</strong>Ogni scheda dice che cosa fa l’alleato, perché il preset automatico usa quelle scelte e quali statistiche cercare per prime.</div>
-                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli oggetti</strong> mostra tutte le categorie utilizzabili; le Scarpe e la variante maschile o femminile sono alternative dello stesso slot Calzature.</div>
+                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli oggetti</strong> mostra tutte le categorie utilizzabili; Shoes, Men’s Shoes e Women’s Shoes sono alternative dello stesso slot Footwear.</div>
                 <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset automatici e oggetti futuri restano esclusi da schede, ricerca e catalogo.</div>
             </div>
         `;
@@ -679,8 +679,10 @@
         buildTableOfContents();
         renderCharacterCards();
         if (catalogueData) {
+            renderGrowthTable(catalogueData);
             renderCatalogue(catalogueData);
             renderReferenceCards(catalogueData);
+            renderRecommendedEquipment(catalogueData);
         }
         maskLockedCharacterReferences(guide);
     }
@@ -717,6 +719,122 @@
             const links = Array.from(list.querySelectorAll("[data-item-ref]"));
             list.hidden = links.length > 0 && links.every(function(link) { return link.hidden; });
         });
+    }
+
+    function growthNumber(value) {
+        const number = Number(value) || 0;
+        return Number.isInteger(number) ? String(number) : number.toFixed(2).replace(/0+$/, "").replace(/\.$/, "");
+    }
+
+    function growthCell(value, index, values) {
+        if (index === 0) {
+            return `<td>${escapeHtml(growthNumber(value))}</td>`;
+        }
+
+        const combatValues = values.slice(1);
+        const numericValue = Number(value) || 0;
+        const highest = Math.max.apply(null, combatValues.map(function(entry) { return Number(entry) || 0; }));
+        const lowest = Math.min.apply(null, combatValues.map(function(entry) { return Number(entry) || 0; }));
+        let className = "";
+
+        if (numericValue === highest) {
+            className = " growth-cell-high";
+        } else if (numericValue === lowest) {
+            className = " growth-cell-low";
+        }
+
+        return `<td class="${className.trim()}">${escapeHtml(growthNumber(value))}</td>`;
+    }
+
+    function renderGrowthTable(data) {
+        const target = guide.querySelector("#growth-table-dynamic");
+        if (!target) {
+            return;
+        }
+
+        const entries = (Array.isArray(data && data.character_growth) ? data.character_growth : []).filter(function(entry) {
+            const member = getMemberByName(entry.name);
+            return member && memberIsVisible(member) && Array.isArray(entry.base) && Array.isArray(entry.level_200);
+        });
+        const header = "<tr><th>Personaggio</th><th>HP</th><th>Atk</th><th>Arte Attack</th><th>Def</th><th>Arte Defense</th><th>Focus</th></tr>";
+
+        if (!entries.length) {
+            target.innerHTML = '<p class="muted">I dati di crescita diventano disponibili insieme alla scheda del personaggio.</p>';
+            return;
+        }
+
+        function rows(field) {
+            return entries.map(function(entry) {
+                const values = entry[field];
+                return `<tr data-spoiler-stage="${escapeHtml(entry.stage)}"><th scope="row">${escapeHtml(entry.name)}</th>${values.map(function(value, index) { return growthCell(value, index, values); }).join("")}</tr>`;
+            }).join("");
+        }
+
+        target.innerHTML = `
+            <p class="growth-legend"><span class="growth-key growth-key-high">Verde</span> crescita combattiva più alta per quel personaggio. <span class="growth-key growth-key-low">Rosso</span> crescita combattiva più bassa. HP non è colorato perché usa una scala separata.</p>
+            <h4>Guadagno per livello</h4>
+            <div class="table-wrap"><table class="compact-table growth-table"><thead>${header}</thead><tbody>${rows("base")}</tbody></table></div>
+            <h4>Guadagno totale stimato al livello 200</h4>
+            <p class="muted">Stima del solo guadagno dai livelli: il ritmo si dimezza oltre il livello 60 e si dimezza di nuovo oltre il livello 100.</p>
+            <div class="table-wrap"><table class="compact-table growth-table"><thead>${header}</thead><tbody>${rows("level_200")}</tbody></table></div>
+        `;
+    }
+
+    function renderRecommendedEquipment(data) {
+        const target = guide.querySelector("#recommended-equipment-dynamic");
+        if (!target) {
+            return;
+        }
+
+        const entries = Array.isArray(data && data.recommended_equipment) ? data.recommended_equipment : [];
+        const itemByName = new Map((Array.isArray(data && data.items) ? data.items : []).map(function(item) {
+            return [normalizeText(item.name), item];
+        }));
+        const groups = [{ name: "Scelte universali", stage: 0, character: "All" }].concat(visibleMembers());
+        const cards = groups.map(function(group) {
+            const groupEntries = entries.filter(function(entry) {
+                const item = itemByName.get(normalizeText(entry.item));
+                return entry.character === (group.character || group.name) && item && itemIsVisible(item);
+            }).sort(function(a, b) {
+                return (Number(a.order) || 0) - (Number(b.order) || 0) || String(a.item).localeCompare(String(b.item));
+            });
+
+            if (!groupEntries.length) {
+                return "";
+            }
+
+            return `
+                <article class="recommendation-card" ${group.character !== "All" ? `data-spoiler-stage="${escapeHtml(group.stage)}"` : ""}>
+                    <header>
+                        <p class="recommendation-kicker">${group.character === "All" ? "Per tutti" : "Percorso del personaggio"}</p>
+                        <h4>${escapeHtml(group.name)}</h4>
+                    </header>
+                    <ol class="recommendation-timeline">
+                        ${groupEntries.map(function(entry) {
+                            const item = itemByName.get(normalizeText(entry.item));
+                            const href = item ? `#${itemId(item)}` : "#catalogo";
+                            const category = displayCategory(entry.category || (item && item.category) || "Categoria");
+                            const rarity = entry.rarity || (item && item.rarity) || "—";
+                            return `
+                                <li>
+                                    <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
+                                    <h5><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h5>
+                                    <p class="recommendation-meta">${escapeHtml(category)} · Rarità ${escapeHtml(rarity)}</p>
+                                    <p>${escapeHtml(entry.reason)}</p>
+                                </li>
+                            `;
+                        }).join("")}
+                    </ol>
+                </article>
+            `;
+        }).filter(Boolean);
+
+        if (!cards.length) {
+            target.innerHTML = '<p class="muted">Le raccomandazioni dei personaggi non ancora incontrati restano nascoste dal filtro anti-spoiler.</p>';
+            return;
+        }
+
+        target.innerHTML = `<div class="recommendation-grid">${cards.join("")}</div>`;
     }
 
     function renderReferenceCards(data) {
@@ -783,7 +901,7 @@
         const characters = visibleMembers().map(function(member) { return member.name; });
         const characterOptions = characters.map(function(character) {
             return `<option value="${escapeHtml(character)}">${escapeHtml(character)}</option>`;
-        }).join("") + "<option value=\"All\">Solo categorie universali (anelli/scarpe)</option>";
+        }).join("") + "<option value=\"All\">Solo categorie universali (Rings/Shoes)</option>";
 
         target.innerHTML = `
             <div class="catalog-toolbar">
@@ -1012,8 +1130,10 @@
             })
             .then(function(data) {
                 catalogueData = data;
+                renderGrowthTable(data);
                 renderCatalogue(data);
                 renderReferenceCards(data);
+                renderRecommendedEquipment(data);
                 maskLockedCharacterReferences(guide);
                 scrollToGuideAnchor();
             })
