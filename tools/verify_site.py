@@ -286,6 +286,10 @@ def validate_character_configuration(script: Path) -> None:
 
 def validate_guide(guide: Path) -> list[str]:
     text = guide.read_text(encoding="utf-8")
+    catalogue_path = guide.parent / "catalogo.json"
+    if not catalogue_path.exists():
+        fail("Guide validation requires the local catalogue snapshot")
+    catalogue = json.loads(catalogue_path.read_text(encoding="utf-8"))
     ids = set(re.findall(r'\bid=["\']([^"\']+)["\']', text))
     missing = REQUIRED_IDS - ids
     if missing:
@@ -316,13 +320,42 @@ def validate_guide(guide: Path) -> list[str]:
     if not dossier_page.exists() or not dossier_script.exists():
         fail("Dedicated character dossier page or its runtime script is missing")
     dossier = dossier_script.read_text(encoding="utf-8")
-    for token in ("source_note_group", "Best in slot", "Really recommended", "Suggested", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json", "sourceTierByItem", "dossier-item-tier-badge"):
+    for token in ("source_note_group", "Best in slot", "Best early", "Good Master Skill material", "Wind Master", "Aqua Split", "Flame Beast", "catalogo.json", "sourceCalloutByItem", "dossier-progression-badge"):
         if token not in dossier:
             fail(f"Character dossier is missing required guide content: {token}")
-    if "recommendationTier(group, groups, index)" in dossier or "postgame || maxRarity" in dossier:
-        fail("Character dossier must not assign Best in slot automatically from post-game status or rarity")
+    if "sourceTierByItem" in dossier or "recommendationTier(" in dossier or "Really recommended" in dossier or "Suggested" in dossier:
+        fail("Character dossier must use a chronological roadmap, not the old generic recommendation tiers")
     if "\"Titan's Knuckles\": { key: \"bis\"" in dossier or "\"Broken Shackle\": { key: \"bis\"" in dossier or "\"Unnamed Bracelet\": { key: \"bis\"" in dossier:
         fail("Character dossier incorrectly marks the entire Eizen post-game Bracelet set as Best in slot")
+    expected_ring_callouts = (
+        ('"Force Ring": { key: "best-early"', "Force Ring must be marked Best early"),
+        ('"Barrier Ring": { key: "best-early"', "Barrier Ring must be marked Best early"),
+        ('"Anthro Ring": { key: "mastery"', "Anthro Ring must be marked Good Master Skill material"),
+        ('"Plated Ring": { key: "mastery"', "Plated Ring must be marked Good Master Skill material"),
+        ('"Unnamed Ring": { key: "bis"', "Unnamed Ring must be marked Best in slot"),
+    )
+    for token, message in expected_ring_callouts:
+        if token not in dossier:
+            fail(message)
+    if '"Force Ring": { key: "bis"' in dossier or '"Barrier Ring": { key: "bis"' in dossier:
+        fail("Force Ring and Barrier Ring must remain Best early, not Best in slot")
+
+    bis_items = set(re.findall(r'"([^"]+)": \{ key: "bis"', dossier))
+    item_categories = {str(item.get("name", "")): str(item.get("category", "")) for item in catalogue.get("items", [])}
+    bis_by_character_category: dict[tuple[str, str], list[str]] = {}
+    for entry in catalogue.get("recommended_equipment", []):
+        item_name = str(entry.get("item", ""))
+        if item_name not in bis_items:
+            continue
+        key = (str(entry.get("character", "")), item_categories.get(item_name, str(entry.get("category", ""))))
+        bis_by_character_category.setdefault(key, []).append(item_name)
+    duplicates = {key: names for key, names in bis_by_character_category.items() if len(set(names)) > 1}
+    if duplicates:
+        fail(f"Only one Best in slot item may exist per character/category: {duplicates}")
+    ring_bis_users = {str(entry.get("character", "")) for entry in catalogue.get("recommended_equipment", []) if str(entry.get("item", "")) == "Unnamed Ring"}
+    expected_ring_users = {str(entry.get("name", "")) for entry in catalogue.get("character_growth", [])}
+    if ring_bis_users != expected_ring_users:
+        fail("Unnamed Ring must be a Best in slot option for every character dossier")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
     if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:

@@ -273,102 +273,62 @@
         return `./index.html?${params.toString()}${hash}`;
     }
 
-    const defaultRecommendationTier = Object.freeze({ key: "suggested", label: "Suggested", icon: "📍" });
-
     /*
-     * These ratings are intentionally source-led, not rarity-led.
-     * A post-game item is not automatically Best in slot: that badge appears only where the
-     * translated source note explicitly calls the item the best / strongest, or names it as the
-     * clear top option for a defined build.
+     * The roadmap is chronological by default.  Badges are reserved for source-backed
+     * callouts, not for a generic quality ladder.
+     *
+     * Best in slot is deliberately rare: one item at most per character/category and
+     * only when the translated source makes a genuinely unambiguous claim.
      */
-    const sourceTierByItem = Object.freeze({
-        "Fluoric Boots": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Quartz Boots": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Hyper Velocity Boots": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Kaiser Road": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Turbulent Shoes": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Cast Heels": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Shimmery Shoes": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Queen Ellis Heels": { key: "bis", label: "Best in slot · Focus", icon: "👑" },
+    const sourceCalloutByItem = Object.freeze({
+        "Force Ring": { key: "best-early", label: "Best early", icon: "🌱" },
+        "Barrier Ring": { key: "best-early", label: "Best early", icon: "🌱" },
+        "Anthro Ring": { key: "mastery", label: "Good Master Skill material", icon: "📘" },
+        "Plated Ring": { key: "mastery", label: "Good Master Skill material", icon: "📘" },
+        "Unnamed Ring": { key: "bis", label: "Best in slot", icon: "👑" },
 
-        "Force Ring": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Barrier Ring": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Anthro Ring": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Plated Ring": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Lindworm Ring": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Unnamed Ring": { key: "strong", label: "Really recommended", icon: "✨" },
-
-        "Garish Pink Shirt": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Pure White Veil": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Quartz Garment": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Survivor's Garb": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Jet Black Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Mythril Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Reflex Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
-
-        "Cassandra Sash": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Gloire des Mousseux Sash": { key: "bis", label: "Best in slot · Arte Attack", icon: "👑" },
-        "Helmut Schmidt Sash": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Exquisite Charm": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Stoic Idol": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Soothing Knife": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Mars Satchel": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Topaz Bag": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Feldspar Pendant": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Pumper-Upper": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Gnome's Force": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Mana Earrings": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Leviathan Earrings": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Adamantine Earrings": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Con Fuoco": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Spiritoso": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Brillante": { key: "strong", label: "Really recommended", icon: "✨" },
+        "Stoic Idol": { key: "bis", label: "Best in slot", icon: "👑" },
         "Unnamed Ribbon": { key: "bis", label: "Best in slot", icon: "👑" },
-
-        "Amphibole Blade": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Fonon Blade": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Adamantine Blade": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Demon's Bane": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
         "Unnamed Blade": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Feldspar Daggers": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Stygian Daggers": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Ephemeral Wings": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Unnamed Daggers": { key: "bis", label: "Best in slot · Skills", icon: "👑" },
-        "Secret Histories": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Ember Paper": { key: "bis", label: "Best in slot · Malak Artes", icon: "👑" },
-        "Lost Parlance": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Unnamed Paper": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
-        "Armstrong": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Perpetuity": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Finger of God": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Secret Agent Doll": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Twoside Doll": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Doppelganger": { key: "bis", label: "Best in slot · Malak Artes", icon: "👑" },
-        "Unnamed Guardian": { key: "bis", label: "Best in slot · Hidden Artes", icon: "👑" },
-        "Mana Lance": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Valkyrie": { key: "strong", label: "Really recommended", icon: "✨" },
-        "Guandao": { key: "strong", label: "Really recommended", icon: "✨" }
+        "Unnamed Daggers": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Lost Parlance": { key: "bis", label: "Best in slot", icon: "👑" }
     });
 
-    const sourceTierByMember = Object.freeze({
-        velvet: Object.freeze({
-            "Uprising Veil": { key: "strong", label: "Really recommended", icon: "✨" }
-        }),
-        rokurou: Object.freeze({
-            "Summertime Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
-        }),
-        laphicet: Object.freeze({
-            "Topaz Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
-        }),
-        eizen: Object.freeze({
-            "Summertime Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" },
-            "Topaz Waistcoat": { key: "strong", label: "Really recommended", icon: "✨" }
-        })
-    });
+    function sourceCallout(member, entry) {
+        return sourceCalloutByItem[entry.item] || null;
+    }
 
-    function recommendationTier(member, entry) {
-        const memberTiers = sourceTierByMember[member.id] || {};
-        return memberTiers[entry.item] || sourceTierByItem[entry.item] || defaultRecommendationTier;
+    function progressionPhase(entry) {
+        const checkpoint = String(entry.checkpoint || "").toLowerCase();
+        if (phaseFromRarity(entry.rarity) === "Post-game") {
+            return { key: "postgame", label: "Post-game route", icon: "👑" };
+        }
+        if (checkpoint.includes("early game") || checkpoint.includes("starting") || checkpoint.includes("recruitment")) {
+            return { key: "early", label: "Early-game route", icon: "①" };
+        }
+        if (checkpoint.includes("mid game")) {
+            return { key: "mid", label: "Mid-game route", icon: "②" };
+        }
+        if (checkpoint.includes("late game") || checkpoint.includes("optional late")) {
+            return { key: "late", label: "Late-game route", icon: "③" };
+        }
+        if (checkpoint.includes("final")) {
+            return { key: "final", label: "Final-route step", icon: "④" };
+        }
+        if (checkpoint.includes("story reward")) {
+            return { key: "story", label: "Story reward", icon: "◆" };
+        }
+        return { key: "story", label: "Story progression", icon: "◆" };
+    }
+
+    function progressionLabel(entry, index, total) {
+        const phase = progressionPhase(entry);
+        const position = String(index + 1).padStart(2, "0");
+        return {
+            key: phase.key,
+            label: `Step ${position}/${String(total).padStart(2, "0")} · ${phase.label}`,
+            icon: phase.icon
+        };
     }
 
     function titleForGroup(group, slotName) {
@@ -447,22 +407,30 @@
             }
         });
 
+        const progressionByEntry = new Map(entries.map(function(entry, index) {
+            return [entry, index];
+        }));
         const cards = groups.map(function(group) {
             const groupHasBest = group.entries.some(function(entry) {
-                return recommendationTier(member, entry).key === "bis";
+                const callout = sourceCallout(member, entry);
+                return callout && callout.key === "bis";
             });
-            const groupHasStrong = group.entries.some(function(entry) {
-                return recommendationTier(member, entry).key === "strong";
+            const groupHasCallout = group.entries.some(function(entry) {
+                return Boolean(sourceCallout(member, entry));
             });
             const items = group.entries.map(function(entry) {
                 const item = itemByName.get(normalize(entry.item));
                 const category = entry.category || (item && item.category) || "Categoria";
                 const rarity = entry.rarity || (item && item.rarity) || "—";
                 const href = itemHref(member, item, entry);
-                const tier = recommendationTier(member, entry);
+                const progression = progressionLabel(entry, progressionByEntry.get(entry) || 0, entries.length);
+                const callout = sourceCallout(member, entry);
+                const calloutMarkup = callout ? `<p class="dossier-item-callout dossier-item-callout-${escapeHtml(callout.key)}">${escapeHtml(callout.icon)} ${escapeHtml(callout.label)}</p>` : "";
+                const calloutClass = callout ? ` dossier-pick-item-${escapeHtml(callout.key)}` : "";
                 return `
-                    <li class="dossier-pick-item dossier-pick-item-${escapeHtml(tier.key)}">
-                        <p class="dossier-item-tier-badge">${escapeHtml(tier.icon)} ${escapeHtml(tier.label)}</p>
+                    <li class="dossier-pick-item dossier-pick-item-${escapeHtml(progression.key)}${calloutClass}">
+                        <p class="dossier-progression-badge">${escapeHtml(progression.icon)} ${escapeHtml(progression.label)}</p>
+                        ${calloutMarkup}
                         <p class="dossier-pick-checkpoint">${escapeHtml(entry.checkpoint)}</p>
                         <h4><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h4>
                         <p class="dossier-pick-meta"><span>${escapeHtml(categoryIcons[category] || "✦")} ${escapeHtml(category)}</span><span>Rarità ${escapeHtml(rarity)}</span><span>${escapeHtml(phaseLabel(rarity))}</span></p>
@@ -479,7 +447,7 @@
                     </div>
                 </details>
             ` : "";
-            const groupState = groupHasBest ? "has-best" : (groupHasStrong ? "has-strong" : "");
+            const groupState = groupHasBest ? "has-best" : (groupHasCallout ? "has-callout" : "");
             return `
                 <article class="dossier-pick dossier-pick-group ${escapeHtml(groupState)}">
                     <ul>${items}</ul>
@@ -586,8 +554,8 @@
             <section class="dossier-gear-section">
                 <div class="dossier-gear-heading">
                     <p class="dossier-section-kicker">Equipment roadmap</p>
-                    <h3>Pick consigliati, realmente raccomandati e best in slot</h3>
-                    <p>Le etichette sono assegnate <strong>per singolo oggetto</strong>, non per rarità o per intero blocco post-game. <strong>Best in slot</strong> compare soltanto quando il commento della guida identifica esplicitamente quell’oggetto come il migliore, il più forte o il top per una build precisa. Le note restano espandibili, ma non vengono rimosse.</p>
+                    <h3>Roadmap lineare dell'equipaggiamento</h3>
+                    <p>Ogni pezzo è mostrato come un <strong>passo della progressione</strong>, ordinato per checkpoint della storia: non è più una classifica generica. I badge speciali compaiono soltanto quando il commento della guida esprime un motivo preciso, come <strong>Best early</strong> o <strong>Good Master Skill material</strong>. <strong>Best in slot</strong> resta riservato a un solo pezzo della categoria per questo personaggio, e solo quando la fonte lo giudica in modo inequivocabile. Le note restano espandibili e collegate agli oggetti.</p>
                 </div>
                 <div class="dossier-slot-list">${slots}</div>
             </section>

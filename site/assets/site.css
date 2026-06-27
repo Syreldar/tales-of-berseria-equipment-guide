@@ -3220,9 +3220,9 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     color: var(--dossier-directory-accent);
 }
 
-/* Source-led recommendation tiers: badges belong to individual items, never to an entire post-game group. */
-.dossier-pick-group.has-strong {
-    border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+/* Chronological equipment roadmap.  Special badges are source-backed exceptions. */
+.dossier-pick-group.has-callout {
+    border-color: color-mix(in srgb, var(--accent) 42%, var(--line));
 }
 
 .dossier-pick-group.has-best {
@@ -3244,14 +3244,33 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     border-top: 1px solid var(--line);
 }
 
-.dossier-pick-group .dossier-pick-item-suggested {
-    border-color: color-mix(in srgb, var(--accent) 25%, var(--line));
+.dossier-pick-group .dossier-pick-item-early {
+    border-color: color-mix(in srgb, #75af70 34%, var(--line));
 }
 
-.dossier-pick-group .dossier-pick-item-strong {
-    border-color: color-mix(in srgb, var(--accent) 62%, var(--line));
-    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 34%, var(--surface)), var(--surface));
-    box-shadow: 0 6px 16px -18px color-mix(in srgb, var(--accent) 60%, transparent);
+.dossier-pick-group .dossier-pick-item-mid {
+    border-color: color-mix(in srgb, var(--accent) 28%, var(--line));
+}
+
+.dossier-pick-group .dossier-pick-item-late,
+.dossier-pick-group .dossier-pick-item-final {
+    border-color: color-mix(in srgb, var(--accent) 46%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, var(--accent-soft) 25%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-postgame {
+    border-color: color-mix(in srgb, #a29ab4 42%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #a29ab4 8%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-best-early {
+    border-color: color-mix(in srgb, #75af70 68%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #75af70 15%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-mastery {
+    border-color: color-mix(in srgb, #6caed6 62%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #6caed6 13%, var(--surface)), var(--surface));
 }
 
 .dossier-pick-group .dossier-pick-item-bis {
@@ -3260,7 +3279,8 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     box-shadow: 0 8px 20px -18px color-mix(in srgb, #d7b75e 80%, transparent);
 }
 
-.dossier-item-tier-badge {
+.dossier-progression-badge,
+.dossier-item-callout {
     display: inline-flex;
     align-items: center;
     width: fit-content;
@@ -3274,12 +3294,21 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     font-weight: 850;
 }
 
-.dossier-pick-item-strong .dossier-item-tier-badge {
-    border-color: color-mix(in srgb, var(--accent) 55%, var(--line));
-    background: color-mix(in srgb, var(--accent-soft) 50%, var(--surface));
+.dossier-progression-badge {
+    color: var(--muted);
 }
 
-.dossier-pick-item-bis .dossier-item-tier-badge {
+.dossier-item-callout-best-early {
+    border-color: color-mix(in srgb, #75af70 72%, var(--line));
+    background: color-mix(in srgb, #75af70 18%, var(--surface));
+}
+
+.dossier-item-callout-mastery {
+    border-color: color-mix(in srgb, #6caed6 70%, var(--line));
+    background: color-mix(in srgb, #6caed6 18%, var(--surface));
+}
+
+.dossier-item-callout-bis {
     border-color: color-mix(in srgb, #d7b75e 70%, var(--line));
     background: color-mix(in srgb, #d7b75e 20%, var(--surface));
 }
