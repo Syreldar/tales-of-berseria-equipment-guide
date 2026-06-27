@@ -41,6 +41,12 @@ EXPECTED_CHARACTER_CATEGORIES = {
     "Eleanor": ("Spears", "Ribbons", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"),
 }
 
+CANONICAL_SHOE_CATEGORIES = {
+    "shoes": ("Shoes", "Shoes", "All"),
+    "mens-shoes": ("Men’s Shoes", "Men’s Shoes", "Rokurou · Laphicet · Eizen"),
+    "womens-shoes": ("Women’s Shoes", "Women’s Shoes", "Velvet · Magilou · Eleanor"),
+}
+
 
 
 def normalized(value: str) -> str:
@@ -205,13 +211,17 @@ def validate_guide(guide: Path) -> list[str]:
         fail("Guide is missing dynamic catalogue, growth, recommendation, reference-card, or character-card container")
     if "filtro anti-spoiler" not in text.lower() or "data-spoiler-stage" not in text:
         fail("Guide is missing the spoiler-safe character flow")
+    if "Footwear" in text:
+        fail("Guide must use the canonical Shoes, Men’s Shoes, and Women’s Shoes category labels")
 
     script_path = guide.parent.parent / "assets" / "site.js"
     validate_character_configuration(script_path)
     script = script_path.read_text(encoding="utf-8")
+    if "Footwear" in script:
+        fail("Runtime UI must use the canonical Shoes, Men’s Shoes, and Women’s Shoes category labels")
     for token in (
         "battleAdvice", "equipmentAdvice", "catalogueLink", "cataloguePendingCategory",
-        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "renderGrowthTable", "Arte Attack",
+        "Preset AI", "Target Strong Enemies", "Wind Master", "Aqua Split", "Flame Beast", "renderRecommendedEquipment", "recommendation-slot", "slotOrder", "renderGrowthTable", "Arte Attack",
     ):
         if token not in script:
             fail(f"Character cards are missing role-specific guidance or direct navigation: {token}")
@@ -288,8 +298,8 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
         fail("Catalogue must contain exactly 36 category/phase reference cards")
     if not isinstance(growth, list) or len(growth) != 6:
         fail("Catalogue must contain the six character growth records")
-    if not isinstance(recommendations, list) or len(recommendations) < 34:
-        fail("Catalogue must contain the complete per-character recommended-equipment routes")
+    if not isinstance(recommendations, list) or len(recommendations) < 70:
+        fail("Catalogue must contain the complete slot-by-slot recommended-equipment routes")
     if not isinstance(integrity, dict):
         fail("Catalogue integrity metadata is missing")
 
@@ -298,6 +308,17 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
         fail("Catalogue category IDs are invalid")
 
     category_by_label = {normalized(str(entry.get("label", ""))): entry for entry in categories}
+    category_by_id = {str(entry.get("id", "")): entry for entry in categories}
+    for identifier, (label, slot, character) in CANONICAL_SHOE_CATEGORIES.items():
+        category = category_by_id.get(identifier)
+        if category is None:
+            fail(f"Missing canonical shoe category: {identifier}")
+        if (category.get("label"), category.get("slot"), category.get("character")) != (label, slot, character):
+            fail(f"Incorrect canonical shoe category metadata for {identifier}")
+    expected_shoe_slot_by_label = {
+        label: slot
+        for label, slot, _ in CANONICAL_SHOE_CATEGORIES.values()
+    }
     for member, required_categories in EXPECTED_CHARACTER_CATEGORIES.items():
         for label in required_categories:
             category = category_by_label.get(normalized(label))
@@ -333,6 +354,9 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             fail(f"Invalid rarity: {item.get('name')}")
         if item.get("phase") != expected_phase(rarity):
             fail(f"Incorrect phase: {item.get('name')}")
+        expected_shoe_slot = expected_shoe_slot_by_label.get(str(item.get("category", "")))
+        if expected_shoe_slot and item.get("slot") != expected_shoe_slot:
+            fail(f"Incorrect canonical shoe category metadata on item: {item.get('name')}")
         found_pairs.add((str(item.get("category_id")), str(item.get("phase"))))
         if not isinstance(stats, list) or len(stats) != 5 or not all(isinstance(value, int) and value >= 0 for value in stats):
             fail(f"Invalid base stats: {item.get('name')}")
@@ -370,12 +394,26 @@ def validate_catalogue(catalogue: Path, item_refs: list[str], allow_unbuilt: boo
             fail(f"Recommended equipment is absent from the catalogue: {entry.get('item')}")
         if entry.get("category") != catalogue_item.get("category") or entry.get("rarity") != catalogue_item.get("rarity"):
             fail(f"Recommended equipment metadata does not match the catalogue: {entry.get('item')}")
-        for field in ("checkpoint", "category", "reason"):
+        for field in ("slot", "checkpoint", "category", "reason"):
             if not str(entry.get(field, "")).strip():
                 fail(f"Recommended equipment is missing {field}: {entry.get('item')}")
+        if entry.get("slot") not in {"Weapon", "Accessory", "Armor", "Rings", "Shoes"}:
+            fail(f"Recommendation has an invalid logical slot: {entry.get('item')}")
+        if "Footwear" in str(entry.get("reason", "")):
+            fail(f"Recommendation uses a non-canonical shoe category label: {entry.get('item')}")
         if character in recommendation_counts:
             recommendation_counts[character] += 1
-    missing_routes = [name for name, count in recommendation_counts.items() if count < 5]
+
+    required_slots = {"Weapon", "Accessory", "Armor", "Rings", "Shoes"}
+    for name in expected_growth:
+        personal = [entry for entry in recommendations if entry.get("character") == name]
+        missing_slots = sorted(required_slots - {str(entry.get("slot", "")) for entry in personal})
+        if missing_slots:
+            fail(f"Recommended equipment is missing logical slot coverage for {name}: {', '.join(missing_slots)}")
+        if len(personal) < 10:
+            fail(f"Recommended equipment route is too short for {name}")
+
+    missing_routes = [name for name, count in recommendation_counts.items() if count < 10]
     if missing_routes:
         fail(f"Recommended-equipment route is incomplete: {', '.join(missing_routes)}")
 

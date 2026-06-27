@@ -73,5 +73,5 @@ La snapshot conserva sempre il Monster quando la tabella strutturata registra un
 
 - Il validatore analizza ogni `href` in `index.html`, `content/guide.html` e `ai.html`: controlla file locali, anchor, destinazione guida/AI e parametri supportati.
 - I collegamenti generati dalle schede usano sempre `./index.html?character=…&category=…#catalogo`; il client applica il filtro e richiama lo scroll dopo che il contenuto dinamico è stato inserito nel DOM.
-- Il validatore controlla anche l’elenco esatto delle categorie per ogni alleato, compresi `Shoes` universali e la variante Footwear corretta. Un errore come `Laphicet → Guardians`, `Magilou → Paper` o una Velvet priva di `Blades` blocca la build.
+- Il validatore controlla anche l’elenco esatto delle categorie per ogni alleato, compresi `Shoes` universali e la variante corretta `Men’s Shoes` oppure `Women’s Shoes`. Un errore come `Laphicet → Guardians`, `Magilou → Paper` o una Velvet priva di `Blades` blocca la build.
 - La validazione è stata eseguita sia con il segnaposto locale sia con una snapshot completa simulata da 350 Item, 18 categorie e 36 coppie categoria/fase.

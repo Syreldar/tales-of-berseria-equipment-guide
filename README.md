@@ -88,7 +88,7 @@ Il filtro anti-spoiler è attivo per impostazione predefinita. Sostituisce con `
 
 Ogni scheda visibile include un ruolo concreto in battaglia, una priorità Equipment breve e una spiegazione del comportamento automatico adatta a chi inizia. Ogni chip categoria usa un link reale a `index.html?character=…&category=…#catalogo`: applica i filtri corretti e poi porta il lettore al catalogo. `Vedi tutti gli Item` filtra l’intero set utilizzabile; `Preset AI` apre la sezione anti-spoiler dell’alleato corrispondente.
 
-Ogni scheda elenca tutte le categorie applicabili. Sono incluse `Shoes` universali e la categoria Footwear specifica del personaggio; Velvet mostra quindi `Blades`, `Belts`, `Women’s Armor`, `Rings`, `Shoes` e `Women’s Shoes`. Laphicet usa `Paper`; Magilou usa `Guardians`.
+Ogni scheda elenca tutte le categorie applicabili. Sono incluse `Shoes` universali e la categoria specifica `Men’s Shoes` oppure `Women’s Shoes` del personaggio; Velvet mostra quindi `Blades`, `Belts`, `Women’s Armor`, `Rings`, `Shoes` e `Women’s Shoes`. Laphicet usa `Paper`; Magilou usa `Guardians`.
 
 
 ### Controllo dei link e delle categorie
@@ -97,4 +97,4 @@ Il validatore controlla tutti i link locali e tutti gli anchor delle pagine pubb
 
 ## Curated story progression
 
-The guide now includes a spoiler-aware recommended-equipment timeline for every party member. Each recommendation identifies the story checkpoint, category, rarity, and a practical reason to keep or target the item; its name opens the existing local catalogue record. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.
+The guide now includes a spoiler-aware, slot-by-slot recommended-equipment path for every party member. Each character is divided into Weapon, Accessory, Armor, Rings, and Shoes, with a story checkpoint, precise category, rarity, and a practical editorial note for every recommended item; its name opens the existing local catalogue record. Character-growth tables also show the fastest combat-stat growth in green and the slowest in red, with a separate level-200 estimate. Visible stat labels use the full `Arte Attack` and `Arte Defense` names, while every equipment category and slot is displayed in English.

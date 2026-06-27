@@ -19,7 +19,7 @@
             tone: "velvet",
             role: "Attaccante in prima linea · combo, Stun e Therion Form",
             battleAdvice: "Se la affidi al controllo automatico, falla puntare un nemico resistente: la sua combo ha il tempo di finire e può entrare in Therion Form. Questa scelta non elimina gli spostamenti: se il bersaglio è lontano, Velvet dovrà comunque raggiungerlo.",
-            equipmentAdvice: "Blades privilegiano Atk; Belts, il suo Accessory, possono aggiungere Focus per lo Stun. Su Armor, Rings e Footwear conserva prima le Master Skills che non hai ancora appreso.",
+            equipmentAdvice: "Blades privilegiano Atk; Belts, il suo Accessory, possono aggiungere Focus per lo Stun. Su Armor, Rings, Shoes e Women’s Shoes conserva prima le Master Skills che non hai ancora appreso.",
             categories: ["Blades", "Belts", "Women’s Armor", "Rings", "Shoes", "Women’s Shoes"],
             tip: "AI: Target Strong Enemies · Be Aggressive",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Velvet_Cut-in_%28ToB%29.png"
@@ -31,7 +31,7 @@
             tone: "rokurou",
             role: "Duellante in prima linea · Souls, counter e colpi mirati",
             battleAdvice: "Target Enemy with Most Souls fa scegliere all’AI il bersaglio con più Souls. Non garantisce che resti sempre lontano da Velvet, ma evita una priorità casuale. Defense Only privilegia schivate e sicurezza quando il gruppo è sotto pressione.",
-            equipmentAdvice: "Cerca Atk su Short Swords e Talismans; Armor e Footwear servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
+            equipmentAdvice: "Cerca Atk su Short Swords e Talismans; Armor, Shoes e Men’s Shoes servono a non farlo cadere mentre resta vicino al nemico. Impara prima ogni Master Skill nuova.",
             categories: ["Short Swords", "Talismans", "Men’s Armor", "Rings", "Shoes", "Men’s Shoes"],
             tip: "AI: Most Souls · Defense Only",
             image: "https://aselia.fandom.com/wiki/Special:Redirect/file/Rokurou_Cut-in_%28ToB%29.png"
@@ -102,9 +102,9 @@
         "Men’s Armor": "Armor",
         "Women’s Armor": "Armor",
         "Rings": "Ring",
-        "Shoes": "Footwear",
-        "Men’s Shoes": "Footwear",
-        "Women’s Shoes": "Footwear"
+        "Shoes": "Shoes",
+        "Men’s Shoes": "Men’s Shoes",
+        "Women’s Shoes": "Women’s Shoes"
     });
 
     const categoryLabels = Object.freeze({
@@ -133,7 +133,9 @@
         "Accessory": "Accessory",
         "Armor": "Armor",
         "Ring": "Ring",
-        "Footwear": "Footwear"
+        "Shoes": "Shoes",
+        "Men’s Shoes": "Men’s Shoes",
+        "Women’s Shoes": "Women’s Shoes"
     });
 
     const phaseLabels = Object.freeze({
@@ -564,7 +566,8 @@
             const chips = member.categories.map(function(category) {
                 const href = catalogueLink(member, category);
                 const slot = categorySlots[category] || "Categoria di equipaggiamento";
-                return `<a href="${escapeHtml(href)}" data-catalogue-link title="Apri ${escapeHtml(displayCategory(category))} (${escapeHtml(slot)}) nel catalogo filtrato per ${escapeHtml(member.name)}" aria-label="Apri ${escapeHtml(displayCategory(category))}, ${escapeHtml(slot)}, nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(displayCategory(category))}</a>`;
+                const descriptor = (slot === category) ? `${slot} category` : slot;
+                return `<a href="${escapeHtml(href)}" data-catalogue-link title="Apri ${escapeHtml(displayCategory(category))} (${escapeHtml(descriptor)}) nel catalogo filtrato per ${escapeHtml(member.name)}" aria-label="Apri ${escapeHtml(displayCategory(category))}, ${escapeHtml(descriptor)}, nel catalogo filtrato per ${escapeHtml(member.name)}">${escapeHtml(displayCategory(category))}</a>`;
             }).join("");
             const catalogHref = catalogueLink(member, "");
             const aiHref = `./ai.html#ai-${escapeHtml(member.id)}`;
@@ -629,7 +632,7 @@
             <div class="character-grid">${cards.join("")}</div>
             <div class="character-help">
                 <div><strong>Ruolo spiegato</strong>Ogni scheda dice che cosa fa l’alleato, perché il preset automatico usa quelle scelte e quali statistiche cercare per prime.</div>
-                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli oggetti</strong> mostra tutte le categorie utilizzabili; Shoes, Men’s Shoes e Women’s Shoes sono alternative dello stesso slot Footwear.</div>
+                <div><strong>Collegamenti diretti</strong>Ogni chip apre la categoria esatta già filtrata. <strong>Vedi tutti gli oggetti</strong> mostra tutte le categorie utilizzabili; Shoes, Men’s Shoes e Women’s Shoes sono categorie alternative dello stesso shoe slot.</div>
                 <div><strong>Nessuno spoiler</strong>Finché il filtro è attivo, personaggi, categorie, preset automatici e oggetti futuri restano esclusi da schede, ricerca e catalogo.</div>
             </div>
         `;
@@ -790,41 +793,64 @@
         const itemByName = new Map((Array.isArray(data && data.items) ? data.items : []).map(function(item) {
             return [normalizeText(item.name), item];
         }));
-        const groups = [{ name: "Scelte universali", stage: 0, character: "All" }].concat(visibleMembers());
-        const cards = groups.map(function(group) {
+        const slotOrder = [
+            { name: "Weapon", icon: "⚔", description: "Weapon" },
+            { name: "Accessory", icon: "✦", description: "Accessory" },
+            { name: "Armor", icon: "⛨", description: "Armor" },
+            { name: "Rings", icon: "◈", description: "Rings" },
+            { name: "Shoes", icon: "⌁", description: "Shoes" },
+        ];
+        const cards = visibleMembers().map(function(group) {
             const groupEntries = entries.filter(function(entry) {
                 const item = itemByName.get(normalizeText(entry.item));
-                return entry.character === (group.character || group.name) && item && itemIsVisible(item);
-            }).sort(function(a, b) {
-                return (Number(a.order) || 0) - (Number(b.order) || 0) || String(a.item).localeCompare(String(b.item));
+                return entry.character === group.name && item && itemIsVisible(item);
             });
 
             if (!groupEntries.length) {
                 return "";
             }
 
+            const slotSections = slotOrder.map(function(slot) {
+                const slotEntries = groupEntries.filter(function(entry) {
+                    return entry.slot === slot.name;
+                }).sort(function(a, b) {
+                    return (Number(a.order) || 0) - (Number(b.order) || 0) || String(a.item).localeCompare(String(b.item));
+                });
+
+                if (!slotEntries.length) {
+                    return "";
+                }
+
+                return `
+                    <section class="recommendation-slot" data-recommendation-slot="${escapeHtml(slot.name)}">
+                        <h5 class="recommendation-slot-heading"><span class="recommendation-slot-icon" aria-hidden="true">${slot.icon}</span>${escapeHtml(slot.description)}</h5>
+                        <ol class="recommendation-list">
+                            ${slotEntries.map(function(entry) {
+                                const item = itemByName.get(normalizeText(entry.item));
+                                const href = item ? `#${itemId(item)}` : "#catalogo";
+                                const category = displayCategory(entry.category || (item && item.category) || "Category");
+                                const rarity = entry.rarity || (item && item.rarity) || "—";
+                                return `
+                                    <li class="recommendation-item">
+                                        <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
+                                        <h6><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h6>
+                                        <p class="recommendation-meta"><span class="recommendation-category">${escapeHtml(category)}</span><span>Rarity ${escapeHtml(rarity)}</span></p>
+                                        <p class="recommendation-note">${escapeHtml(entry.reason)}</p>
+                                    </li>
+                                `;
+                            }).join("")}
+                        </ol>
+                    </section>
+                `;
+            }).filter(Boolean);
+
             return `
-                <article class="recommendation-card" ${group.character !== "All" ? `data-spoiler-stage="${escapeHtml(group.stage)}"` : ""}>
+                <article class="recommendation-card" data-spoiler-stage="${escapeHtml(group.stage)}">
                     <header>
-                        <p class="recommendation-kicker">${group.character === "All" ? "Per tutti" : "Percorso del personaggio"}</p>
+                        <p class="recommendation-kicker">Character equipment path</p>
                         <h4>${escapeHtml(group.name)}</h4>
                     </header>
-                    <ol class="recommendation-timeline">
-                        ${groupEntries.map(function(entry) {
-                            const item = itemByName.get(normalizeText(entry.item));
-                            const href = item ? `#${itemId(item)}` : "#catalogo";
-                            const category = displayCategory(entry.category || (item && item.category) || "Categoria");
-                            const rarity = entry.rarity || (item && item.rarity) || "—";
-                            return `
-                                <li>
-                                    <p class="recommendation-checkpoint">${escapeHtml(entry.checkpoint)}</p>
-                                    <h5><a href="${escapeHtml(href)}">${escapeHtml(entry.item)}</a></h5>
-                                    <p class="recommendation-meta">${escapeHtml(category)} · Rarità ${escapeHtml(rarity)}</p>
-                                    <p>${escapeHtml(entry.reason)}</p>
-                                </li>
-                            `;
-                        }).join("")}
-                    </ol>
+                    <div class="recommendation-slot-list">${slotSections.join("")}</div>
                 </article>
             `;
         }).filter(Boolean);
