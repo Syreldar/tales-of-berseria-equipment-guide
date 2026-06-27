@@ -280,22 +280,180 @@
      * Best in slot is deliberately rare: one item at most per character/category and
      * only when the translated source makes a genuinely unambiguous claim.
      */
+    /*
+     * Every item in the roadmap gets a concise, source-led purpose label.
+     * These are not quality tiers: they explain why the piece belongs in the
+     * route.  Only the explicitly confirmed standouts use Best in slot.
+     */
     const sourceCalloutByItem = Object.freeze({
+        /* Velvet · Blades */
+        "Amphibole Blade": { key: "early", label: "Early-game carry", icon: "⚡" },
+        "Fonon Blade": { key: "build", label: "Anti-Armored route", icon: "🛡️" },
+        "Adamantine Blade": { key: "offense", label: "Best main-game damage", icon: "🔥" },
+        "Demon's Bane": { key: "build", label: "Hidden Arte route", icon: "✦" },
+        "Dragon Slayer": { key: "postgame", label: "Post-game comparison", icon: "↗" },
+        "Unnamed Blade": { key: "bis", label: "Best in slot", icon: "👑" },
+
+        /* Rokurou · Short Swords */
+        "Feldspar Daggers": { key: "early", label: "Main-game carry", icon: "⚡" },
+        "Kurogane Daggers": { key: "story", label: "Story reward upgrade", icon: "◆" },
+        "Stygian Daggers": { key: "focus", label: "Focus specialist", icon: "◈" },
+        "Ephemeral Wings": { key: "offense", label: "Attack-cap route", icon: "🔥" },
+        "Lunar Tempests": { key: "mastery", label: "Mastery material", icon: "📘" },
+        "Unnamed Daggers": { key: "bis", label: "Best in slot", icon: "👑" },
+
+        /* Laphicet · Paper */
+        "Secret Histories": { key: "build", label: "AI caster priority", icon: "✦" },
+        "Old Flyers": { key: "defense", label: "Support route", icon: "🛡️" },
+        "Ember Paper": { key: "offense", label: "Endgame Malak route", icon: "🔥" },
+        "Ragnarok": { key: "postgame", label: "Post-game alternative", icon: "↗" },
+        "Lost Parlance": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Unnamed Paper": { key: "build", label: "Hidden Arte route", icon: "✦" },
+
+        /* Eizen · Bracelets */
+        "Armstrong": { key: "early", label: "Early-game mainstay", icon: "⚡" },
+        "Perpetuity": { key: "focus", label: "Focus + Break Soul route", icon: "◈" },
+        "Finger of God": { key: "build", label: "Caster route", icon: "✦" },
+        "Titan's Knuckles": { key: "offense", label: "Raw Attack route", icon: "🔥" },
+        "Broken Shackle": { key: "postgame", label: "Versatile post-game", icon: "↗" },
+        "Unnamed Bracelet": { key: "mastery", label: "Skill-focused post-game", icon: "📘" },
+
+        /* Magilou · Guardians */
+        "Feldspar Doll": { key: "build", label: "Hidden Arte alternative", icon: "✦" },
+        "Secret Agent Doll": { key: "offense", label: "Late-game caster spike", icon: "🔥" },
+        "Twoside Doll": { key: "defense", label: "Offense + survival", icon: "🛡️" },
+        "Corpore Sano": { key: "defense", label: "Tanking route", icon: "🛡️" },
+        "Doppelganger": { key: "build", label: "Malak Arte route", icon: "✦" },
+        "Unnamed Guardian": { key: "build", label: "Hidden Arte route", icon: "✦" },
+
+        /* Eleanor · Spears */
+        "Mana Lance": { key: "early", label: "Early-game carry", icon: "⚡" },
+        "Valkyrie": { key: "build", label: "Hybrid build", icon: "✦" },
+        "Guandao": { key: "offense", label: "Paladin-style main-game route", icon: "🔥" },
+        "Final Scepter": { key: "build", label: "Malak Arte route", icon: "✦" },
+        "Gae Bolg": { key: "build", label: "Status-abuse route", icon: "☄" },
+        "Nameless Spear": { key: "offense", label: "Standard damage route", icon: "🔥" },
+
+        /* Velvet · Belts */
+        "Cassandra Sash": { key: "best-early", label: "Best early", icon: "🌱" },
+        "Gloire des Mousseux Sash": { key: "offense", label: "Maximum Arte Attack", icon: "🔥" },
+        "Helmut Schmidt Sash": { key: "final", label: "Final-dungeon powerhouse", icon: "★" },
+        "Intrigue Sash": { key: "build", label: "Stun-sustain route", icon: "✦" },
+        "Jeanne d'Arc Sash": { key: "offense", label: "Dual-offense route", icon: "🔥" },
+        "Unnamed Belt": { key: "build", label: "Guard-break route", icon: "✦" },
+
+        /* Rokurou · Talismans */
+        "Exquisite Charm": { key: "defense", label: "Slow tanking route", icon: "🛡️" },
+        "Stoic Idol": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Soothing Knife": { key: "offense", label: "Attack finisher", icon: "🔥" },
+        "Long Life Charm": { key: "defense", label: "Pure-defense option", icon: "🛡️" },
+        "Perfect Bulwark": { key: "defense", label: "Defense-wall option", icon: "🛡️" },
+        "Unnamed Talisman": { key: "mastery", label: "Skill-utility option", icon: "📘" },
+
+        /* Laphicet · Bags */
+        "Mars Satchel": { key: "early", label: "Early-game caster route", icon: "⚡" },
+        "Topaz Bag": { key: "offense", label: "Main-game upgrade", icon: "🔥" },
+        "Adamantine Bag": { key: "postgame", label: "Difficult sidegrade", icon: "↗" },
+        "Solar Satchel": { key: "build", label: "Hidden Arte route", icon: "✦" },
+        "Galactic Satchel": { key: "build", label: "Generalist Malak route", icon: "✦" },
+        "Unnamed Bag": { key: "build", label: "Break Soul route", icon: "✦" },
+
+        /* Eizen · Pendants */
+        "Feldspar Pendant": { key: "build", label: "Fatigue synergy", icon: "☄" },
+        "Pumper-Upper": { key: "mastery", label: "Farmable utility", icon: "📘" },
+        "Gnome's Force": { key: "final", label: "Best main-game pendant", icon: "★" },
+        "Sylph's Invitation": { key: "offense", label: "Offensive pendant route", icon: "🔥" },
+        "Undine's Heart": { key: "caution", label: "Lower-priority post-game", icon: "◌" },
+        "Unnamed Pendant": { key: "postgame", label: "Efficient post-game route", icon: "↗" },
+
+        /* Magilou · Earrings */
+        "Mana Earrings": { key: "early", label: "Early-game core", icon: "⚡" },
+        "Satan's Wrath Earrings": { key: "caution", label: "Hard-to-get upgrade", icon: "◌" },
+        "Leviathan Earrings": { key: "build", label: "Water-caster route", icon: "✦" },
+        "Adamantine Earrings": { key: "final", label: "Best main-game earrings", icon: "★" },
+        "Lucifer's Pride Earrings": { key: "offense", label: "Highest raw power", icon: "🔥" },
+        "Lucky Rabbit Earrings": { key: "postgame", label: "Stat-anomaly option", icon: "↗" },
+        "Unnamed Earrings": { key: "build", label: "Shooting Star route", icon: "✦" },
+
+        /* Eleanor · Ribbons */
+        "Con Fuoco": { key: "offense", label: "Main-game Atk core", icon: "🔥" },
+        "Spiritoso": { key: "final", label: "Best campaign Ribbon", icon: "★" },
+        "Brillante": { key: "mastery", label: "Utility + mastery route", icon: "📘" },
+        "Perdendosi": { key: "build", label: "Status route", icon: "☄" },
+        "Grandioso": { key: "offense", label: "Slow power route", icon: "🔥" },
+        "Unnamed Ribbon": { key: "bis", label: "Best in slot", icon: "👑" },
+
+        /* Armor shared by the relevant characters */
+        "Garish Pink Shirt": { key: "early", label: "Story offense bridge", icon: "⚡" },
+        "Pure White Veil": { key: "defense", label: "Generalist defense", icon: "🛡️" },
+        "Quartz Garment": { key: "offense", label: "Offensive generalist", icon: "🔥" },
+        "Elder Garden": { key: "defense", label: "Pure-defense option", icon: "🛡️" },
+        "Survivor's Garb": { key: "build", label: "Preferred hybrid", icon: "✦" },
+        "Uprising Veil": { key: "postgame", label: "Offense-defense post-game", icon: "↗" },
+        "Empress Shield": { key: "defense", label: "Magic-defense specialist", icon: "🛡️" },
+        "Unnamed Garment": { key: "caution", label: "Lower-priority option", icon: "◌" },
+        "Jet Black Waistcoat": { key: "early", label: "Early-story universal", icon: "⚡" },
+        "Summertime Waistcoat": { key: "offense", label: "Late-game martial route", icon: "🔥" },
+        "Topaz Waistcoat": { key: "mastery", label: "Easy-enhancement route", icon: "📘" },
+        "Mythril Waistcoat": { key: "build", label: "Simple universal upgrade", icon: "✦" },
+        "Reflex Waistcoat": { key: "defense", label: "Reflection route", icon: "🛡️" },
+        "Zero Impact Waistcoat": { key: "defense", label: "Raw-defense option", icon: "🛡️" },
+        "Mumbane": { key: "focus", label: "Focus post-game option", icon: "◈" },
+        "Unnamed Vestments": { key: "defense", label: "Effective-defense option", icon: "🛡️" },
+
+        /* Rings */
         "Force Ring": { key: "best-early", label: "Best early", icon: "🌱" },
         "Barrier Ring": { key: "best-early", label: "Best early", icon: "🌱" },
         "Anthro Ring": { key: "mastery", label: "Good Master Skill material", icon: "📘" },
         "Plated Ring": { key: "mastery", label: "Good Master Skill material", icon: "📘" },
+        "Lindworm Ring": { key: "postgame", label: "Useful-stat option", icon: "↗" },
         "Unnamed Ring": { key: "bis", label: "Best in slot", icon: "👑" },
 
-        "Stoic Idol": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Unnamed Ribbon": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Unnamed Blade": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Unnamed Daggers": { key: "bis", label: "Best in slot", icon: "👑" },
-        "Lost Parlance": { key: "bis", label: "Best in slot", icon: "👑" }
+        /* Shoes shared by the relevant characters */
+        "Fluoric Boots": { key: "early", label: "Early-game training wheels", icon: "⚡" },
+        "Cast Heels": { key: "best-early", label: "Best early", icon: "🌱" },
+        "Shimmery Shoes": { key: "build", label: "Cast Heels fallback", icon: "✦" },
+        "Quartz Boots": { key: "build", label: "Atk + status route", icon: "☄" },
+        "Protective Hops": { key: "defense", label: "Defensive fallback", icon: "🛡️" },
+        "Hyper Velocity Boots": { key: "offense", label: "Late-game Focus spike", icon: "🔥" },
+        "Unnamed Boots": { key: "postgame", label: "Post-game fallback", icon: "↗" },
+        "Kaiser Road": { key: "build", label: "Eizen berserker route", icon: "✦" },
+        "Gigant Shoes": { key: "defense", label: "Tanking route", icon: "🛡️" },
+        "Turbulent Shoes": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Pegasus Wings": { key: "defense", label: "Defensive Cast Heels", icon: "🛡️" },
+        "Grounded Shoes": { key: "build", label: "Ventite-combo route", icon: "✦" },
+        "Queen Ellis Heels": { key: "focus", label: "Focus crown route", icon: "◈" }
     });
 
+    /* Character-specific source judgements override the shared baseline when needed. */
+    const sourceCalloutByCharacterItem = Object.freeze({
+        "velvet::Uprising Veil": { key: "build", label: "Velvet post-game carry", icon: "✦" },
+        "magilou::Uprising Veil": { key: "caution", label: "Low priority for Magilou", icon: "◌" },
+        "rokurou::Summertime Waistcoat": { key: "final", label: "Late-game standout", icon: "★" },
+        "eizen::Summertime Waistcoat": { key: "final", label: "Late-game standout", icon: "★" },
+        "laphicet::Summertime Waistcoat": { key: "caution", label: "Low priority for Laphicet", icon: "◌" },
+        "laphicet::Topaz Waistcoat": { key: "offense", label: "Late-game offensive route", icon: "🔥" },
+        "eizen::Topaz Waistcoat": { key: "offense", label: "Late-game offensive route", icon: "🔥" },
+        "rokurou::Topaz Waistcoat": { key: "caution", label: "Easy but secondary option", icon: "◌" },
+        "laphicet::Reflex Waistcoat": { key: "final", label: "High-stat reflection route", icon: "★" },
+        "eizen::Reflex Waistcoat": { key: "build", label: "Situational reflection", icon: "✦" },
+        "rokurou::Reflex Waistcoat": { key: "defense", label: "Defensive reflection", icon: "🛡️" },
+        "velvet::Queen Ellis Heels": { key: "bis", label: "Best in slot", icon: "👑" },
+        "eleanor::Queen Ellis Heels": { key: "bis", label: "Best in slot", icon: "👑" },
+        "magilou::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
+        "velvet::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
+        "eleanor::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
+        "magilou::Queen Ellis Heels": { key: "focus", label: "Focus crown route", icon: "◈" }
+    });
+
+
     function sourceCallout(member, entry) {
-        return sourceCalloutByItem[entry.item] || null;
+        const memberKey = `${member.id}::${String(entry.item || "")}`;
+        return sourceCalloutByCharacterItem[memberKey] || sourceCalloutByItem[entry.item] || {
+            key: "story",
+            label: "Story progression step",
+            icon: "◆"
+        };
     }
 
     function progressionPhase(entry) {
@@ -555,7 +713,7 @@
                 <div class="dossier-gear-heading">
                     <p class="dossier-section-kicker">Equipment roadmap</p>
                     <h3>Roadmap lineare dell'equipaggiamento</h3>
-                    <p>Ogni pezzo è mostrato come un <strong>passo della progressione</strong>, ordinato per checkpoint della storia: non è più una classifica generica. I badge speciali compaiono soltanto quando il commento della guida esprime un motivo preciso, come <strong>Best early</strong> o <strong>Good Master Skill material</strong>. <strong>Best in slot</strong> resta riservato a un solo pezzo della categoria per questo personaggio, e solo quando la fonte lo giudica in modo inequivocabile. Le note restano espandibili e collegate agli oggetti.</p>
+                    <p>Ogni pezzo ha un <strong>passo cronologico</strong> e una <strong>funzione pratica estratta dal commento della guida</strong>: early-game carry, route da Focus, opzione difensiva, materiale per Master Skill, specializzazione da endgame e così via. Non sono voti di qualità. <strong>Best in slot</strong> appare soltanto su un singolo pezzo della categoria per questo personaggio quando la fonte è davvero inequivocabile; gli altri oggetti mantengono il loro motivo specifico per esistere nella progressione. Le note restano espandibili e collegate agli oggetti.</p>
                 </div>
                 <div class="dossier-slot-list">${slots}</div>
             </section>

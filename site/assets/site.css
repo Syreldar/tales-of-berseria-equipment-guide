@@ -3279,6 +3279,37 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
     box-shadow: 0 8px 20px -18px color-mix(in srgb, #d7b75e 80%, transparent);
 }
 
+.dossier-pick-group .dossier-pick-item-offense {
+    border-color: color-mix(in srgb, #c9655d 58%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #c9655d 10%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-defense {
+    border-color: color-mix(in srgb, #7188b5 58%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #7188b5 10%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-focus {
+    border-color: color-mix(in srgb, #45a798 58%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #45a798 10%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-build {
+    border-color: color-mix(in srgb, #9b78bf 58%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #9b78bf 10%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-final {
+    border-color: color-mix(in srgb, #d49a51 60%, var(--line));
+    background: linear-gradient(135deg, color-mix(in srgb, #d49a51 11%, var(--surface)), var(--surface));
+}
+
+.dossier-pick-group .dossier-pick-item-caution {
+    border-style: dashed;
+    border-color: color-mix(in srgb, var(--muted) 60%, var(--line));
+    background: color-mix(in srgb, var(--surface-muted) 78%, var(--surface));
+}
+
 .dossier-progression-badge,
 .dossier-item-callout {
     display: inline-flex;
@@ -3311,4 +3342,40 @@ html:not([data-ai-spoiler="off"])[data-ai-spoiler-stage="4"] [data-spoiler-stage
 .dossier-item-callout-bis {
     border-color: color-mix(in srgb, #d7b75e 70%, var(--line));
     background: color-mix(in srgb, #d7b75e 20%, var(--surface));
+}
+
+.dossier-item-callout-offense {
+    border-color: color-mix(in srgb, #c9655d 70%, var(--line));
+    background: color-mix(in srgb, #c9655d 17%, var(--surface));
+}
+
+.dossier-item-callout-defense {
+    border-color: color-mix(in srgb, #7188b5 70%, var(--line));
+    background: color-mix(in srgb, #7188b5 17%, var(--surface));
+}
+
+.dossier-item-callout-focus {
+    border-color: color-mix(in srgb, #45a798 70%, var(--line));
+    background: color-mix(in srgb, #45a798 17%, var(--surface));
+}
+
+.dossier-item-callout-build {
+    border-color: color-mix(in srgb, #9b78bf 70%, var(--line));
+    background: color-mix(in srgb, #9b78bf 17%, var(--surface));
+}
+
+.dossier-item-callout-final {
+    border-color: color-mix(in srgb, #d49a51 70%, var(--line));
+    background: color-mix(in srgb, #d49a51 17%, var(--surface));
+}
+
+.dossier-item-callout-postgame {
+    border-color: color-mix(in srgb, #a29ab4 70%, var(--line));
+    background: color-mix(in srgb, #a29ab4 17%, var(--surface));
+}
+
+.dossier-item-callout-caution {
+    border-style: dashed;
+    color: var(--muted);
+    background: var(--surface-muted);
 }

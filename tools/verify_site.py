@@ -340,6 +340,17 @@ def validate_guide(guide: Path) -> list[str]:
     if '"Force Ring": { key: "bis"' in dossier or '"Barrier Ring": { key: "bis"' in dossier:
         fail("Force Ring and Barrier Ring must remain Best early, not Best in slot")
 
+    roadmap_match = re.search(r'const sourceCalloutByItem = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
+    if not roadmap_match:
+        fail("Character dossier is missing the source-led roadmap callout map")
+    roadmap_items = set(re.findall(r'^\s*"([^"]+)": \{ key:', roadmap_match.group("body"), flags=re.MULTILINE))
+    recommended_items = {str(entry.get("item", "")) for entry in catalogue.get("recommended_equipment", [])}
+    missing_roadmap_items = sorted(item for item in recommended_items if item and item not in roadmap_items)
+    if missing_roadmap_items:
+        fail(f"Every recommended equipment item needs a source-led roadmap role: {missing_roadmap_items}")
+    if "sourceCalloutByCharacterItem" not in dossier:
+        fail("Character dossier must support character-specific roadmap labels")
+
     bis_items = set(re.findall(r'"([^"]+)": \{ key: "bis"', dossier))
     item_categories = {str(item.get("name", "")): str(item.get("category", "")) for item in catalogue.get("items", [])}
     bis_by_character_category: dict[tuple[str, str], list[str]] = {}
