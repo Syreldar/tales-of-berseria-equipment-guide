@@ -344,7 +344,7 @@
 
         /* Rokurou · Talismans */
         "Exquisite Charm": { key: "defense", label: "Slow tanking route", icon: "🛡️" },
-        "Stoic Idol": { key: "bis", label: "Best in slot", icon: "👑" },
+        "Stoic Idol": { key: "defense", label: "Defensive standout", icon: "🛡️" },
         "Soothing Knife": { key: "offense", label: "Attack finisher", icon: "🔥" },
         "Long Life Charm": { key: "defense", label: "Pure-defense option", icon: "🛡️" },
         "Perfect Bulwark": { key: "defense", label: "Defense-wall option", icon: "🛡️" },
@@ -426,53 +426,46 @@
     });
 
     /*
-     * Exactly one general Best in slot is selected for every character/category.
-     * These choices are resolved from the source comments, not from rarity alone:
-     * strongest/preferred/ideal wording wins; alternatives remain roadmap steps for
-     * specialized builds, mastery, farming, or raw-stat variants.
+     * One crown per logical equipment slot, not per raw category.
+     * Shoes, Men’s Shoes and Women’s Shoes share the same footwear slot in the dossier,
+     * so only the single strongest footwear endpoint may be Best in slot for a character.
      */
-    const bestInSlotByCharacterCategory = Object.freeze({
-        "velvet::Blades": "Unnamed Blade",
-        "velvet::Belts": "Gloire des Mousseux Sash",
-        "velvet::Women’s Armor": "Uprising Veil",
+    const bestInSlotByCharacterSlot = Object.freeze({
+        "velvet::Weapon": "Unnamed Blade",
+        "velvet::Accessory": "Gloire des Mousseux Sash",
+        "velvet::Armor": "Uprising Veil",
         "velvet::Rings": "Unnamed Ring",
-        "velvet::Shoes": "Fluoric Boots",
-        "velvet::Women’s Shoes": "Queen Ellis Heels",
+        "velvet::Shoes": "Queen Ellis Heels",
 
-        "rokurou::Short Swords": "Unnamed Daggers",
-        "rokurou::Talismans": "Stoic Idol",
-        "rokurou::Men’s Armor": "Summertime Waistcoat",
+        "rokurou::Weapon": "Unnamed Daggers",
+        "rokurou::Accessory": "Stoic Idol",
+        "rokurou::Armor": "Summertime Waistcoat",
         "rokurou::Rings": "Unnamed Ring",
-        "rokurou::Shoes": "Quartz Boots",
-        "rokurou::Men’s Shoes": "Turbulent Shoes",
+        "rokurou::Shoes": "Turbulent Shoes",
 
-        "laphicet::Paper": "Lost Parlance",
-        "laphicet::Bags": "Galactic Satchel",
-        "laphicet::Men’s Armor": "Reflex Waistcoat",
+        "laphicet::Weapon": "Lost Parlance",
+        "laphicet::Accessory": "Galactic Satchel",
+        "laphicet::Armor": "Reflex Waistcoat",
         "laphicet::Rings": "Unnamed Ring",
-        "laphicet::Shoes": "Quartz Boots",
-        "laphicet::Men’s Shoes": "Turbulent Shoes",
+        "laphicet::Shoes": "Turbulent Shoes",
 
-        "eizen::Bracelets": "Unnamed Bracelet",
-        "eizen::Pendants": "Gnome's Force",
-        "eizen::Men’s Armor": "Summertime Waistcoat",
+        "eizen::Weapon": "Unnamed Bracelet",
+        "eizen::Accessory": "Gnome's Force",
+        "eizen::Armor": "Summertime Waistcoat",
         "eizen::Rings": "Unnamed Ring",
-        "eizen::Shoes": "Quartz Boots",
-        "eizen::Men’s Shoes": "Kaiser Road",
+        "eizen::Shoes": "Kaiser Road",
 
-        "magilou::Guardians": "Doppelganger",
-        "magilou::Earrings": "Lucifer's Pride Earrings",
-        "magilou::Women’s Armor": "Empress Shield",
+        "magilou::Weapon": "Doppelganger",
+        "magilou::Accessory": "Lucifer's Pride Earrings",
+        "magilou::Armor": "Empress Shield",
         "magilou::Rings": "Unnamed Ring",
-        "magilou::Shoes": "Fluoric Boots",
-        "magilou::Women’s Shoes": "Grounded Shoes",
+        "magilou::Shoes": "Grounded Shoes",
 
-        "eleanor::Spears": "Guandao",
-        "eleanor::Ribbons": "Unnamed Ribbon",
-        "eleanor::Women’s Armor": "Uprising Veil",
+        "eleanor::Weapon": "Guandao",
+        "eleanor::Accessory": "Unnamed Ribbon",
+        "eleanor::Armor": "Uprising Veil",
         "eleanor::Rings": "Unnamed Ring",
-        "eleanor::Shoes": "Fluoric Boots",
-        "eleanor::Women’s Shoes": "Queen Ellis Heels"
+        "eleanor::Shoes": "Queen Ellis Heels"
     });
 
     /* Character-specific source judgements override the shared baseline when needed. */
@@ -488,9 +481,6 @@
         "laphicet::Reflex Waistcoat": { key: "final", label: "High-stat reflection route", icon: "★" },
         "eizen::Reflex Waistcoat": { key: "build", label: "Situational reflection", icon: "✦" },
         "rokurou::Reflex Waistcoat": { key: "defense", label: "Defensive reflection", icon: "🛡️" },
-        "velvet::Queen Ellis Heels": { key: "bis", label: "Best in slot", icon: "👑" },
-        "eleanor::Queen Ellis Heels": { key: "bis", label: "Best in slot", icon: "👑" },
-        "magilou::Grounded Shoes": { key: "bis", label: "Best in slot", icon: "👑" },
         "velvet::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
         "eleanor::Grounded Shoes": { key: "build", label: "Ventite specialist", icon: "✦" },
         "magilou::Queen Ellis Heels": { key: "focus", label: "Focus crown route", icon: "◈" }
@@ -498,8 +488,8 @@
 
 
     function sourceCallout(member, entry) {
-        const categoryKey = `${member.id}::${String(entry.category || "")}`;
-        if (bestInSlotByCharacterCategory[categoryKey] === String(entry.item || "")) {
+        const slotKey = `${member.id}::${String(entry.slot || "")}`;
+        if (bestInSlotByCharacterSlot[slotKey] === String(entry.item || "")) {
             return { key: "bis", label: "Best in slot", icon: "👑" };
         }
 
@@ -798,7 +788,7 @@
                 <div class="dossier-gear-heading">
                     <p class="dossier-section-kicker">Equipment roadmap</p>
                     <h3>Roadmap lineare dell'equipaggiamento</h3>
-                    <p>Ogni pezzo ha un <strong>passo cronologico</strong> e una <strong>funzione pratica estratta dal commento della guida</strong>: early-game carry, route da Focus, opzione difensiva, materiale per Master Skill, specializzazione da endgame e così via. Non sono voti di qualità. Ogni categoria del personaggio ha però <strong>un solo Best in slot generale</strong>, scelto confrontando le frasi più forti della fonte: “più forte”, “preferibile”, “ideale”, “perfetto”, “ultimo” o equivalenti. Le alternative restano visibili quando servono a una build diversa, al farming o a una Master Skill specifica. Le note restano espandibili e collegate agli oggetti.</p>
+                    <p>Ogni pezzo ha un <strong>passo cronologico</strong> e una <strong>funzione pratica estratta dal commento della guida</strong>: early-game carry, route da Focus, opzione difensiva, materiale per Master Skill, specializzazione da endgame e così via. Non sono voti di qualità. Ogni slot logico del personaggio ha però <strong>un solo Best in slot generale</strong>, scelto confrontando le frasi più forti della fonte: “più forte”, “preferibile”, “ideale”, “perfetto”, “ultimo” o equivalenti. Le alternative restano visibili quando servono a una build diversa, al farming o a una Master Skill specifica. Le note restano espandibili e collegate agli oggetti.</p>
                     ${roadmapLegendMarkup()}
                 </div>
                 <div class="dossier-slot-list">${slots}</div>

@@ -336,8 +336,8 @@ def validate_guide(guide: Path) -> list[str]:
             fail(message)
     if '"Force Ring": { key: "bis"' in dossier or '"Barrier Ring": { key: "bis"' in dossier:
         fail("Force Ring and Barrier Ring must remain Best early, not Best in slot")
-    if '"eizen::Bracelets": "Unnamed Bracelet"' not in dossier:
-        fail("Unnamed Bracelet must be Eizen's source-led Best in slot Bracelet")
+    if '"eizen::Weapon": "Unnamed Bracelet"' not in dossier:
+        fail("Unnamed Bracelet must be Eizen's source-led Best in slot Weapon")
 
     roadmap_match = re.search(r'const sourceCalloutByItem = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
     if not roadmap_match:
@@ -350,29 +350,29 @@ def validate_guide(guide: Path) -> list[str]:
     if "sourceCalloutByCharacterItem" not in dossier:
         fail("Character dossier must support character-specific roadmap labels")
 
-    best_map_match = re.search(r'const bestInSlotByCharacterCategory = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
+    best_map_match = re.search(r'const bestInSlotByCharacterSlot = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
     if not best_map_match:
-        fail("Character dossier is missing the per-character/category Best in slot selection map")
-    best_by_character_category = dict(re.findall(r'^\s*"([^"]+)": "([^"]+)",?$', best_map_match.group("body"), flags=re.MULTILINE))
-    if len(best_by_character_category) != 36:
-        fail(f"Best in slot map must cover all 36 character/category routes, found {len(best_by_character_category)}")
+        fail("Character dossier is missing the per-character/logical-slot Best in slot selection map")
+    best_by_character_slot = dict(re.findall(r'^\s*"([^"]+)": "([^"]+)",?$', best_map_match.group("body"), flags=re.MULTILINE))
+    if len(best_by_character_slot) != 30:
+        fail(f"Best in slot map must cover all 30 character/logical-slot routes, found {len(best_by_character_slot)}")
 
-    expected_categories: dict[tuple[str, str], set[str]] = {}
+    expected_slots: dict[tuple[str, str], set[str]] = {}
     for entry in catalogue.get("recommended_equipment", []):
         character = str(entry.get("character", ""))
-        category = str(entry.get("category", ""))
+        slot = str(entry.get("slot", ""))
         item_name = str(entry.get("item", ""))
-        if character and category and item_name:
-            expected_categories.setdefault((character, category), set()).add(item_name)
+        if character and slot and item_name:
+            expected_slots.setdefault((character, slot), set()).add(item_name)
 
-    if len(expected_categories) != 36:
-        fail(f"Expected 36 character/category routes from the recommendation data, found {len(expected_categories)}")
+    if len(expected_slots) != 30:
+        fail(f"Expected 30 character/logical-slot routes from the recommendation data, found {len(expected_slots)}")
 
     missing_bis: list[str] = []
     invalid_bis: list[str] = []
-    for (character, category), item_names in expected_categories.items():
-        key = f"{character.lower()}::{category}"
-        selected = best_by_character_category.get(key)
+    for (character, slot), item_names in expected_slots.items():
+        key = f"{character.lower()}::{slot}"
+        selected = best_by_character_slot.get(key)
         if not selected:
             missing_bis.append(key)
             continue
@@ -380,32 +380,35 @@ def validate_guide(guide: Path) -> list[str]:
             invalid_bis.append(f"{key} -> {selected}")
 
     if missing_bis:
-        fail(f"Every character/category route must have exactly one Best in slot selection: {missing_bis}")
+        fail(f"Every character/logical-slot route must have exactly one Best in slot selection: {missing_bis}")
     if invalid_bis:
-        fail(f"Best in slot selections must refer to a recommended item in that exact category: {invalid_bis}")
+        fail(f"Best in slot selections must refer to a recommended item in that logical slot: {invalid_bis}")
 
     expected_ring_users = {str(entry.get("name", "")) for entry in catalogue.get("character_growth", [])}
     for user in expected_ring_users:
-        if best_by_character_category.get(f"{user.lower()}::Rings") != "Unnamed Ring":
+        if best_by_character_slot.get(f"{user.lower()}::Rings") != "Unnamed Ring":
             fail("Unnamed Ring must be the Best in slot Ring for every character dossier")
 
-    expected_womens_shoes_bis = {
-        "velvet::Women’s Shoes": "Queen Ellis Heels",
-        "magilou::Women’s Shoes": "Grounded Shoes",
-        "eleanor::Women’s Shoes": "Queen Ellis Heels",
+    expected_shoe_bis = {
+        "velvet::Shoes": "Queen Ellis Heels",
+        "magilou::Shoes": "Grounded Shoes",
+        "eleanor::Shoes": "Queen Ellis Heels",
     }
-    for route, item_name in expected_womens_shoes_bis.items():
-        if best_by_character_category.get(route) != item_name:
-            fail(f"Women’s Shoes Best in slot selection is incorrect for {route}: expected {item_name}")
+    for route, item_name in expected_shoe_bis.items():
+        if best_by_character_slot.get(route) != item_name:
+            fail(f"Footwear Best in slot selection is incorrect for {route}: expected {item_name}")
 
-    expected_bis_callouts = (
-        ('"velvet::Queen Ellis Heels": { key: "bis"', "Velvet Queen Ellis Heels must render as Best in slot"),
-        ('"magilou::Grounded Shoes": { key: "bis"', "Magilou Grounded Shoes must render as Best in slot"),
-        ('"eleanor::Queen Ellis Heels": { key: "bis"', "Eleanor Queen Ellis Heels must render as Best in slot"),
-    )
-    for token, message in expected_bis_callouts:
-        if token not in dossier:
-            fail(message)
+    # The map is the only producer of Best in slot badges. This prevents duplicate crowns
+    # when one logical slot contains universal Shoes plus gender-specific Shoes.
+    character_callouts_match = re.search(r'const sourceCalloutByCharacterItem = Object\.freeze\(\{(?P<body>.*?)\n    \}\);', dossier, flags=re.DOTALL)
+    if character_callouts_match and 'key: "bis"' in character_callouts_match.group("body"):
+        fail("Character-specific roadmap overrides must not create additional Best in slot badges")
+    if 'key: "bis"' in roadmap_match.group("body"):
+        fail("Shared roadmap callouts must not create additional Best in slot badges")
+    if 'bestInSlotByCharacterSlot[slotKey]' not in dossier:
+        fail("Best in slot badges must be resolved from the logical slot map")
+    if 'dossier-roadmap-legend' not in dossier or 'dossier-pick-item-theme-' not in dossier:
+        fail("Character dossier must expose the roadmap colour legend and semantic item themes")
     if "character-category-list a" not in (guide.parent.parent / "assets" / "site.css").read_text(encoding="utf-8"):
         fail("Character-category chips must remain direct links")
     if ("Nota della guida" not in script and "Nota della guida" not in dossier) or "Guide recommendation" in script or "Guide recommendation" in dossier:
